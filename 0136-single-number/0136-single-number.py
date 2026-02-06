@@ -21,7 +21,7 @@ class Solution:
         freq = Counter(nums)
 
 
-        for key, value in freq.items:
+        for key, value in freq.items():
             if value == 1:
                 return key
 
