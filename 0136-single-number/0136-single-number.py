@@ -13,11 +13,25 @@ class Solution:
         #         return key
 
 
-        # { 1: 1, 3: 2} frequency: nums
+        # { 1: (1), 3: (2,3)} frequency: nums
+
+        #########   Even Simpler    ########
 
 
-        for i in nums:
-            count = nums.count(i)
-            if count == 1:
-                return i
+        freq = Counter(nums)
+
+
+        for key, value in freq.items:
+            if value == 1:
+                return key
+
+
+
+
+
+
+        # for i in nums:
+        #     count = nums.count(i)
+        #     if count == 1:
+        #         return i
 
