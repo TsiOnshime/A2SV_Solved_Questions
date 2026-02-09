@@ -1,23 +1,30 @@
 class RandomizedSet:
 
     def __init__(self):
-        self.sett = set()
+        self.map = dict()
+        self.list = list()
 
     def insert(self, val: int) -> bool:
-        if val not in self.sett:
-            self.sett.add(val)
+        if val not in self.map:
+            self.map[val] = len(self.list)
+            self.list.append(val)
             return True
         return False
 
     def remove(self, val: int) -> bool:
-        if val in self.sett:
-            self.sett.remove(val)
+        if val in self.map:
+            idx = self.map[val]
+            lastelmnt = self.list[-1]
+            self.list[idx] = lastelmnt
+            self.list.pop()
+            self.map[lastelmnt] = idx
+            del self.map[val]
             return True
         return False
         
 
     def getRandom(self) -> int:
-        return random.choice(list(self.sett))
+        return random.choice(self.list)
         
 
 
