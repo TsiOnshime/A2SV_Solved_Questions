@@ -4,12 +4,15 @@ class Solution:
 
 
         for i in range(len(heights)):
-            j = 0
-            while j + 1 < len(heights):
-                if heights[j] > heights[j + 1]:
-                    heights[j], heights[j + 1] = heights[j + 1], heights[j]
-                j += 1
-        heights = heights[::-1]
+            max_index = i
+            
+            for j in range(i + 1, len(heights)):
+                
+                if heights[max_index] < heights[j]:
+                    heights[max_index], heights[j] = heights[j], heights[max_index]
+                    
+            max_index += 1
+        print(heights)
 
         names_new = []
         for i in heights:
