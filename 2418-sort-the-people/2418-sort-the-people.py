@@ -1,24 +1,19 @@
 class Solution:
     def sortPeople(self, names: List[str], heights: List[int]) -> List[str]:
-        name_height = list(zip(names, heights))
+        n = len(heights)
 
+        for i in range(1, n):
+            curr_height = heights[i]
+            curr_name = names[i]
 
-        for i in range(len(heights)):
-            max_index = i
-            
-            for j in range(i + 1, len(heights)):
+            j = i - 1
+
+            while j >= 0 and heights[j] < curr_height:
+                heights[j + 1] = heights[j]
+                names[j + 1] = names[j]
+
+                j -= 1 
                 
-                if heights[max_index] < heights[j]:
-                    heights[max_index], heights[j] = heights[j], heights[max_index]
-                    
-            max_index += 1
-        print(heights)
-
-        names_new = []
-        for i in heights:
-            for name, age in name_height:
-                if age == i:
-                    names_new.append(name)
-
-        return names_new
-            
+            heights[j+ 1] = curr_height
+            names[j+ 1] = curr_name
+        return names
