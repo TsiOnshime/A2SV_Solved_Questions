@@ -1,0 +1,25 @@
+c = int(input())
+contests = list(map(int, input().split(" ")))
+
+
+count = 0
+contests.sort()
+
+day = 1
+p = 0
+while p < c:
+    if day <= contests[p]:
+        count += 1
+        day += 1
+    p += 1
+    
+
+print(count)
+        
+    
+
+
+
+
+
+
