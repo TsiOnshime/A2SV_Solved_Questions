@@ -1,0 +1,21 @@
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    s = input()
+    sub = float('inf')
+    for i in range(n):
+        f = [0, 0, 0]
+        f[ord(s[i]) - ord('a')] += 1
+        
+        for j in range(i+1, min(n, i+7)):
+            f[ord(s[j]) - ord('a')] += 1
+            
+            if f[0] > f[1] and f[0] > f[2]:
+                sub = min(sub, j-i+1)
+            
+    if sub == float('inf'):
+        print(-1)
+    else:
+        print(sub)
