@@ -1,51 +1,34 @@
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        """
-we will have two pointers n and h
+        """DONALD KNUTH_ KNUTH MORRIS PRAT ALGORITHM O(N+M) TIME COMPLEXITY, O(M) SPACE COMPLEXITY"""
+        if needle == "": return 0
+        lps = [0] * len(needle)
 
-both start at 0
+        prevLPS, i = 0, 1
 
-and we check if hay[h] == ned[n]:
-    if they are equal we increment both h and n by 1
-    if n == len(ned):
-        return 
-else: 
-    we set n = 0
-    if ned[n] == hay[h]:
-        n += 1
-    h += 1
-    sasad
-    sad
-a and s
+        while i < len(needle):
+            if needle[i] == needle[prevLPS]:
+                lps[i] = prevLPS + 1
+                prevLPS += 1
+                i += 1
+            elif prevLPS == 0:
+                lps[i] = 0
+                i += 1
+            else:
+                prevLPS = lps[prevLPS - 1]     
 
-        """
-# let's save the index of occurences of the first char i in haystack
-# iterate through the haystack and save the index in idx list
 
-# we will iterate through the the list idx and initialize h to be i and in the n = 0
-# in a while loop h < hay 
-        if len(needle) == 0:
-            return 0
-        idx = []
-        for i, ch in enumerate(haystack):
-            if ch == needle[0]:
-                idx.append(i)
-        
-
-        for j in idx:
-            h = j
-            n = 0
-
-            ned = len(needle) # 5
-            hay = len(haystack) # 11
-
-            while h < hay:
-                if needle[n] == haystack[h]:
-                    h += 1
-                    n += 1
-                    if n == ned:
-                        return h - ned
+        i = 0 # ptr for haystack
+        j = 0 # ptr for needle    
+        while i < len(haystack):
+            if haystack[i] == needle[j]:
+                i, j = i + 1, j + 1
+            else:
+                if j == 0:
+                    i += 1
                 else:
-                    break
-                
+                    j = lps[j - 1]
+
+            if j == len(needle):
+                return i - j
         return -1
