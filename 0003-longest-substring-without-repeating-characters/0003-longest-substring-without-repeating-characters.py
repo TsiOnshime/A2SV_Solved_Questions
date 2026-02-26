@@ -7,11 +7,11 @@ class Solution:
         r = 1
         if len(s) == 0:
             return 0
+        if len(s) == 1:
+            return 1
 
         while r < len(s):
             s_counter = Counter(s[l:r+1])
-            if r == 2:
-                print(s_counter)
 
             if s_counter[s[r]] > 1:
                 l += 1
