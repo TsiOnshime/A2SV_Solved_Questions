@@ -30,3 +30,10 @@ class Solution:
             prod[i] *= postfix
             postfix *= nums[i]
         return prod
+
+        # prod = [1, 1, 1, 1]   nums= [1,2,3,4]
+        # prefix = 1 => 1 => 2 => 6 => 24
+        # prod = [1, 1, 2, 6]
+        # postfix = 1 => 4 => 12 => 24 => 24
+        # prod = [24, 12, 8, 6]
+
