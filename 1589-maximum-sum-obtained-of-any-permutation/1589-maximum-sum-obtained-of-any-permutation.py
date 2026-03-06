@@ -1,8 +1,8 @@
 class Solution:
     def maxSumRangeQuery(self, nums: List[int], requests: List[List[int]]) -> int:
         
-        freq = [0] * len(nums)
-        freq.append(float('-inf'))
+        freq = [0] * (len(nums) + 1)
+        
         for request in requests:
             freq[request[0]] += 1
             freq[request[1] + 1] -= 1
@@ -14,8 +14,7 @@ class Solution:
         nums.sort(reverse=True)
         freq.sort(reverse=True)
     
-        print(f"{nums=}")
-        print(f"{freq=}")
+
         _sum = 0
       
         for i in range(len(nums)):
