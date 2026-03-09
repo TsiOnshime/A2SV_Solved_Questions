@@ -7,8 +7,15 @@ class Solution:
         # then he gains 1meter which makes is altitude -4 
         # then he gains 5 meter which makes his altitude 1
         # so we will use prefix sum to calculate the altitudes
-        altitudes = [0] * (len(gain) + 1)
+        # altitudes = [0] * (len(gain) + 1)
+        # for i in range(len(gain)):
+        #     altitudes[i + 1] = altitudes[i] + gain[i] 
+        # return max(altitudes)
+
+        highest_altitude = 0
+        current_altitude = 0
         for i in range(len(gain)):
-            altitudes[i + 1] = altitudes[i] + gain[i] 
-        return max(altitudes)
+            current_altitude += gain[i]
+            highest_altitude = max(current_altitude, highest_altitude)
+        return highest_altitude
 
