@@ -4,14 +4,12 @@ class Solution:
             
         # i == p[i]
         # right 
-        s_list = [0] * len(s)
+        _sum = 0
         for i in range(len(s)):
-            s_list[i] = int(s[i])
-        for i in range(1, len(s)):
-            s_list[i] += s_list[i - 1]
-        print(s_list)
+            _sum += int(s[i])
+        
         left = 0
-        right = s_list[-1]
+        right = _sum
         score = 0
 
         for i in range(len(s)-1):
