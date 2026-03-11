@@ -2,20 +2,22 @@ from collections import deque
 class DataStream:
 
     def __init__(self, value: int, k: int):
-        self.value = value
+        self.queue = deque()
+        self.val = value
         self.k = k
-        self.timeseen = 0
      
 
     def consec(self, num: int) -> bool:
-        if self.value == num:
-            self.timeseen += 1
-            if self.timeseen >= self.k:
-                return True
-        else:
-            self.timeseen = 0
+        if num == self.val:
+            self.queue.append(num)
+        else: 
+            self.queue.clear()
+        if len(self.queue) < self.k:
+            return False
+        while len(self.queue) > self.k:
+            self.queue.popleft()
+        return True
 
-        return False
 
 
 
