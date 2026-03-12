@@ -6,31 +6,32 @@
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        stack = ListNode(head.val)
-        start = stack
-        
-        current = head.next
-        while current:
-            while start and start.val < current.val:
-                start = start.next
-            add = ListNode(current.val)
-            add.next = start
-            start = add 
-            current = current.next
-        
-        _prev = None
-        _current = start
-        _next = start.next
+        def reverse(head):
+            prev = None
+            curr = head
+            next = curr.next
 
-        while _current:
-            _current.next = _prev
-            _prev = _current 
-            _current = _next
-            if _next:
-                _next = _next.next
-        return _prev
+            while curr:
+                temp = curr.next
+                curr.next = prev
+                prev, curr = curr, temp
+
+            return prev
+        
+        head = reverse(head)
+
+        curr = head
+        curr_max = head.val
+
+        while curr.next:
+            if curr.val > curr.next.val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+                curr_max = curr.val
+
+
+
+        return reverse(head)
 
         
-        
-
-    
