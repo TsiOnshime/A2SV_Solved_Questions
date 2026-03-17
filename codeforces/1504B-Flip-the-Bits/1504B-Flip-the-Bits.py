@@ -1,4 +1,21 @@
-# to be legal i + 1 - prefix[i] == prefix[i]
+t = int(input())
+
+
+for _ in range(t):
+    n = int(input())
+    a = input()
+    b = input()
+    
+    prefix = [0] * n
+    legal = set()
+    
+    for i in range(n):
+        if i == 0:
+            prefix[i] = int(a[i])
+        else:
+            prefix[i] = prefix[i -1] + int(a[i])
+    
+    # to be legal i + 1 - prefix[i] == prefix[i]
     for i in range(n):
         if i + 1 - prefix[i] == prefix[i]:
             legal.add(i)
