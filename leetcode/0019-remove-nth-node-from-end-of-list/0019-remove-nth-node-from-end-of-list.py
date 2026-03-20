@@ -11,13 +11,11 @@ class Solution:
         while n and curr:
             curr = curr.next
             n -= 1
-        print(prev)
+   
         while curr:
             prev = prev.next
             curr = curr.next
-            print("hello")
-        print(prev.next)
         prev.next = prev.next.next
-        print(prev)
+
 
         return dummy.next
