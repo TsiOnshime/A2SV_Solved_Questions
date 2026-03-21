@@ -34,4 +34,29 @@ class Solution:
 |                   |
 |                    |
 |                             |
+
 """
+
+        # ######BFS####
+        # queue = deque()
+        # queue.append(root)
+        # _sum = 0
+
+        # while queue:
+        #     curr = queue.pop()
+        #     if curr.val % 2 == 0:
+        #         if curr.left:
+        #             if curr.left.left:
+        #                 _sum += curr.left.left.val
+        #             if curr.left.right:
+        #                 _sum += curr.left.right.val
+        #         if curr.right:
+        #             if curr.right.left:
+        #                 _sum += curr.right.left.val
+        #             if curr.right.right:
+        #                 _sum += curr.right.right.val
+        #     if curr.left:
+        #         queue.append(curr.left)
+        #     if curr.right:
+        #         queue.append(curr.right)
+        # return _sum
