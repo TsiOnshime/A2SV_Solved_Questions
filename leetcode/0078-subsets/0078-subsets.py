@@ -1,23 +1,19 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        powerset = []
-        subset = []
-
-        def backtrack(i):
+        solution = []
+        state = []
+        def search(i):
             if i >= len(nums):
-                powerset.append(subset.copy())
+                solution.append(state.copy())
                 return
             
-            # choose not to include nums[i]
-            backtrack(i + 1)
-            # choose to include nums[i]
-            subset.append(nums[i])
-            backtrack(i + 1)
-            subset.pop()
-        
+            # decision to include nums[i]
+            state.append(nums[i])
+            search(i + 1)
 
+            # decision not to include nums[i]
+            state.pop()
+            search(i + 1)
 
-        backtrack(0)
-        return powerset
-
-
+        search(0)
+        return solution
