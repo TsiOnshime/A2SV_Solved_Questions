@@ -1,10 +1,9 @@
 class Solution:
     def countDigits(self, num: int) -> int:
-        s_num = str(num)
+        new_num = num
         count = 0
-
-        for i in s_num:
-            if num % int(i) == 0:
+        while new_num:
+            if num % (new_num % 10) == 0:
                 count += 1
-        
+            new_num //= 10
         return count
