@@ -3,6 +3,7 @@ class Solution:
         _max = 0
         for i in sentences:
   
-            _max = max(_max, len(i.split(" ")))
+            _max = max(_max, i.count(" ") + 1)
+
 
         return _max
