@@ -1,27 +1,54 @@
 class Solution:
-    def isAdditiveNumber(self, num: str) -> bool:
-        def search(n1, n2, s, found):
-            if s == "" and found:
-                return True
-            n3 = str(n1 + n2)
-            idx = min(len(s), len(n3))
-
-            if s[:idx] == n3:
-                return search(n2, int(n3), s[idx:], True)
+    def isAdditiveNumber(self, num):
+        if len(num) <= 2:
             return False
-        
-        n = len(num)
-        for i in range(1, n - 1):
-            n1 = int(num[0:i])
-            if str(n1) != num[0:i]:
-                break
-            for j in range(i + 1, n):
-                n2 = int(num[i:j])
-                if str(n2) != num[i:j]:
-                    break
+        length = 0
+        state = []
+        def solve():
+            
+            return search(0)
+
+        def is_valid_state(i):
+            if state[-3] + state[-2] > state[-1] or state[-3] + state[-2] < state[-1]:
+                return False
+            else:
+                return True
+
+
+            
+
+        def get_candidates(i):
+            res = []
+
+            for j in range(i, len(num) + 1):
+                if i == j:
+                    continue
+                if num[i:j].startswith('0') and len(num[i:j]) > 1:
+                    continue
                 
-                found = search(n1, n2, num[j:], False)
-                if found:
+                res.append(int(num[i:j]))
+            return res
+        def search(length):
+            
+            if len(state) >= 3 and not is_valid_state(length):
+                return False
+            if length == len(num):
+                return len(state) >= 3
+            
+
+            for candidate in get_candidates(length):
+                length += len(str(candidate))
+                
+                state.append(candidate)
+                if search(length):
                     return True
+                length -= len(str(candidate))
+                state.pop()
+        if solve():
+            return True
         return False
-        
+
+
+    
+o = Solution()
+print(o.isAdditiveNumber("112358"))
