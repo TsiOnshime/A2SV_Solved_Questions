@@ -3,21 +3,16 @@ class Solution:
         # [1,2, 5, 6]
         # target = 3
         
-        def binary(l, r):
-            if l > r:
-                return -1
-            middle = (r + l) // 2
-            if nums[middle] < target:
-                l = middle + 1
-                return binary(l, r)
-            elif nums[middle] > target:
-                r = middle - 1
-                return binary(l, r)
+        l = 0
+        r = len(nums) - 1
+        while l <= r:
+            mid = (l + r) // 2
+
+            if target == nums[mid]:
+                return mid
+            elif target > nums[mid]:
+                l = mid + 1
             else:
-                return middle
-
-            
-
-
-
-        return binary(0, len(nums) - 1)
+                r = mid - 1
+        
+        return -1
