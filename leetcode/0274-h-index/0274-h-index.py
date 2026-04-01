@@ -2,7 +2,7 @@ class Solution:
     def hIndex(self, citations: List[int]) -> int:
         
         count = [0] * (len(citations) + 1)
-        print(count)
+      
 
         for citation in citations:
             if citation >= len(count):
