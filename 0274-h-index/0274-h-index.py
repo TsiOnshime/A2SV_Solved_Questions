@@ -9,7 +9,7 @@ class Solution:
                 count[-1] += 1
             else:
                 count[citation] += 1
-        print(count)
+
 
         
         paper_count = 0
