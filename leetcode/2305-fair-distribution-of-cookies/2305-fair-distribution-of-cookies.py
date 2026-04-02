@@ -2,23 +2,30 @@ class Solution:
     def distributeCookies(self, cookies: List[int], k: int) -> int:
 
         min_unfairness = float('inf')
-        children = [0] * k
         n = len(cookies)
+        children = [0] * k
 
-        def distribution(index):
+        def solve():
+            nonlocal min_unfairness
+            search(0)
+            return min_unfairness
+
+
+        def is_valid_state(i):
+            nonlocal min_unfairness
+            if i == n or max(children) >= min_unfairness:
+                return True
+
+        def search(i):
             nonlocal min_unfairness
 
-            if index == n:
+            if is_valid_state(i):
                 min_unfairness = min(min_unfairness, max(children))
                 return
-
-            if max(children) >= min_unfairness:
-                return
-
-            for i in range(k):
-                children[i] += cookies[index]
-                distribution(index + 1)
-                children[i] -= cookies[index]
-
-        distribution(0)
-        return min_unfairness
+            
+            for j in range(len(children)):
+                children[j] += cookies[i]
+                search(i + 1)
+                children[j] -= cookies[i]
+        return solve()
+        
