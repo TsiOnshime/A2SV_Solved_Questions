@@ -2,28 +2,30 @@ class Solution:
     def search(self, nums: List[int], target: int) -> int:
         
 
-        def searchTarget(l, r):
-            m = (l + r) // 2
 
-            if target == nums[m]:
-                return m
-            if l > r:
-                return -1
+        l = 0
+        r = len(nums) - 1
 
-            #left portion
-            if nums[l] <= nums[m]:
-                if target < nums[l] or target > nums[m]:
-                    l = m + 1
-                    return searchTarget(l, r)
+        ans = -1
+
+        while l <= r:
+            mid = l + (r - l)//2
+
+            if nums[mid] == target:
+                ans = mid
+                break
+            elif nums[mid] <= nums[r]:
+                if nums[mid] <= target <= nums[r]:
+                    l = mid + 1
                 else:
-                    r = m - 1
-                    return searchTarget(l, r)
-            # right portion
-            else:
-                if target > nums[r] or target < nums[m]:
-                    r = m - 1
-                    return searchTarget(l, r)
+                    r = mid - 1
+            
+            elif nums[mid] >=  nums[l]:
+                if nums[l] <= target <= nums[mid]:
+                    r = mid - 1
                 else:
-                    l = m + 1
-                    return searchTarget(l, r)
-        return searchTarget(0, len(nums) - 1)
+                    l = mid + 1
+            
+        return ans
+
+          
