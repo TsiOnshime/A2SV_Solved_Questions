@@ -2,7 +2,7 @@
 
 **Difficulty:** Medium
 
-**Problem:** [Splitting-a-String-Into-Descending-Consecutive-Values](https://leetcode.com/problems/splitting-a-string-into-descending-consecutive-values/)
+**Problem:** [Splitting-a-String-Into-Descending-Consecutive-Values](https://leetcode.com/problems/splitting-a-string-into-descending-consecutive-values/submissions/1970247900/)
 
 ---
 
