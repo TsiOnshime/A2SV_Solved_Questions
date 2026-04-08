@@ -3,18 +3,15 @@ class Solution:
         stack = []
         parenthesis = {')': '(', '}': '{', ']': '['}
 
-        for i in s:
-            if i == '(' or i == '{' or i == '[':
-                stack.append(i)
-                
-            else:
-                if len(stack) == 0:
-                    return False
-                if stack[-1] == parenthesis[i]:
+        for i in range(len(s)):
+            if s[i] in parenthesis:
+                if stack and stack[-1] == parenthesis[s[i]]:
                     stack.pop()
                 else:
                     return False
-        
-        if len(stack) == 0:
-            return True
-        return False
+            else:
+                stack.append(s[i])
+
+        if stack:
+            return False
+        return True
