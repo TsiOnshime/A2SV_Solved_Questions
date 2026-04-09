@@ -1,16 +1,20 @@
 class Solution:
-    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        
-        stack = [0]
-        answer = [0] * len(temperatures)
-        for i in range(len(temperatures)):
-            while stack and temperatures[i] > temperatures[stack[-1]]:
-                answer[stack[-1]] = i - stack[-1]
-                stack.pop()
+    def dailyTemperatures(self, nums: List[int]) -> List[int]:
+        # next greater element
+        #  ]
+
+        stack = []
+        result = [0] * len(nums)
+
+        for i in range(len(nums)):
+            while stack and nums[stack[-1]] < nums[i]:
+                idx = stack.pop()
+                result[idx] = i - idx
             
             stack.append(i)
-        return answer
 
+        return result
+        
 
              
 
