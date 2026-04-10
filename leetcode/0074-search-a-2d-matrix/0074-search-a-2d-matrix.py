@@ -1,15 +1,28 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        # staircase search
+        ROWS, COLS = len(matrix), len(matrix[0])
 
-        r = 0
-        c = len(matrix[0]) - 1
+        top = 0
+        bot = ROWS - 1
 
-        while c >= 0 and r < len(matrix):
-            if matrix[r][c] == target:
-                return True
-            elif matrix[r][c] < target:
-                r += 1
+        while top <= bot:
+            mid_row = top + (bot - top) // 2
+
+            if target > matrix[mid_row][-1]:
+                top = mid_row + 1
+            elif target < matrix[mid_row][0]:
+                bot = mid_row - 1
             else:
-                c -= 1
+                break
+        print(mid_row)
+        l, r = 0, COLS - 1
+        while l <= r:
+            mid = l + (r - l)//2
+            if target > matrix[mid_row][mid]:
+                l = mid + 1
+            elif target < matrix[mid_row][mid]:
+                r = mid - 1
+            else:
+                return True
         return False
+
