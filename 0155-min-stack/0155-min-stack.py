@@ -12,21 +12,16 @@ class MinStack:
 
 
     def pop(self) -> None:
-
-
-        if self.stack:
-            if self.minStack and self.stack[-1] == self.minStack[-1]:
-                self.minStack.pop()
-            self.stack.pop()
+        if self.stack[-1] == self.minStack[-1]:
+            self.minStack.pop()
+        self.stack.pop()
 
             
         
     def top(self) -> int:
-        if self.stack:
-            return self.stack[-1]
+        return self.stack[-1]
         
 
-    def getMin(self) -> int:
-        if self.minStack:
-            return self.minStack[-1]
-        return -1
+    def getMin(self) -> int: 
+        return self.minStack[-1]
+  
