@@ -1,21 +1,27 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
+     # to calculate ceil(pile/k) we can do (piles + k - 1) // k
 
-        def possible(k):
+        def possible(mid):
             time = 0
-            for pile in piles:
-                time += (pile + k - 1) // k 
-            return time
 
-        l = 1
-        u = max(piles)
-        while l <= u:
-            mid = l + (u - l)// 2 
-            needed = possible(mid)
-            if needed > h:
-                l = mid + 1
+            for pile in piles:
+                time += math.ceil(pile / mid)
+            return time <= h
+
+
+        l = 1 
+        r = max(piles)
+
+        ans = 0
+
+        while l <= r:
+
+            mid = l + (r - l)//2
+            if possible(mid):
+                ans = mid
+                r = mid - 1
             else:
-                u = mid - 1
-        return l
-o = Solution()
-print(o.minEatingSpeed([30,11,23,4,20], 5))
+                l = mid + 1
+
+        return ans
