@@ -1,14 +1,14 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        longest = float('-inf')
-        length = 0
+        longest = 1
+        length = 1
 
         l = 0
         r = 1
         if len(s) == 0:
             return 0
-        if len(s) == 1:
-            return 1
+        # if len(s) == 1:
+        #     return 1
 
         while r < len(s):
             s_counter = Counter(s[l:r+1])
