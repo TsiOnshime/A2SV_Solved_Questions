@@ -9,20 +9,39 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        mapping = {None: None}
-        # old node : new node
-
+        if not head:
+            return None
         curr = head
         while curr:
-            new_node = Node(curr.val)
-            mapping[curr] = new_node
-            curr = curr.next
+            newNode = Node(curr.val)
+            newNode.next = curr.next
+            curr.next = newNode
+            curr = newNode.next
+
+        # 7 => 7 => 13 => 13 => 11 => 11 => 4 => 4 => 10 => 10 => 1 => 1
+
+        # iterate through the merged list
         curr = head
         while curr:
-            copy = mapping[curr]
-            copy.next = mapping[curr.next]
-            copy.random = mapping[curr.random]
+            curr.next.random = curr.random.next if curr.random else None
+            curr = curr.next.next
 
+
+        curr = head
+        newHead = head.next
+        newcurr = newHead
+
+        while curr:
+            curr.next = newcurr.next
             curr = curr.next
-        return mapping[head]
+            if curr:
+                newcurr.next = curr.next
+                newcurr = newcurr.next
+        return newHead
+
+        
+            
+
+
+
         
