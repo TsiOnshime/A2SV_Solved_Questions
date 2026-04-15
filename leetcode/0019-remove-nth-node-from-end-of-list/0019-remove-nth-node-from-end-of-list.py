@@ -8,17 +8,12 @@ class Solution:
         if not head.next:
             return 
         slow = fast = head
-        # 2, 1 => 2
-        # 1, 2 => None
 
         while n and fast.next:
             fast = fast.next
             n -= 1
-        while n:
-            slow = slow.next
-            n -= 1
-            if n == 0:
-                return slow
+        if n:
+            return head.next
         while fast and fast.next:
             slow = slow.next
             fast = fast.next
