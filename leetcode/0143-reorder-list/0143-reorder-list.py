@@ -17,18 +17,19 @@ class Solution:
         l2 = slow.next
         slow.next = None
         l1 = head
-        if not l2:
-            return l1
-        if not l2.next:
-            curr = l1
-            nxt = curr.next
-            curr.next = l2
-            curr.next.next = nxt
-            return l1
+        # if not l2:
+        #     return l1
+        # if not l2.next:
+        #     curr = l1
+        #     nxt = curr.next
+        #     curr.next = l2
+        #     curr.next.next = nxt
+        #     return l1
 
         prev = None
         curr = l2
-        nxt = l2.next
+        if l2:
+            nxt = l2.next
 
         while curr:
             curr.next = prev
@@ -40,7 +41,7 @@ class Solution:
 
         p1 = l1
         p2 = prev
-        print(p2)
+        
 
         while p1 and p2:
             nxt = p1.next #2
