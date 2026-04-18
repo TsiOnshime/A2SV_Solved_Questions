@@ -1,8 +1,20 @@
 class Solution:
     def fib(self, n: int) -> int:
-        def f(n):
-            if n == 1 or n == 0:
-                return n
-            return f(n - 1) + f(n - 2)
-        n = f(n)
-        return n
+        
+        cache = {0: 0, 1: 1}
+
+        def fibonacci(n):
+            if n < 0:
+                return 0
+            
+
+            if n in cache:
+                return cache[n]
+            else:
+                cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
+                return cache[n]
+        return fibonacci(n)
+            
+            
+
+
