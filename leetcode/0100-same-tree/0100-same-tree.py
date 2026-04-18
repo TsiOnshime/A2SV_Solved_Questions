@@ -7,19 +7,18 @@
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         
-        self.Truth = True
+        stack = [[p,q]]
 
-        def same(p, q):
-            if not p and not q:
-                return
-            if not p or not q:
-                self.Truth = False
-                return 
-            if p.val != q.val:
-                self.Truth = False
-                return
+        while stack:
+            nodep, nodeq = stack.pop()
 
-            same(p.left, q.left)
-            same(p.right, q.right)
-        same(p,q)
-        return self.Truth
+            if not nodep and not nodeq:
+                continue
+            if not nodep or not nodeq:
+                return False
+            if nodeq.val != nodep.val:
+                return False
+            
+            stack.append([nodep.left, nodeq.left])
+            stack.append([nodep.right, nodeq.right])
+        return True
