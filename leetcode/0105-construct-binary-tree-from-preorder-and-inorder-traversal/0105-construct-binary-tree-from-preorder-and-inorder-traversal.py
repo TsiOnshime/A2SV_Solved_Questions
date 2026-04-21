@@ -7,23 +7,21 @@
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         
-        def tree(preorder, inorder):
-            # check if we're at a leaf node
-            if not preorder or not inorder:
-                return None
+        self.val_idx = {val:i for i, val in enumerate(inorder)}
 
+        self.idx = 0
 
-            # get the parent node
-            parent = preorder[0]
-            # initialize our node
-            binary_tree = TreeNode(parent)
-            # get the indext in which the left subtree and right subtree split for that particular parent node
-            mid = inorder.index(parent)
+        def build(left, right):
+            if left > right:
+                return
 
-            binary_tree.left = tree(preorder[1:mid + 1], inorder[:mid + 1])
-            binary_tree.right = tree(preorder[mid + 1:], inorder[mid + 1:])
+            root = TreeNode(preorder[self.idx])
+            self.idx += 1
+            mid = self.val_idx[root.val]
 
-            return binary_tree
-        
-        return tree(preorder, inorder)
-            
+            root.left = build(left, mid - 1)
+            root.right = build(mid + 1, right)
+
+            return root
+
+        return build(0, len(preorder) - 1)
