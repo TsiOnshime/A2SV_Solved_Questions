@@ -1,23 +1,17 @@
 class Solution:
     def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
-        res = []
-        sorted_nums = sorted(nums)
-
-
-        int_idx = {}
-
-        for i in sorted_nums:
-            if i not in int_idx:
-                int_idx[i] = sorted_nums.index(i)
-   
-
+        prefix = [0] * (max(nums) + 1)
         for i in nums:
-            score = int_idx[i]
-            res.append(score)
+            prefix[i] += 1
 
+        for i in range(1, len(prefix)):
+            prefix[i] += prefix[i - 1]
+        print(prefix)
+        res = [0] * len(nums)
+        for i in range(len(res)):
+            num = nums[i]
+            smaller = (prefix[num - 1]) if num > 0 else 0
+            res[i] = smaller
         return res
 
-
-
-
-            
+ 
