@@ -1,7 +1,8 @@
+from sortedcontainers import SortedList
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         res = [0] * len(nums)
-        sort = []
+        sort = SortedList([])
         def binarySearch(sort, num):
             l = 0
             r = len(sort) - 1
@@ -13,7 +14,7 @@ class Solution:
                 else:
                     l = mid + 1
             
-            sort.insert(l, num)
+            sort.add(num)
             
             return l
 
