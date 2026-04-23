@@ -6,39 +6,44 @@
 
 class Solution:    
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-
-        if not lists or len(lists) == 0:
+        if not lists:
             return None
+        if len(lists) == 1:
+            return lists[0]
 
-        return self.divide(lists, 0, len(lists) - 1)
-    
-    def divide(self,lists, l, r):
-        if l > r:
-            return 
-        if l == r:
-            return lists[l]
+        l1 = lists[0]
+        l2 = lists[1]
+
+        def divide(l, r):  
+            if l > r:
+                return     # 0, 2      # 0, 1     merge(0, 1)  #2,2
+            if l == r:
+                return lists[l]
+            mid = l + (r - l) // 2
+
+            left = divide(l, mid)
+            right = divide(mid + 1, r)
+            return merge(left, right)
         
-        mid = l + (r - l)//2
-        left = self.divide(lists, l, mid)
-        right = self.divide(lists, mid + 1, r)
 
-        return self.conquer(left, right)
-    
-    def conquer(self, l1, l2):
-        dummy = ListNode()
-        curr = dummy
+        def merge(l1, l2):
+            
 
-        while l1 and l2:
-            if l1.val <= l2.val:
-                curr.next = l1
-                l1 = l1.next
-            else:
-                curr.next = l2
-                l2 = l2.next
-            curr = curr.next
-        if l1:
-            curr.next = l1
-        if l2:
-            curr.next = l2
-        return dummy.next
+            dummy = tail = ListNode()
+            while l1 and l2:
+                if l1.val <= l2.val:
+                    tail.next = l1
+                    l1 = l1.next
+                else:
+                    tail.next = l2
+                    l2 = l2.next
+                tail = tail.next
+            if l1:
+                tail.next = l1
+            if l2:
+                tail.next = l2
+            return dummy.next
+            
     
+
+        return divide(0, len(lists) - 1)
