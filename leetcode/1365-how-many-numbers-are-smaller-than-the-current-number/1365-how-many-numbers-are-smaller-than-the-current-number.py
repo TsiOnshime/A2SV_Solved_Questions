@@ -6,7 +6,7 @@ class Solution:
 
         for i in range(1, len(prefix)):
             prefix[i] += prefix[i - 1]
-        print(prefix)
+      
         res = [0] * len(nums)
         for i in range(len(res)):
             num = nums[i]
