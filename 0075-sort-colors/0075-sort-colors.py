@@ -3,34 +3,31 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        
-        #  nums = [2,0,2,1,1,0]
-        k = max(nums)
-        counts = [0] * (k + 1)
-        
-        for num in nums:
-            counts[num] += 1
-            
-        # counts = [2, 2, 2]
-        
-        starting_index = 0
-        
-        for i, count in enumerate(counts): # 0 2    1, 2    2 2
-            counts[i] = starting_index # [0]       [0,2]    [0,2,4]
-            starting_index += count # 2     4       6
-        
-        sorted_nums = [0] * len(nums)
-        
-        for elem in nums:
-            sorted_nums[counts[elem]] = elem
-            
-            counts[elem] += 1
-            
-        for i in range(len(sorted_nums)):
-            nums[i] = sorted_nums[i]
-            
+        def divide(l, r):
+            if l == r:
+                return 
+            mid = l + (r - l)//2
+            divide(l, mid)
+            divide(mid + 1, r)
+            merge(l, mid, r)
+        def merge(l, mid, r):
+            temp = []
+            low = l
+            high = mid + 1
+
+            while low <= mid and high <= r:
+                if nums[low] <= nums[high]:
+                    temp.append(nums[low])
+                    low += 1
+                else:
+                    temp.append(nums[high])
+                    high += 1
+            temp.extend(nums[low:mid + 1])
+            temp.extend(nums[high:r + 1])
+
+            for i in range(l, r + 1):
+                nums[i] = temp[i - l]
+
+        divide(0, len(nums) - 1)
         return nums
-        
-            
-            
-        
+
