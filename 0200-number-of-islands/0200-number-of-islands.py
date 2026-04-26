@@ -1,36 +1,33 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        self.rows = len(grid)
-        self.cols = len(grid[0])
-        self.visited = set()
-        count = 0
-        
-        def explore(grid, start, visited):
-            r, c = start
-            rowInbounds = 0 <= r and r < self.rows
-            colsInbounds = 0 <= c and c < self.cols
+        if not grid:
+            return 0
 
-            if not rowInbounds or not colsInbounds:
-                return False
-            if grid[r][c] == "0":
-                return False
-            if start in self.visited:
-                return False
-            self.visited.add(start)
+        rows, cols = len(grid), len(grid[0])
+        visited = set()
+        islands = 0
 
-            explore(grid, (r - 1, c), self.visited)
-            explore(grid, (r + 1, c), self.visited)
-            explore(grid, (r, c - 1), self.visited)
-            explore(grid, (r, c + 1), self.visited)
+        def bfs(r, c):
+            q = deque()
+            visited.add((r,c))
+            q.append((r,c))
 
-            return True
+            while q:
+                row, col = q.popleft()
+                directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
 
+                for dr, dc in directions:
+                    r, c = row + dr, col + dc
+                    if (r in range(rows) and 
+                        c in range(cols) and 
+                        grid[r][c] == "1" and 
+                        (r, c) not in visited):
+                        q.append((r, c))
+                        visited.add((r, c))
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == "1" and (r, c) not in visited:
+                    bfs(r, c)
+                    islands += 1
 
-        for r in range(self.rows):
-            for c in range(self.cols):
-                if explore(grid, (r, c), self.visited):
-                    count += 1
-                
-        return count
-
-
+        return islands
