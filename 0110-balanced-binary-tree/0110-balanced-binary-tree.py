@@ -9,6 +9,8 @@ class Solution:
 
         self.truth = True
         def dfs(root):
+            if not self.truth:
+                return 0
             if not root:
                 return 0
             leftDepth = dfs(root.left)
