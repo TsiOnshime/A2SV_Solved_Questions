@@ -1,36 +1,27 @@
 class Solution:
     def maximumGap(self, nums: List[int]) -> int:
-        if len(nums) < 2:
-            return 0
+        # pigeon hole Principle
+        if len(nums) < 2: return 0
+        _max, _min = max(nums), min(nums)
+        n = len(nums)
+        bucketSize = max(1, (_max - _min) // (n - 1) )
+        # 9 - 1 // 3 = 2
+        # [1 - 3), [3 - 5), [5 - 7), [7, 9]
+        bucket = defaultdict(list)
+        for num in nums:
+            
+            key = (num - _min) // bucketSize
+            if key not in bucket:
+                bucket[key] = [num, num]
+            else:
+                bucket[key] = [min(num, bucket[key][0]), max(num, bucket[key][1])]
 
-        def divide(l, r):
-            if l == r:
-                return 
-            mid = l + (r - l)//2
-            divide(l, mid)
-            divide(mid + 1, r)
-            merge(l, mid, r)
+        
+        ans = 0
+        prev = -1
+        for key in sorted(bucket):
+            if prev != -1:
+                ans = max(bucket[key][0] - bucket[prev][1], ans)
+            prev = key
 
-        def merge(l, mid, r):
-            temp = []
-            low, high = l, mid + 1
-
-            while low <= mid and high <= r:
-                if nums[low] <= nums[high]:
-                    temp.append(nums[low])
-                    low += 1
-                else:
-                    temp.append(nums[high])
-                    high += 1
-            temp.extend(nums[low:mid + 1])
-            temp.extend(nums[high:r + 1])
-
-            for i in range(l, r + 1):
-                nums[i] = temp[i - l]
-        divide(0, len(nums) - 1)
-
-        diff = 0
-        for i in range(1, len(nums)):
-            diff = max(diff, nums[i] - nums[i - 1])
-
-        return diff
+        return ans
