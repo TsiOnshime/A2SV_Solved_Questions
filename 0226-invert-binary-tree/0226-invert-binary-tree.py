@@ -8,17 +8,15 @@ class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         
         if not root:
-            return None
-        q = deque()
+            return 
 
-        q.append(root)
-
-        while q:
-            node = q.popleft()
+        queue = deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
             node.left, node.right = node.right, node.left
-            if node.left:
-                q.append(node.left)
-            if node.right:
-                q.append(node.right)
-        
+            for neigh in [node.left, node.right]:
+                if neigh:
+                    queue.append(neigh)
+
         return root
