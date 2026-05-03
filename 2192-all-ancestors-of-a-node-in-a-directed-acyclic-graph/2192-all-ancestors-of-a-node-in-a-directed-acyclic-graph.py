@@ -1,29 +1,25 @@
 class Solution:
     def getAncestors(self, n: int, edges: List[List[int]]) -> List[List[int]]:
-        adj_list = defaultdict(list)
-        ancestor_list = [set() for i in range(n)]
-
+        adj = defaultdict(list)
+        ancestorList = []
         for u, v in edges:
-            adj_list[u].append(v)
-
-        def bfs(start):
-            queue = deque()
-            visited = set()
-            queue.append(start)
-            visited.add(start)
-
-            while queue:
-                node = queue.popleft()
-                for neigh in adj_list[node]:
-                    if neigh not in visited:
-                        visited.add(neigh)
-                        queue.append(neigh)
-                        ancestor_list[neigh].add(start)
-                
-
+            adj[v].append(u)
+        def dfs(start, visited):
+            visited[start] = 1
+            for neigh in adj[start]:
+                if not visited[neigh]:
+                    dfs(neigh, visited)
         for i in range(n):
-            bfs(i)
-        
-        return [sorted(list(s)) for s in ancestor_list]
+            visited = [0] * n
+            ancestors = []
+            dfs(i, visited)
 
-        
+            for j in range(n):
+                if j == i:
+                    continue
+                if visited[j]:
+                    ancestors.append(j)
+
+            ancestorList.append(ancestors)
+
+        return ancestorList
