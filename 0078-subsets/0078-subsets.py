@@ -1,19 +1,25 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        solution = []
-        state = []
-        def search(i):
-            if i >= len(nums):
-                solution.append(state.copy())
-                return
+        res = []
+        def is_valid(i):
+            if i == len(nums):
+                return True
+            return False
+
+        def get_candidates(i):
+            return [[], nums[i]]
             
-            # decision to include nums[i]
-            state.append(nums[i])
-            search(i + 1)
+        def search(i, subset):
+            nonlocal res
+            if is_valid(i):
+                res.append(subset.copy())
+                return
+            for candidate in get_candidates(i):
+                if candidate != []:
+                    subset.append(candidate)
+                search(i + 1, subset)
+            if subset:
+                subset.pop()
 
-            # decision not to include nums[i]
-            state.pop()
-            search(i + 1)
-
-        search(0)
-        return solution
+        search(0, [])
+        return res
