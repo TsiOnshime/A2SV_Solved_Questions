@@ -6,7 +6,6 @@ class Solution:
         directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
        
         def is_valid(r, c):
-           
             if 0 <= r < rows and 0<= c < cols and (r, c) not in visited and grid[r][c] == "1":
                 return True
             return False
@@ -16,7 +15,7 @@ class Solution:
             queue.append(start)
             visited.add(start)
             while queue:
-                cr, cc = queue.popleft()
+                cr, cc = queue.pop()
                 for dr, dc in directions:
                     nr, nc = cr + dr, cc + dc
                     if is_valid(nr, nc):
