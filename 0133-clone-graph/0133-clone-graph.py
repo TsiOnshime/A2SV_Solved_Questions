@@ -12,7 +12,6 @@ class Solution:
         if not node:
             return None
         oldNew = {node: Node(node.val)}
-
         queue = deque()
         queue.append(node)
 
@@ -22,6 +21,6 @@ class Solution:
                 if neigh not in oldNew:
                     oldNew[neigh] = Node(neigh.val)
                     queue.append(neigh)
-                oldNew[curr].neighbors.append(oldNew[neigh])
 
+                oldNew[curr].neighbors.append(oldNew[neigh])
         return oldNew[node]
