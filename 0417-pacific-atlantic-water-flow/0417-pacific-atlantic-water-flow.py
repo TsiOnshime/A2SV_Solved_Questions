@@ -1,52 +1,42 @@
 class Solution:
-    def pacificAtlantic(self, heights):
-    
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        rows, cols = len(heights), len(heights[0])
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        pacific = set()
+        atlantic = set()
         res = []
-        rows = len(heights)
-        cols = len(heights[0])
-        def dfs(start, pacific, atlantic, visited):
-            r,c = start
-            if r == 0 or c == 0:
-                pacific = True
-            if r == rows - 1 or c == cols - 1:
-                atlantic = True
-            if pacific and atlantic:
-                return True, True
-            
-            if start in visited:
-                return pacific, atlantic
 
-            visited.add(start)
-            if r - 1 in range(rows) and heights[r-1][c] <= heights[r][c]:
-                p,a = dfs((r - 1, c), pacific, atlantic, visited)
-                pacific = pacific or p
-                atlantic = atlantic or a
-            if r + 1 in range(rows) and heights[r + 1][c] <= heights[r][c]:
-                p, a = dfs((r + 1, c), pacific, atlantic, visited)
-                pacific = pacific or p
-                atlantic = atlantic or a
-            if c - 1 in range(cols) and heights[r][c - 1] <= heights[r][c]:
-                p, a = dfs((r, c - 1), pacific, atlantic, visited)
-                pacific = pacific or p
-                atlantic = atlantic or a
-            if c + 1 in range(cols) and heights[r][c + 1] <= heights[r][c]:
-                p, a = dfs((r, c + 1), pacific, atlantic, visited)
-                pacific = pacific or p
-                atlantic = atlantic or a
-            
-            return pacific, atlantic
+        def is_valid(neigh, parent, visited):
+            nr, nc = neigh
+            cr, cc = parent
+            if 0 <= nr < rows and 0 <= nc < cols and (nr, nc) not in visited and heights[nr][nc] >= heights[cr][cc]:
+                return True
+            return False
+        def bfs(r, c, visited):
+            if (r, c) in visited:
+                return 
+            queue = deque()
+            queue.append((r, c))
+            visited.add((r, c))
 
+            while queue:
+                cr, cc = queue.popleft()
+                for dr, dc in directions:
+                    nr, nc = dr + cr, dc + cc
+                    if is_valid((nr,nc), (cr, cc), visited):
+                        queue.append((nr,nc))
+                        visited.add((nr, nc))
+
+        for c in range(cols):
+            bfs(0, c, pacific)
+            bfs(rows - 1, c, atlantic)
+        for r in range(rows):
+            bfs(r, 0, pacific)
+            bfs(r, cols - 1, atlantic)
 
         for r in range(rows):
             for c in range(cols):
-                pacific = atlantic = False
-                visited = set()
-                pacific, atlantic = dfs((r,c), pacific, atlantic, visited)
-                if pacific and atlantic:
-                    res.append([r,c])
+                if (r, c) in pacific and (r, c) in atlantic:
+                    res.append([r, c])
 
         return res
-
-o = Solution()
-print(o.pacificAtlantic([[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]))
-
