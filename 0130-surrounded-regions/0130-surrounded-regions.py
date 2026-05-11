@@ -3,37 +3,39 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        rows, cols = len(board), len(board[0])
         visited = set()
-        def dfs(r, c):
-            rowInbounds = 0 <= r and r < rows
-            colInbounds = 0 <= c and c < cols
-            if not rowInbounds or not colInbounds:
+        rows, cols = len(board), len(board[0])
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        
+        def is_valid(r, c):
+            if 0 <= r < rows and 0 <= c < cols and (r, c) not in visited and board[r][c] == "O":
+                return True
+            return False
+        def bfs(r, c):
+            if board[r][c] != "O" or (r, c) in visited:
                 return
-            if board[r][c] == "X":
-                return 
-            if (r, c) in visited:
-                return 
             
+            queue = deque()
+            queue.append((r, c))
             visited.add((r, c))
 
-            dfs(r - 1, c)
-            dfs(r + 1, c)
-            dfs(r, c - 1)
-            dfs(r, c + 1)
+            while queue:
+                cr, cc = queue.popleft()
+                for dr, dc in directions:
+                    nr, nc = cr + dr, cc + dc
+                    if is_valid(nr, nc):
+                        queue.append((nr, nc))
+                        visited.add((nr, nc))
 
         for c in range(cols):
-            dfs(0, c)
-            dfs(rows - 1, c)
+            bfs(0, c)
+            bfs(rows - 1, c)
         for r in range(rows):
-            dfs(r, 0)
-            dfs(r, cols - 1)
+            bfs(r, 0)
+            bfs(r, cols -1)
 
         for r in range(rows):
             for c in range(cols):
-                if (r, c) not in visited and board[r][c] == "O":
+                if board[r][c] == "O" and (r, c) not in visited:
                     board[r][c] = "X"
-
-        
-
-        
+        return board
