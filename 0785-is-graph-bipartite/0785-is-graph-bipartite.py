@@ -1,28 +1,31 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        n = len(graph)
-        group = [-1] * n
+        visited = set()
 
-        def bfs(start, pg):
+        def bfs(start):
             queue = deque()
             queue.append(start)
-            group[start] = "A"
+        
+
+            group = {start: "A"}
 
             while queue:
                 node = queue.popleft()
                 for neigh in graph[node]:
-                    if group[neigh] == -1:
-                        group[neigh] = "A" if group[node] == "B" else "B"
+                    if neigh not in group:
+                        if group[node] == "A": group[neigh] = "B"
+                        else: group[neigh] = "A"
                         queue.append(neigh)
                     else:
-                        if group[neigh] == group[node]:
-                            return False
-            
-            return True
-        for i in range(n):
-            if group[i] == -1:
-                if not bfs(i, "A"):
-                    return False
 
+                        if group[node] == group[neigh]:
+                            return False
+            return True
+
+        truth = True
+        for i in range(len(graph)):
+            if len(graph[i]) > 0 and i not in visited:
+                truth = truth and bfs(i)
+                if not truth:
+                    return False
         return True
-        
