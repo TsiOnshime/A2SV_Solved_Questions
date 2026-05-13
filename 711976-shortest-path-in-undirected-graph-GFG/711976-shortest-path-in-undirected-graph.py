@@ -19,13 +19,13 @@ class Solution:
         
         while queue:
             node, dist = queue.popleft()
-            if res[node] != float('inf'):
-                for neigh in graph[node]:
-                    if neigh not in visited:
-                        new_dist = dist + 1
-                        res[neigh] = new_dist
-                        queue.append([neigh, new_dist])
-                        visited.add(neigh)
+            
+            for neigh in graph[node]:
+                if neigh not in visited:
+                    new_dist = dist + 1
+                    res[neigh] = new_dist
+                    queue.append([neigh, new_dist])
+                    visited.add(neigh)
                         
        
                 
