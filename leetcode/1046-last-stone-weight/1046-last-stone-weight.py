@@ -1,9 +1,9 @@
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
         stones = [-stones[i] for i in range(len(stones))]
-        print(stones)
+        
         heapq.heapify(stones)
-        print(stones)
+        
         while len(stones) > 1:
             first = abs(heapq.heappop(stones))
             second = abs(heapq.heappop(stones))
