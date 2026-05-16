@@ -10,27 +10,28 @@ class Node:
 
 class Solution:
     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if not head:
-            return None
-        stack = []
-        dummy = Node(0, None, head, [])
+        curr = head
 
-        while head:
-            if head.child:
-                temp = head.next
-                head.next = head.child
-                head.child.prev = head
-                head.child = None
-                if temp:
-                    stack.append(temp)
-            if head.next == None and stack:
-                head.next = stack.pop()
-                head.next.prev = head
+        while curr:
 
-            head = head.next
+            if curr.child:
+                tail = curr.child
 
-        return dummy.next
+                while tail.next:
+                    tail = tail.next
+                
+                tail.next = curr.next
+                if curr.next:
+                    curr.next.prev = tail
 
+                curr.next = curr.child
+                curr.child.prev = curr
+
+
+                curr.child = None
+
+            curr = curr.next
+        return head
 
 
 # Synced seamlessly with LeetHub Pro
