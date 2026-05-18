@@ -1,50 +1,46 @@
-class ListNode:
-    def __init__(self,key, value):
-        self.key, self.value = key, value
-        self.next, self.prev = None, None
+class Node:
+    def __init__(self, key=0, val=0, prev=None, next=None):
+        self.key = key
+        self.val = val
+        self.prev = prev
+        self.next = next
+
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self.left, self.right = ListNode(0, 0), ListNode(0, 0)
-        self.left.next, self.right.prev = self.right, self.left
-        self.cache = {}
-        self.k = 0
+        self.cache = {} # key: node
+        self.right = self.left = Node()
+        self.right.prev, self.left.next = self.left, self.right
         self.capacity = capacity
-        
+    
     def remove(self, node):
-
         prev, nxt = node.prev, node.next
         prev.next, nxt.prev = nxt, prev
-        self.k -= 1
 
     def insert(self, node):
         prev, nxt = self.right.prev, self.right
         prev.next, node.prev = node, prev
-        nxt.prev, node.next = node, nxt
-        self.k += 1
-        
+        self.right.prev, node.next = node, self.right
+
     def get(self, key: int) -> int:
         if key in self.cache:
             self.remove(self.cache[key])
             self.insert(self.cache[key])
-            return self.cache[key].value
+            return self.cache[key].val
         return -1
         
 
     def put(self, key: int, value: int) -> None:
         if key in self.cache:
             self.remove(self.cache[key])
-        
-        node = ListNode(key, value)
-        self.cache[key] = node
+        node = Node(key, value)
         self.insert(node)
+        self.cache[key] = node
 
-        if self.k > self.capacity:
+        if len(self.cache) > self.capacity:
             lru = self.left.next
             self.remove(lru)
             del self.cache[lru.key]
-
-
 
         
 
@@ -54,15 +50,6 @@ class LRUCache:
 # param_1 = obj.get(key)
 # obj.put(key,value)
 
-
-# key: value => hashmap
-
-# to maintain the lru and mru 
-# I would use linked list
-
-# key: node => key, val and pre, next
-# left : lru
-# right: mru
-# 4: 5, 6:5, 6:6, 7:6
-# <= left =><= 3,3 =><= 6,5 =><= right => 
-            #          prev=><=node=><=next
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
