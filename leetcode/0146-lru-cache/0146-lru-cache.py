@@ -9,7 +9,7 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.cache = {} # key: node
-        self.right = self.left = Node()
+        self.right, self.left = Node(), Node()
         self.right.prev, self.left.next = self.left, self.right
         self.capacity = capacity
     
