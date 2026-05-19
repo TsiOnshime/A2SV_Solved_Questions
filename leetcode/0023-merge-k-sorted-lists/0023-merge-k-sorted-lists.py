@@ -3,42 +3,27 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
-class Solution:    
+class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-
-        if not lists or len(lists) == 0:
-            return None
-
-        return self.divide(lists, 0, len(lists) - 1)
-    
-    def divide(self,lists, l, r):
-        if l > r:
-            return 
-        if l == r:
-            return lists[l]
+        min_heap = []
+        dummy = curr = ListNode()
         
-        mid = l + (r - l)//2
-        left = self.divide(lists, l, mid)
-        right = self.divide(lists, mid + 1, r)
+        for i in range(len(lists)):
+            if lists[i]:
+                heapq.heappush(min_heap, [lists[i].val, i, lists[i]])
 
-        return self.conquer(left, right)
-    
-    def conquer(self, l1, l2):
-        dummy = ListNode()
-        curr = dummy
+        while min_heap:
+            val, idx, node = heapq.heappop(min_heap)
+            curr.next = node
+            curr = node
+            lists[idx] = lists[idx].next
+            if lists[idx]:
+                heapq.heappush(min_heap, [lists[idx].val, idx, lists[idx]])
 
-        while l1 and l2:
-            if l1.val <= l2.val:
-                curr.next = l1
-                l1 = l1.next
-            else:
-                curr.next = l2
-                l2 = l2.next
-            curr = curr.next
-        if l1:
-            curr.next = l1
-        if l2:
-            curr.next = l2
         return dummy.next
-    
+
+        
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
