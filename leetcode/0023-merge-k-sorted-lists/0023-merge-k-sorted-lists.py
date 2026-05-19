@@ -5,24 +5,34 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        min_heap = []
+        if not lists:
+            return None
+        while len(lists) > 1:
+            mergedLists = []
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i + 1] if (i + 1) < len(lists) else None
+                mergedLists.append(self.merge(l1, l2))
+            lists = mergedLists
+        return lists[0]
+
+    def merge(self, l1, l2):
         dummy = curr = ListNode()
+
+        while l1 and l2:
+            if l1.val < l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+        if l1:
+            curr.next = l1
+        if l2:
+            curr.next = l2
         
-        for i in range(len(lists)):
-            if lists[i]:
-                heapq.heappush(min_heap, [lists[i].val, i, lists[i]])
-
-        while min_heap:
-            val, idx, node = heapq.heappop(min_heap)
-            curr.next = node
-            curr = node
-            lists[idx] = lists[idx].next
-            if lists[idx]:
-                heapq.heappush(min_heap, [lists[idx].val, idx, lists[idx]])
-
         return dummy.next
-
-        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
