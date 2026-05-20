@@ -1,32 +1,36 @@
+class HeapItem:
+    def __init__(self, word, count):
+        self.word = word
+        self.count = count
+    
+    def __lt__(self, to_compare):
+        if self.count == to_compare.count:
+            return self.word > to_compare.word
+        return self.count < to_compare.count
+
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
         word_count = Counter(words)
-        count_word = defaultdict(list)
+        heap = []
         res = []
-        min_heap = [] # to store the k highest frequencies
-
         for word, cnt in word_count.items():
-            count_word[cnt].append(word)
+            item = HeapItem(word, cnt)
+            if len(heap) < k:
+                heapq.heappush(heap,item)
+            else:
+                if not item < heap[0]:
+                    heapq.heappop(heap)
+                    heapq.heappush(heap, item)
 
-        for key in count_word.keys():
-            count_word[key].sort()
-            heapq.heappush(min_heap, key)
-            if len(min_heap) > k:
-                heapq.heappop(min_heap)
-        
-        min_heap = [-i for i in min_heap]
-        heapq.heapify(min_heap)
+        while k:
+            item = heapq.heappop(heap)
+            res.append(item.word)
+            k -= 1
 
-        while min_heap and len(res) < k:
-            cnt = heapq.heappop(min_heap)
-            for ws in count_word[-cnt]:
-                res.append(ws)
-                if len(res) == k:
-                    break
+        res = list(reversed(res))
         return res
-            
 
-        
+
         
 
 # Synced seamlessly with LeetHub Pro
