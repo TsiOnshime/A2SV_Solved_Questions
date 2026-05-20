@@ -1,29 +1,19 @@
 class Solution:
     def frequencySort(self, s: str) -> str:
-        # ascii values
-        # upper case = A - Z = 65 - 90
-        # lower case = a - z = 97 - 122
-        #  digits = 0 - 9 = 48 - 57
+        count = Counter(s) # char -> cnt
+        buckets = defaultdict(list) # freq -> [char]
 
-        counts = [[0, 0] for i in range(125)]
-        n = len(s)
-        for i in range(n):
-            idx = ord(s[i])
-            counts[idx][0] += 1
-            counts[idx][1] = i
+
+        for char, cnt in count.items():
+            buckets[cnt].append(char)
 
         res = []
-        counts.sort(key=lambda x: x[0], reverse=True)
-       
-        for i in range(len(counts)):
-            if counts[i][0] == 0:
-                break
-            freq, letter = counts[i]
-            letter = s[letter]
-            res.append(letter * freq)
+        for i in range(len(s), 0, -1):
+            for c in buckets[i]:
+                res.append(c * i)
 
-        res = "".join(res)
-        return res
+        return "".join(res)
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
