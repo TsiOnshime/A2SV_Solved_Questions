@@ -8,32 +8,22 @@ class Solution:
         for r in range(rows):
             for c in range(cols):
                 if grid[r][c] == "1" and (r, c) not in visited:
-                    self.explore(r, c, visited, directions, rows, cols, grid)
+                    self.explore(r, c, visited, rows, cols, directions, grid)
                     count += 1
-
         return count
 
-    def is_valid(self, r, c, rows, cols, visited, grid):
-        if 0 <= r < rows and 0 <= c < cols and (r, c) not in visited and grid[r][c] == "1": 
+    def is_valid(self, r, c, visited, rows, cols, grid):
+        if 0 <= r < rows and 0 <= c < cols and (r, c) not in visited and grid[r][c] == "1":
             return True
         return False
-
-
-    def explore(self, r, c, visited, directions, rows, cols, grid):
+    
+    def explore(self, r, c, visited, rows, cols, directions, grid):
+        if not self.is_valid(r, c, visited, rows, cols, grid):
+            return 
         visited.add((r, c))
-        queue = deque()
-        queue.append([r, c])
-
-        while queue:
-            cr, cc = queue.popleft()
-            for dr, dc in directions:
-                nr, nc = cr + dr, cc + dc
-                if self.is_valid(nr, nc, rows, cols, visited, grid):
-                    queue.append([nr, nc])
-                    visited.add((nr, nc))
-
-
-
+        for dr, dc in directions:
+            self.explore(r + dr, c + dc, visited, rows, cols, directions, grid)
+            
 
 
 
