@@ -9,39 +9,22 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if not head:
-            return None
-        curr = head
-        while curr:
-            newNode = Node(curr.val)
-            newNode.next = curr.next
-            curr.next = newNode
-            curr = newNode.next
-
-        # 7 => 7 => 13 => 13 => 11 => 11 => 4 => 4 => 10 => 10 => 1 => 1
-
-        # iterate through the merged list
-        curr = head
-        while curr:
-            curr.next.random = curr.random.next if curr.random else None
-            curr = curr.next.next
-
+        old_to_new = {None:None}
 
         curr = head
-        newHead = head.next
-        newcurr = newHead
-
         while curr:
-            curr.next = newcurr.next
+            old_to_new[curr] = Node(curr.val)
             curr = curr.next
-            if curr:
-                newcurr.next = curr.next
-                newcurr = newcurr.next
-        return newHead
+        curr = head
+       # {[7, 13, 1]: [7: 13, 1], [13, 11, 7]: [13, 11, 7], [11, 10, 1]: [11, 10, 1], [10, 1, 11]: [10, 1, 11], [1, None, 7]: [1, None, 7]}
 
-        
-            
+       
+        while curr:
+            old_to_new[curr].next = old_to_new[curr.next]
+            old_to_new[curr].random = old_to_new[curr.random]
+            curr = curr.next
+        return old_to_new[head]
 
-
-
-        
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
