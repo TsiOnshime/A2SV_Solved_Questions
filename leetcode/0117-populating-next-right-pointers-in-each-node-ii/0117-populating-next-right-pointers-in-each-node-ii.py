@@ -10,23 +10,21 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        
-        if not root:
-            return
+        hashMap = defaultdict(list)
 
-        queue = deque()
-        queue.append(root)
+        def dfs(root, level):
+            if not root:
+                return
+            
+            if hashMap[level]:
+                root.next = hashMap[level][-1]
+            
+            hashMap[level].append(root)
 
-        while queue:
-            n = len(queue)
-            for i in range(n):
-                node = queue.popleft()
-                if queue and i != n - 1:
-                    node.next = queue[0]
-                for neigh in [node.left, node.right]:
-                    if neigh:
-                        queue.append(neigh)
+            dfs(root.right, level + 1)
+            dfs(root.left, level + 1)
 
+        dfs(root, 0)
         return root
 
 # Synced seamlessly with LeetHub Pro
