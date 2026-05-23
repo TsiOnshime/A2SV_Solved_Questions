@@ -10,21 +10,25 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        hashMap = defaultdict(list)
+        curr = root
 
-        def dfs(root, level):
-            if not root:
-                return
-            
-            if hashMap[level]:
-                root.next = hashMap[level][-1]
-            
-            hashMap[level].append(root)
+        while curr:
+            dummy = Node()
+            tail = dummy
 
-            dfs(root.right, level + 1)
-            dfs(root.left, level + 1)
+            while curr:
 
-        dfs(root, 0)
+                if curr.left:
+                    tail.next = curr.left
+                    tail = tail.next
+                if curr.right:
+                    tail.next = curr.right
+                    tail = tail.next
+
+                curr = curr.next
+
+            curr = dummy.next
+
         return root
 
 # Synced seamlessly with LeetHub Pro
