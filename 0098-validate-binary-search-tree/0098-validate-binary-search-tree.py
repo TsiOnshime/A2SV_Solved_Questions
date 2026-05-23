@@ -6,16 +6,24 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        
-        def validate(root, minVal, maxVal):
-            if not root:
-                return True
-            
-            if root.val <= minVal or root.val >= maxVal:
+        leftBound, rightBound = float('-inf'), float('inf')
+        queue = deque()
+        queue.append([root, leftBound, rightBound])
+
+        while queue:
+            node, left, right = queue.popleft()
+
+            if node.val <= left or node.val >= right:
                 return False
-
             
-            return (validate(root.left, minVal, root.val) and validate(root.right, root.val, maxVal))
+            if node.left:
+                queue.append([node.left, left, node.val])
+            if node.right:
+                queue.append([node.right, node.val, right])
 
         
-        return validate(root, float('-inf'), float('inf'))
+        return True
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
