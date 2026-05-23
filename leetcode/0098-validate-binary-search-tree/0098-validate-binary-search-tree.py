@@ -6,20 +6,24 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
-        q = deque()
-        q.append([root, float('-inf'), float('inf')])
+        leftBound, rightBound = float('-inf'), float('inf')
+        queue = deque()
+        queue.append([root, leftBound, rightBound])
 
-        while q:
-            node, leftBound, rightBound = q.popleft()
+        while queue:
+            node, left, right = queue.popleft()
 
-            if node.val <= leftBound or node.val >= rightBound:
+            if node.val <= left or node.val >= right:
                 return False
             
             if node.left:
-                q.append([node.left, leftBound, node.val])
+                queue.append([node.left, left, node.val])
             if node.right:
-                q.append([node.right, node.val, rightBound])
+                queue.append([node.right, node.val, right])
 
+        
         return True
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
