@@ -1,29 +1,26 @@
 class Solution:
     def triangleNumber(self, nums: List[int]) -> int:
-        # find the first value for which a + b < c 
+        n = len(nums)
         count = 0
+        if len(nums) < 3:
+            return 0
+# 0, 1, 2
         nums.sort()
+        for i in range(n - 1, 1, -1):
+            left, right = 0, i - 1
 
-        def find(target, l, r):
+            while left <= right:
+                target = nums[i]
 
-            while l <= r:
-                mid = l + (r - l)//2
-
-                if nums[mid] < target:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-
-            return l
-
-
-        for i in range(len(nums) - 2):
-            for j in range(i + 1, len(nums) - 1):
-                target = nums[i] + nums[j]
-                k = find(target, j + 1, len(nums) - 1)
-                count += k - j - 1
+                if nums[left] + nums[right] > target:
+                    count += right - left
+                    right -= 1
+                else: 
+                    left += 1
 
         return count
+
+        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
