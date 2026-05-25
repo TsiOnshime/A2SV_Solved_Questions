@@ -1,16 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-# 9 - 2 = 7 
-# 9 - 7 = 2
-# 9 - 11 = -2
-
-        hashmap = {nums[i]: i for i in range(len(nums))}
-        print(hashmap)
+        self.index = {nums[i]: i for i in range(len(nums))}
 
         for i in range(len(nums)):
             complement = target - nums[i]
-            if complement in hashmap and i != hashmap[complement]:
-                return [i, hashmap[complement]]
-                
-            
+            if complement in self.index and i != self.index[complement]:
+                return [i, self.index[complement]]
 
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
