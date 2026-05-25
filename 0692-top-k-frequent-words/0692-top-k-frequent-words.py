@@ -1,22 +1,43 @@
+class HeapItem:
+    def __init__(self, word, count):
+        self.word = word
+        self.count = count
+    
+    def __lt__(self, to_compare):
+        if self.count == to_compare.count:
+            return self.word > to_compare.word
+        return self.count < to_compare.count
+
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        n = len(words)
-        word_count = Counter(words)
-        bucket = [[] for i in range(n + 1)]
+
+        word_freq = Counter(words)
+        heap = []
         res = []
+        for word, count in word_freq.items():
+            item = HeapItem(word, count)
+            if len(heap) < k:
+                heapq.heappush(heap, item)
+            else:
+                if not item < heap[0]:
+                    heapq.heappop(heap)
+                    heapq.heappush(heap, item)
 
-        for word, freq in word_count.items():
-            bucket[freq].append(word)
+        while heap:
+            res.append(heapq.heappop(heap).word)
 
-        for i in range(len(bucket)):
-            bucket[i].sort()
+        return list(reversed(res))
 
-        for i in range(n, -1, -1):
-            
-            for w in bucket[i]:
-                res.append(w)
-                if len(res) == k:
-                    return res
+        
+
+
+
+
+
+
+
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
