@@ -1,25 +1,22 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        longest = 1
-        length = 1
-
+        char_freq = defaultdict(int)
+        length = 0
         l = 0
-        r = 1
-        if len(s) == 0:
-            return 0
-        # if len(s) == 1:
-        #     return 1
-
-        while r < len(s):
-            s_counter = Counter(s[l:r+1])
-
-            if s_counter[s[r]] > 1:
+        # r = 3 l = 1
+        # abcabcbb
+        # {a: 1, b: 1, c: 1}
+        for r in range(len(s)):
+            char_freq[s[r]] += 1
+            while char_freq[s[r]] > 1:
+                char_freq[s[l]] -= 1
                 l += 1
-            else: 
-                length = len(s[l:r+1])
-                r += 1
+            length = max(length, r - l + 1)
 
-            longest = max(longest, length)
-        return longest
-            
+        return length
 
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
