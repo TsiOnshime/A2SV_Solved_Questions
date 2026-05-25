@@ -1,38 +1,42 @@
 class Solution:
     def lastRemaining(self, n: int) -> int:
-        # is all about mapping
-        # at any point our number should be in range [1 - n]
-        # so when we go from left to right we will always be left with even numbers since we start our elimination from odd number so the mapping could be 
-        #      valid element    current element
-        #           1               2
-        #           2               4
-        #           3               6
-        # to make our recurssion easier we will use the valid elements but when we come back to it we should map the valid elements to the actual elements and we do that by 2 * validElem
-
-        # when we go from right to left though things change since n could be odd or even
-        # if it is odd we will be left with the even elements for which we can simply use the earlier mapping 2 * validElem
-        # if it is even since we start eliminating from even numbers we will be left with odd numbers 
-        #      valid element        current element
-        #           1                   1
-        #           2                   3
-        #           3                   5
-
-        # to get the current element from the valid element we would have to do (2 * validElem) - 1
-        def last(n, left):
-            if n == 1:
-                return 1
-            
-            if left:
-                return 2 * last(n // 2, False)
-            else:
-                if n % 2:
-                    return 2 * last(n // 2, True)
-                else:
-                    return 2 * last(n // 2, True) - 1
+        # Iterative Solution
 
 
-        
-        return last(n, True)
+        # head -> first uneliminated number
+        # step -> gap between the uneliminated numbers
+        # remaining -> number of elements that are uneliminated
+        # left -> direction we're going
+
+
+        # when does head change?
+            # when we go from left to right since we always eliminate the first value
+            # when we go from right to left and the number of remaining elements is odd
+            # 2, 4, 6 => head was 2 but when we go from right to left we eliminate 6 and 2 -> so head changes to be 4
+            # 2, 4 => head is 2 when we go from right to left we eliminate 6 but we are still left with 2 head did not change
+
+        # by what value do we change head when it changes?
+        #   when head changes it changes to be the next element which is available and we find that by doing head += step
+
+        # at every loop step will be doubled
+        #               remaining elements will be halved
+
+
+        head = 1
+        remaining = n
+        step = 1
+        left = True
+
+        while remaining > 1:
+
+            if left or remaining % 2 == 1:
+                head += step
+
+            step *= 2
+            remaining //= 2
+            left = not left
+
+        return head
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
