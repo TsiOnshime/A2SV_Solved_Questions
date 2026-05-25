@@ -1,39 +1,39 @@
 class RandomizedSet:
 
     def __init__(self):
-        self.map = defaultdict(int)
-        self.list = []
+        self.sett = {}
+        self.arr = []
 
     def insert(self, val: int) -> bool:
-
-        if val in self.map:
+        if val in self.sett:
             return False
 
-        self.list.append(val)
-        self.map[val] = len(self.list) - 1
+        idx = len(self.arr)
 
+        self.sett[val] = idx
+        self.arr.append(val)
         return True
 
     def remove(self, val: int) -> bool:
-        if val not in self.map:
+        if val not in self.sett:
             return False
+        
+        idx = self.sett[val]
+        # when we are told to delete an element at 2, we swap it with the last element so it would be an O(1) for array
+        # [2, 3, 1, 6] val = 3          {2: 0, 3: 1, 1: 2, 6: 3}
+        # [2, 6, 1, 3] then pop()       {2: 0, 6: 1, 1: 2}
+        last_elem = self.arr[-1]
+        self.sett[last_elem] = idx
 
-        curr_val_index = self.map[val]
-
-
-        last_idx = len(self.list) - 1
-
-        self.map[self.list[last_idx]] = curr_val_index
-
-        self.list[curr_val_index], self.list[last_idx] = self.list[last_idx], self.list[curr_val_index]
-
-        self.list.pop()
-        del self.map[val]
+        self.arr[idx], self.arr[-1] = self.arr[-1], self.arr[idx]
+        self.arr.pop()
+        del self.sett[val]
         return True
+        
         
 
     def getRandom(self) -> int:
-        return random.choice(self.list)
+        return random.choice(self.arr)
         
 
 
@@ -42,3 +42,7 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
