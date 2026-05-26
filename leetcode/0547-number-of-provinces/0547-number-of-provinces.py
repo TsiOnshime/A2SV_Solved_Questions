@@ -1,43 +1,28 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        rows, cols = len(isConnected), len(isConnected[0])
-        parent = [i for i in range(rows)]
-        rank = [0] * rows
+        n = len(isConnected)
 
-        def find(node):
+        visited = set()
+        provinces = 0
 
-            if node != parent[node]:
-                parent[node] = find(parent[node])
-                node = parent[node]
-            return node
+        def bfs(start):
+            queue = deque([start])
+            visited.add(start)
 
-        
-        def union(a, b):
-            p1, p2 = find(a), find(b)
+            while queue:
+                curr = queue.popleft()
+                for i in range(n):
 
-            if p1 == p2:
-                return 0
+                    if i not in visited and isConnected[curr][i]== 1:
+                        queue.append(i)
+                        visited.add(i)
 
-            if rank[p1] == rank[p2]:
-                parent[p1] = p2
-                rank[p2] += 1
-            elif rank[p1] > rank[p2]:
-                parent[p2] = p1
-            else:
-                parent[p1] = p2
-
-            return 1
-        provinces = rows
-        for r in range(rows):
-            for c in range(cols):
-                if isConnected[r][c] == 1:
-                    provinces -= union(r, c)
+        for i in range(n):
+            if i not in visited:
+                bfs(i)
+                provinces += 1
 
         return provinces
-        
-
-
-
 
 
 # Synced seamlessly with LeetHub Pro
