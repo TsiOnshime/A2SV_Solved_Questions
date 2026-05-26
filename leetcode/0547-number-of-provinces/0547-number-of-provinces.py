@@ -6,7 +6,7 @@ class Solution:
 
         def find(node):
 
-            while node != parent[node]:
+            if node != parent[node]:
                 parent[node] = find(parent[node])
                 node = parent[node]
             return node
