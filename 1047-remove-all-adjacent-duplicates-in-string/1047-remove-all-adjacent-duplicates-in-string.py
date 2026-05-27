@@ -1,14 +1,18 @@
 class Solution:
     def removeDuplicates(self, s: str) -> str:
-        stack = [s[0]]
-        for i in range(1, len(s)):
-            if stack and s[i] == stack[-1]:
-                stack.pop()
-            else:
-                stack.append(s[i])
+        stack = []
 
+        for char in s:
+            while stack and stack[-1] == char:
+                stack.pop()
+                if not stack or stack[-1] != char:
+                    break
+            else:
+                stack.append(char)
+        
         return "".join(stack)
             
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
