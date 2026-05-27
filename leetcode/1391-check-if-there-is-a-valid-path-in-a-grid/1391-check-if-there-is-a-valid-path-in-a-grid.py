@@ -6,7 +6,8 @@ class UnionFind:
     def find(self,node):
         if node != self.parent[node]:
             self.parent[node] = self.find(self.parent[node])
-        return self.parent[node]
+            node = self.parent[node]
+        return node
 
     def union(self, u, v):
         p1, p2 = self.find(u), self.find(v)
