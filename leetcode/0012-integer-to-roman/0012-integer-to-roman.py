@@ -23,7 +23,7 @@ class Solution:
             freq = num // key
             if freq != 0:
                 rom.append(Int_Rom[key] * freq)
-            num %= key
+                num %= key
 
         return "".join(rom)
 
