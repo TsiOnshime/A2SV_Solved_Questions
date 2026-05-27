@@ -5,28 +5,23 @@
 #         self.next = next
 class Solution:
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or not head.next:
+        if not head:
             return head
 
+        
+        odd = head
         even = head.next
-        temp1 = even
-        temp2 = head
-# temp1 = 2 -> None temp2 = 1 -> 3
+        even_head = head.next
 
-        while temp1.next and temp2.next:
-            if temp1.next:
-                temp2.next = temp1.next
-                temp2 = temp2.next
-                temp1.next = None
-            if temp2.next:
-                temp1.next = temp2.next
-                temp1 = temp1.next
+        while even and even.next:
+            odd.next = even.next
+            odd = odd.next
 
-
-        temp2.next = even
+            even.next = odd.next
+            even = even.next
+        
+        odd.next = even_head
         return head
-
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
