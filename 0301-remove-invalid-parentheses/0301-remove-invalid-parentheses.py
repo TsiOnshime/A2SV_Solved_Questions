@@ -1,45 +1,45 @@
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
-        
-        self._max = -1
-        self.res  = set()
+        self.max_length = -1
+
+        self.res = set()
 
         self.dfs(s, 0, [], 0, 0)
 
         return list(self.res)
 
-    
-    def dfs(self, s, i, state, open_count, close_count):
-        if i == len(s):
-            if open_count == close_count:
-                char = "".join(state)
-                if len(char) > self._max:
-                    self._max = len(state)
-                    self.res = {char}
+    def dfs(self, word, i, state, o_count, c_count):
+        if i >= len(word):
+            if o_count == c_count:
+                if len(state) > self.max_length:
+                    self.max_length = len(state)
 
-                elif len(char) == self._max:
-                    self.res.add(char) 
+                    self.res = set()
+                    self.res.add("".join(state))
+                elif len(state) == self.max_length:
+                    self.res.add("".join(state))
 
-            return
+            return 
 
-        char = s[i]
-
+        char = word[i]
         if char == "(":
             state.append(char)
-            self.dfs(s, i + 1, state, open_count + 1, close_count)
+            self.dfs(word, i + 1, state, o_count + 1, c_count)
             state.pop()
-            self.dfs(s, i + 1, state, open_count, close_count)
-
+            self.dfs(word, i + 1, state, o_count, c_count)
         elif char == ")":
-            self.dfs(s, i + 1, state, open_count, close_count)
-            if open_count > close_count:
-                state.append(char)
-                self.dfs(s, i + 1, state, open_count, close_count + 1)
-                state.pop()
+            self.dfs(word, i + 1, state, o_count, c_count)
 
-        else:
+            if o_count > c_count:
                 state.append(char)
-                self.dfs(s, i + 1, state, open_count, close_count)
+                self.dfs(word, i + 1, state, o_count, c_count + 1)
                 state.pop()
-            
-                
+        else:
+            state.append(char)
+            self.dfs(word, i + 1, state, o_count, c_count)
+            state.pop()
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
