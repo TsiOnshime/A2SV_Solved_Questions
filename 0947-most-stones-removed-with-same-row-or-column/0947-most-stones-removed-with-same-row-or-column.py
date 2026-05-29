@@ -23,21 +23,29 @@ class UnionFind:
     
 class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
-        # [[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]
-        n = len(stones)
-        uf = UnionFind(n)
-        for i in range(n - 1):
-            for j in range(i + 1, n):
-                u = stones[i]
-                v = stones[j]
-                if u[0] == v[0] or u[1] == v[1]:
-                    uf.union(i, j)
-        roots = set()
+        max_row = 0
+        max_col = 0
+        for u, v in stones:
+            max_row = max(max_row, u)
+            max_col = max(max_col, v)
 
-        for i in range(n):
+        n = max_row + max_col + 2
+        # [0, 1, 2, 3, 4, 5, 6]
+        uf = UnionFind(n)
+        used = set()
+        def get_new_idx(c):
+            return c + max_row + 1
+        for u, v in stones:
+            new_col = get_new_idx(v)
+            uf.union(u, new_col)
+            used.add(u)
+            used.add(new_col)
+
+        roots = set()
+        for i in used:
             roots.add(uf.find(i))
 
-        return n - len(roots)
+        return len(stones) - len(roots)
         
 
         
