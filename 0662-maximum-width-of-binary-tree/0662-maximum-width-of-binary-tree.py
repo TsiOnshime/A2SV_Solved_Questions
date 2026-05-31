@@ -10,23 +10,31 @@ class Solution:
         queue = deque()
         queue.append([root, 0])
         r = l = 0
+        offset = 0
+
         while queue:
+            Found = False
             n = len(queue)
-            for i in range(n):
+            for _ in range(n):
                 node, idx = queue.popleft()
-                if i == 0:
+                if _ == 0:
                     l = idx
-                elif i == n - 1:
+                if _ == n - 1:
                     r = idx
-                
+                if not Found:
+                    offset = idx
+                    Found = True
                 if node.left:
-                    queue.append([node.left, 2 * idx + 1])
+                    i = (idx - offset) * 2 + 1
+                    queue.append([node.left, i])
                 if node.right:
-                    queue.append([node.right, 2 * idx + 2])
-
+                    i = (idx - offset) * 2 + 2
+                    queue.append([node.right, i])
             max_width = max(max_width, r - l + 1)
-
+        
         return max_width
+                
+
 
 
 # Synced seamlessly with LeetHub Pro
