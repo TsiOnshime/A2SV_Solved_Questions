@@ -1,19 +1,18 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        cache = {}
-        # without memoization
-        def climb(n):
-            if n == 1: return 1
-            if n == 2: return 2
-            if n in cache:
-                return cache[n]
+        if n == 1: return 1
+        if n == 2: return 2
 
-            val = climb(n - 1) + climb(n - 2)
-            cache[n] = val
+        ways = [1, 2]
+        curr = 3
+        i = 2
+        while curr != n:
+            way = ways[i - 1] + ways[i - 2]
+            ways.append(way)
+            i += 1
+            curr += 1
 
-            return val
-
-        return climb(n)
+        return ways[-1] + ways[-2]
 
 
 # Synced seamlessly with LeetHub Pro
