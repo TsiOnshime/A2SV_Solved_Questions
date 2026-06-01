@@ -10,7 +10,7 @@ class UnionFind:
     def union(self, u, v):
         p1, p2 = self.find(u), self.find(v)
         if p1 == p2:
-            return 
+            return True
         self.components -= 1
         if self.rank[p1] == self.rank[p2]:
             self.parent[p1] = p2
@@ -19,52 +19,32 @@ class UnionFind:
             self.parent[p2] = p1
         else:
             self.parent[p1] = p2
-
+        return False
 class Solution:
     def maxNumEdgesToRemove(self, n: int, edges: List[List[int]]) -> int:
-        alice = UnionFind(n) # type 1
-        bob = UnionFind(n) # type 2
-        edges.sort(reverse=True)
-        res = 0
-        edge_size = len(edges)
-        edge_idx = 0
-        while edge_idx < edge_size and edges[edge_idx][0] == 3: 
-            u, v = edges[edge_idx][1], edges[edge_idx][2]
-            p1, p2 = alice.find(u - 1), alice.find(v - 1)
-            if p1 == p2:
-                res += 1
-            else:
-                alice.union(u - 1, v - 1)
-                bob.union(u - 1, v - 1)
-            edge_idx += 1
-        
-        while edge_idx < edge_size and edges[edge_idx][0] == 2:
-            u, v = edges[edge_idx][1], edges[edge_idx][2]
-            p1, p2 = bob.find(u - 1), bob.find(v - 1)
-            if p1 == p2:
-                res += 1
-            else:
-                bob.union(u - 1, v - 1)
-            edge_idx += 1
+        bob = UnionFind(n)
+        alice = UnionFind(n)
+        remove = 0
+        edges.sort(reverse = True)
+        for edge in edges:
+            typ, u, v = edge
+            if typ == 3:
+                b = bob.union(u - 1, v - 1)
+                a = alice.union(u - 1, v - 1)
 
-        while edge_idx < edge_size and edges[edge_idx][0] == 1:
-            u, v = edges[edge_idx][1], edges[edge_idx][2]
-            p1, p2 = alice.find(u - 1), alice.find(v - 1)
-            if p1 == p2:
-                res += 1
-            else:
-                alice.union(u - 1, v - 1)
-            edge_idx += 1
+                if b and a:
+                    remove += 1
 
+            elif typ == 2:
+                if bob.union(u - 1, v - 1):
+                    remove += 1
+            else:
+                if alice.union(u - 1, v - 1):
+                    remove += 1
 
         if bob.components != 1 or alice.components != 1:
             return -1
-        
-        return res
-
-        
-
-
+        return remove
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
