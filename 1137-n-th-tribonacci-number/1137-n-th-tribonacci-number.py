@@ -1,17 +1,16 @@
 class Solution:
     def tribonacci(self, n: int) -> int:
-        cache = {}
-        def triSum(n):
-            if n == 0: return 0
-            if n == 1: return 1
-            if n == 2: return 1
-            if n in cache: return cache[n]
+        if n == 0:
+            return 0
+        if n <= 2:
+            return 1
 
-            val = triSum(n - 3) + triSum(n - 2) + triSum(n - 1)
-            cache[n] = val
-            return val
-        
-        return triSum(n)
+        t1, t2, t3 = 0, 1, 1
+
+        for i in range(3, n + 1):
+            t1, t2, t3 = t2, t3, t1 + t2 + t3
+
+        return t3
 
 
 # Synced seamlessly with LeetHub Pro
