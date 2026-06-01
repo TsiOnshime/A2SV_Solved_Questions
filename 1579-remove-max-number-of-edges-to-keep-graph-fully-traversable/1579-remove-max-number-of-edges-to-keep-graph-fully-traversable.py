@@ -25,20 +25,23 @@ class Solution:
         bob = UnionFind(n)
         alice = UnionFind(n)
         remove = 0
-        edges.sort(reverse = True)
+        
         for edge in edges:
             typ, u, v = edge
             if typ == 3:
                 b = bob.union(u - 1, v - 1)
                 a = alice.union(u - 1, v - 1)
-
                 if b and a:
                     remove += 1
 
-            elif typ == 2:
+        for edge in edges:
+            typ, u, v = edge
+            if typ == 2:
                 if bob.union(u - 1, v - 1):
                     remove += 1
-            else:
+        for edge in edges:
+            typ, u, v = edge
+            if typ == 1:
                 if alice.union(u - 1, v - 1):
                     remove += 1
 
