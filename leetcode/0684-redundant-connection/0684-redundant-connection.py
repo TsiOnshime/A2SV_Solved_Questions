@@ -1,33 +1,36 @@
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+        self.rank = [0] * n
+    def find(self, node):
+        if node != self.parent[node]:
+            self.parent[node] = self.find(self.parent[node])
+        return self.parent[node]
+    def union(self, u, v):
+        p1, p2 = self.find(u), self.find(v)
+        if p1 == p2:
+            return True
+        
+        if self.rank[p1] == self.rank[p2]:
+            self.parent[p1] = p2
+            self.rank[p2] += 1
+        elif self.rank[p1] > self.rank[p2]:
+            self.parent[p2] = p1
+        else:
+            self.parent[p1] = p2
+        return False
+
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        # I'll go through the edges connecting them if they are already connected I'd set the ans to be that edge and return 
         n = len(edges)
-        parent = [i for i in range(n)]
-        rank = [0] * n
+        uf = UnionFind(n)
         res = []
-        def find(node):
-            if node != parent[node]:
-                parent[node] = find(parent[node])
-            return parent[node]
-        def union(u, v):
-            nonlocal res
-            p1, p2 = find(u), find(v)
-
-            if p1 == p2:
-                res = [u + 1, v + 1]
-                return 
-
-            if rank[p1] == rank[p2]:
-                parent[p1] = p2
-                rank[p2] += 1
-            elif rank[p1] > rank[p2]:
-                parent[p2] = p1
-            else:
-                parent[p1] = p2
-
         for u, v in edges:
-            union(u - 1, v - 1)
+            if uf.union(u - 1, v - 1):
+                res = [u, v]
+            
         return res
+        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
