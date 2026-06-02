@@ -1,17 +1,17 @@
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
+        queue = deque()
 
-        def helper(n, k):
-            if n == 1:
-                return 0
-            
-            return (helper(n - 1, k) + k) % n
+        for i in range(n):
+            queue.append(i)
 
-        return helper(n, k) + 1
+        while len(queue) > 1:
+            for i in range(k - 1):
+                val = queue.popleft()
+                queue.append(val)
+            queue.popleft()
+        return queue[0] + 1
 
-            
-                 
-
-
-
-                
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
