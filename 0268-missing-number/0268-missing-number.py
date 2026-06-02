@@ -1,17 +1,20 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        count = {}
-        for i in nums:
-            if i not in count:
-                count[i] = 1
-            else:
-                count[i] += 1
-        
-        for i in range(len(nums)):
-            if i not in count:
+        i = 0
+        n = len(nums)
+# [0,1,2,3,4,5,6,9,7]
+#                  i 
+        while i < n:
+            while i < n and nums[i] < n and nums[i] != i:
+                temp = nums[i]
+                nums[i], nums[temp] = nums[temp], nums[i]
+            i += 1
+
+        for i in range(n):
+            if nums[i] != i:
                 return i
 
-        return len(nums)
+        return n
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
