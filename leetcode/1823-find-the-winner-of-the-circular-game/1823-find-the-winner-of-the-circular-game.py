@@ -1,16 +1,12 @@
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        queue = deque()
+        def helper(n, k):
+            if n == 0:
+                return 0
 
-        for i in range(n):
-            queue.append(i)
+            return (helper(n - 1, k) + k) % n
 
-        while len(queue) > 1:
-            for i in range(k - 1):
-                val = queue.popleft()
-                queue.append(val)
-            queue.popleft()
-        return queue[0] + 1
+        return helper(n,k) + 1
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
