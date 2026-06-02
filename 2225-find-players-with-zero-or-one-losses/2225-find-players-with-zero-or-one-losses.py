@@ -1,26 +1,26 @@
 class Solution:
     def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
-        loss_count = defaultdict(int)
-
+        losers_count = {}
+        winners = set()
+        losers = set()
         for w, l in matches:
-            loss_count[l] += 1
-            loss_count[w] += 0
-        
-        answer = []
-        zero_losses = []
-        one_losses = []
-        for player, cnt in loss_count.items():
-            if cnt == 0:
-                zero_losses.append(player)
-            elif cnt == 1:
-                one_losses.append(player)
-        
-        zero_losses.sort()
-        one_losses.sort()
-        answer.append(zero_losses)
-        answer.append(one_losses)
+            if l not in losers_count:
+                losers_count[l] = 1
+            else:
+                losers_count[l] += 1
+        print(losers_count)
+        for w, l in matches:
+            if w not in losers_count:
+                winners.add(w)
 
-        return answer
+            if losers_count[l] == 1:
+                losers.add(l)
+
+        WinnersList = sorted(list(winners))
+        LosersList = sorted(list(losers))
+
+        return [WinnersList, LosersList]
+                
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
