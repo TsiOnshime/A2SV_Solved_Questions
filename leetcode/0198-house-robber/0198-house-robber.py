@@ -1,19 +1,27 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        if len(nums) <= 2:
-            return max(nums)
+        
+        dp = [-1] * len(nums)
+        def robbery(i):
+            if i == 0:
+                return nums[i]
+            if i == 1:
+                return max(nums[0], nums[1])
+            if dp[i] != -1:
+                return dp[i]
 
-# [6,3,10,8,2,10,3,5,10,5,3]
-#                         i
-# h1 = 36, h2 = 37
-# h1 = 6, 
-        h1, h2 = nums[0], max(nums[0], nums[1])
+            pick = nums[i] + robbery(i - 2)
+            noPick = robbery(i - 1)
 
-        for i in range(2, len(nums)):
-  
-            h1, h2 = h2, max(h2, h1 + nums[i])
+            val = max(pick, noPick)
 
-        return h2
+            dp[i] = val
+
+            return val
+
+
+        
+        return robbery(len(nums) - 1)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
