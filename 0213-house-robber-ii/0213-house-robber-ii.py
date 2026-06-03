@@ -3,24 +3,37 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
 
-        def robbery(start, end):
-
-            if (start - end + 1) == 1:
+        def robbery(start, end, dp):
+            if end <= start:
                 return nums[start]
-            prev2 = nums[start]
-            prev = max(nums[start + 1], nums[start])
+            if end == start + 1:
+                return max(nums[start], nums[end])
 
-            for i in range(start + 2, end + 1):
-                curr = max(prev, nums[i] + prev2)
-                prev2, prev = prev, curr
+            if dp[end] != -1:
+                return dp[end]
 
-            return prev
+            take = nums[end] + robbery(start, end - 2, dp)
+            notake = robbery(start, end - 1, dp)
+
+            val = max(take, notake)
+
+            dp[end] = val
+
+            return val
 
 
 
-        _max = max(robbery(0, len(nums) - 2), robbery(1, len(nums) - 1))
+        for i in range(2):
+            dp = [-1] * len(nums)
+            if i == 0:
+                _max = robbery(0, len(nums) - 2, dp)
+                print(_max)
+            else:
+                _max = max(_max, robbery(1, len(nums) - 1, dp))
 
         return _max
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
