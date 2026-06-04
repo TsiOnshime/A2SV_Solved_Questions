@@ -1,5 +1,6 @@
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        # how many possible paths are there from (i, j) to (m - 1, n - 1)
         m, n = len(obstacleGrid), len(obstacleGrid[0])
         def path(i, j):
             if i >= m or j >= n:
@@ -8,7 +9,6 @@ class Solution:
                 return 0
             if i == m - 1 and j == n - 1:
                 return 1
- 
             if memo[i][j] != -1:
                 return memo[i][j]
             val = path(i + 1, j) + path(i, j + 1)
