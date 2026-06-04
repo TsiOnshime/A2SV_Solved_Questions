@@ -1,24 +1,27 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        dp = [[-1] * n for i in range(m)]
-        print(dp)
-        def paths(i, j):
+        # down = m - 1
+        # left = n - 1
+        # total moves = n - 1 + m - 1 = n + m - 2
 
-            if i >= m or j >= n:
-                return 0
-            if i == m - 1 and j == n - 1:
-                return 1
-            if dp[i][j] != -1:
-                return dp[i][j]
+        # c(total, min(down, left))
 
-            val = paths(i + 1, j) + paths(i, j + 1)
-            dp[i][j] = val
-            return val
+        #   6 * 5  
+        #   _____
+        #   2 * 1
 
+        ans = 1
 
+        total = n + m - 2
+        choose = min(m - 1, n - 1)
 
-        return paths(0, 0)
-        
+        for i in range(1, choose + 1):
+            numerator = total - choose + i
+            ans *= numerator
+            ans //= i
+
+        return ans
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
