@@ -1,15 +1,24 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        cols = [1] * m
+        dp = [[-1] * n for i in range(m)]
+        print(dp)
+        def paths(i, j):
 
-        for i in range(1, n):
-            for j in range(1, m):
-                cols[j] = cols[j] + cols[j - 1]
+            if i >= m or j >= n:
+                return 0
+            if i == m - 1 and j == n - 1:
+                return 1
+            if dp[i][j] != -1:
+                return dp[i][j]
 
+            val = paths(i + 1, j) + paths(i, j + 1)
+            dp[i][j] = val
+            return val
+
+
+
+        return paths(0, 0)
         
-        return cols[-1]
-
-        # [1, 1, 1]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
