@@ -1,24 +1,28 @@
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
-        def path(i, j):
-            if i >= m or j >= n:
-                return float('inf')
-            if i == m - 1 and j == n - 1:
-                return grid[i][j]
-            
-            if dp[i][j] != -1:
-                return dp[i][j]
-            
-            down = grid[i][j] + path(i + 1, j)
-            right = grid[i][j] + path(i, j + 1)
-            val = min(down, right)
-            dp[i][j] = val
 
-            return val
+        dp = [0] * n
+    #l = 8 , u = 6
+        # [6, 8, 7]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[i] = grid[i][j]
+                else:
+                    left = float('inf')
+                    up = float('inf')
 
-        dp = [[-1] * n for i in range(m)]
-        return path(0, 0)
+                    if j - 1 >= 0:
+                        left = dp[j - 1]
+                    if i - 1 >= 0:
+                        up = dp[j]
+                    val = min(left, up)
+                    dp[j] = val + grid[i][j]
+
+        return dp[-1]
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
