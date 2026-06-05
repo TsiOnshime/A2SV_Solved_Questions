@@ -1,30 +1,30 @@
 class Solution:
     def minFallingPathSum(self, matrix: List[List[int]]) -> int:
-        # top down
         rows, cols = len(matrix), len(matrix[0])
-        _min = float('inf')
-        dp = [[float('inf')]* cols for r in range(rows)]
-        def pathSum(i, j):
-            if j < 0 or j >= cols:
-                return float('inf')
-            if i == rows - 1:
-                return matrix[i][j]
-            if dp[i][j] != float('inf'):
-                return dp[i][j]
-            down = matrix[i][j] + pathSum(i + 1, j)
-            downleft = matrix[i][j] + pathSum(i + 1, j - 1)
-            downright = matrix[i][j] + pathSum(i + 1, j + 1)
-
-            val = min(down, downleft, downright)
-
-            dp[i][j] = val
-
-            return val
+        dp = [[float('inf')]*cols for r in range(rows)]
 
         for i in range(cols):
-            _min = min(_min, pathSum(0, i))
+            dp[rows - 1][i] = matrix[rows - 1][i]
 
-        return _min
+
+        for i in range(rows - 2, -1, -1):
+            for j in range(cols):
+                down = dp[i + 1][j]
+                downleft = float('inf')
+                downright = float('inf')
+
+                if j - 1 >= 0:
+                    downleft = dp[i + 1][j - 1]
+                if j + 1 < cols:
+                    downright = dp[i + 1][j + 1]
+
+                val = min(down, downleft, downright)
+
+                dp[i][j] = val + matrix[i][j]
+
+        return min(dp[0])
+
+                
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
