@@ -10,6 +10,7 @@ class Solution:
                 if j1 == j2:
                     return grid[i][j1]
                 return grid[i][j1] + grid[i][j2]
+            
             if dp[i][j1][j2] != float('-inf'):
                 return dp[i][j1][j2]
 
@@ -27,4 +28,4 @@ class Solution:
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
