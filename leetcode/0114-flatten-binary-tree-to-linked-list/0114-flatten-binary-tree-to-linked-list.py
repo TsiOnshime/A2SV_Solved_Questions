@@ -9,24 +9,23 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        def dfs(root):
+        prev = None
+        def preOrder(root):
+            nonlocal prev
             if not root:
-                return
+                return 
 
-            leftTail = dfs(root.left)
-            rightTail = dfs(root.right)
+            preOrder(root.right)
+            preOrder(root.left)
 
-            if leftTail:
-                leftTail.right = root.right
-                root.right = root.left
-                root.left = None
+            root.right = prev
+            root.left = None
+            prev = root
 
-            last = rightTail or leftTail or root
+        preOrder(root)
 
-            return last
 
-        dfs(root)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
