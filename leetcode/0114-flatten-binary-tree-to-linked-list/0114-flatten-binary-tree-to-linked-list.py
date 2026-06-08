@@ -9,21 +9,26 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        prev = None
-        def preOrder(root):
-            nonlocal prev
-            if not root:
-                return 
+        if not root:
+            return []
+        stack = []
+        stack.append(root)
+        while stack:
+            curr = stack.pop()
 
-            preOrder(root.right)
-            preOrder(root.left)
+            if curr.right:
+                stack.append(curr.right)
+            if curr.left:
+                stack.append(curr.left)
+            if stack:
+                curr.right = stack[-1]
+            curr.left = None
 
-            root.right = prev
-            root.left = None
-            prev = root
-
-        preOrder(root)
-
+        
+# [1]
+# curr = 1, stack = [5, 2]
+# 
+#
 
 
 # Synced seamlessly with LeetHub Pro
