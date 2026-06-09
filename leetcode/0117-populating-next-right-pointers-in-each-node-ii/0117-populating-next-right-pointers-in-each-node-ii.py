@@ -11,10 +11,9 @@ class Node:
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
         curr = root
-
         while curr:
-            dummy = Node(0)
-            temp = dummy
+            dummy = Node()
+            temp = dummy 
             while curr:
                 if curr.left:
                     temp.next = curr.left
@@ -24,7 +23,7 @@ class Solution:
                     temp = temp.next
                 curr = curr.next
             curr = dummy.next
-        
+
         return root
 
 # Synced seamlessly with LeetHub Pro
