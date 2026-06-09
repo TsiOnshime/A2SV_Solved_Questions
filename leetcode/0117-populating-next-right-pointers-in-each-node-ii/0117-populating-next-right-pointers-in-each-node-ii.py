@@ -10,22 +10,21 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        if not root:
-            return 
-        queue = deque()
-        queue.append(root)
-# queue = [2, 3], n = 2
-        while queue:
-            n = len(queue)
-            for i in range(n):
-                node = queue.popleft()
-                if i != n - 1 and queue:
-                    node.next = queue[0]
+        curr = root
 
-                for neigh in [node.left, node.right]:
-                    if neigh:
-                        queue.append(neigh)
-
+        while curr:
+            dummy = Node(0)
+            temp = dummy
+            while curr:
+                if curr.left:
+                    temp.next = curr.left
+                    temp = temp.next
+                if curr.right:
+                    temp.next = curr.right
+                    temp = temp.next
+                curr = curr.next
+            curr = dummy.next
+        
         return root
 
 # Synced seamlessly with LeetHub Pro
