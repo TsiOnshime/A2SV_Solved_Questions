@@ -11,24 +11,19 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
-            return
-        queue = deque()
-        queue.append(root)
+            return 
+        curr, nxt = root, root.left
 
-        while queue:
-            n = len(queue)
-            for i in range(n):
-                node = queue.popleft()
-                if i != n - 1 and queue:
-                    node.next = queue[0]
-                for neigh in [node.left, node.right]:
-                    if neigh:
-                        queue.append(neigh)
-        
+        while curr and nxt:
+            curr.left.next = curr.right
+            if curr.next:
+                curr.right.next = curr.next.left
+                curr = curr.next
+            else:
+                curr= nxt
+                nxt = curr.left
+
         return root
-        
-
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
