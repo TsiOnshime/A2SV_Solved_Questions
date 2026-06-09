@@ -10,25 +10,26 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        curr = root
+        if not root:
+            return
+        queue = deque()
+        queue.append(root)
 
-        while curr:
-            dummy = ListNode()
-            tail = dummy
-
-            while curr:
-
-                if curr.left:
-                    tail.next = curr.left
-                    tail = tail.next
-                if curr.right:
-                    tail.next = curr.right
-                    tail = tail.next
-                
-                curr = curr.next
-            curr = dummy.next
+        while queue:
+            n = len(queue)
+            for i in range(n):
+                node = queue.popleft()
+                if i != n - 1 and queue:
+                    node.next = queue[0]
+                for neigh in [node.left, node.right]:
+                    if neigh:
+                        queue.append(neigh)
+        
         return root
+        
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
