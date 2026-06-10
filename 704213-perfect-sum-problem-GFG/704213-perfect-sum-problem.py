@@ -9,7 +9,7 @@ class Solution:
         dp[len(arr)][target] = 1
             
         for i in range(len(arr) - 1, -1, -1):
-            for j in range(target, -1, -1):
+            for j in range(target + 1):
                 notake = dp[i + 1][j]
                 take = 0
                 if j + arr[i] <= target:
