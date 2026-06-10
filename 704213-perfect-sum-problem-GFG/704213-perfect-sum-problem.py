@@ -3,21 +3,31 @@ class Solution:
 	def perfectSum(self, arr, target):
 
 
-		dp = [[0] * (target + 1) for i in range(len(arr) + 1)]
+		front= [0] * (target + 1) 
 
     
-        dp[len(arr)][target] = 1
-            
+        front[target] = 1
+        curr = [0] * (target + 1)
         for i in range(len(arr) - 1, -1, -1):
             for j in range(target + 1):
-                notake = dp[i + 1][j]
+                notake = front[j]
                 take = 0
                 if j + arr[i] <= target:
-                    take = dp[i + 1][j + arr[i]]
-                dp[i][j] = take + notake
+                    take = front[j + arr[i]]
+                curr[j] = take + notake
                 
-                
-        return dp[0][0]
+            front = curr.copy()
+        return front[0]
+        
+#         arr = [1,2,3]
+# target = 4
+
+#         0 1 2 3 4
+
+# i=0    ? ? ? ? ?
+# i=1    ? ? ? ? ?
+# i=2    ? ? ? ? 1
+# i=3    0 0 0 0 1
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
