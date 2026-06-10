@@ -3,31 +3,21 @@ class Solution:
 	def perfectSum(self, arr, target):
 
 
-		dp = [[-1] * (target + 1) for i in range(len(arr))]
-		def countSubsets(i, _sum):
-		    nonlocal dp
-		    if _sum > target:
-		        return 0
-            if i == len(arr):
-                return 1 if _sum == target else 0
+		dp = [[0] * (target + 1) for i in range(len(arr) + 1)]
+
+    
+        dp[len(arr)][target] = 1
             
-            if dp[i][_sum] != -1:
-                return dp[i][_sum]
+        for i in range(len(arr) - 1, -1, -1):
+            for j in range(target, -1, -1):
+                notake = dp[i + 1][j]
+                take = 0
+                if j + arr[i] <= target:
+                    take = dp[i + 1][j + arr[i]]
+                dp[i][j] = take + notake
                 
-            
-            num = arr[i]
-            
-            take = countSubsets(i + 1, _sum + num)
-            notake = countSubsets(i + 1, _sum)
-            
-            val = take + notake
-            
-            dp[i][_sum] = val
-            return val
-            
-            
-        return countSubsets(0, 0)
-        
+                
+        return dp[0][0]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
