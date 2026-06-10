@@ -2,24 +2,26 @@
 class Solution:
 	def perfectSum(self, arr, target):
 	    n = len(arr)
-	    dp = [[0] * (target + 1) for i in range(n)]
+	    prev = [0] * (target + 1)
         
         if arr[0] == 0:
-            dp[0][0] = 2
+            prev[0] = 2
         else:
-            dp[0][0] = 1
+            prev[0] = 1
         
         if arr[0] != 0 and arr[0] <= target:
-            dp[0][arr[0]] = 1
-	    
+            prev[arr[0]] = 1
+	    curr = [0] * (target + 1)
 	    for i in range(1, n):
 	        for j in range(target + 1):
-	            notake = dp[i - 1][j]
+	            notake = prev[j]
 	            take = 0
 	            if arr[i] <= j:
-	                take = dp[i- 1][j - arr[i]]
-	            dp[i][j] = take + notake
-	    return dp[n - 1][target]
+	                take = prev[j - arr[i]]
+	            curr[j] = take + notake
+	            
+	        prev = curr.copy()
+	    return prev[target]
 	    
         
 #         arr = [1,2,3]
