@@ -12,25 +12,27 @@ class Solution:
             return 0
         n = len(arr)
         target = (total - diff) // 2
-        dp = [[0] * (target + 1) for i in range(n)]
-        
+        prev = [0] * (target + 1)
+        curr = [0] * (target + 1)
         if arr[0] == 0:
-            dp[0][0] = 2
+            prev[0] = 2
         else:
-            dp[0][0] = 1
+            prev[0] = 1
             
         if arr[0] != 0 and arr[0] <= target:
-            dp[0][arr[0]] = 1
+            prev[arr[0]] = 1
             
         for i in range(1, n):
             for t in range(target + 1):
-                notake = dp[i - 1][t]
+                notake = prev[t]
                 take = 0 
                 if arr[i] <= t:
-                    take = dp[i - 1][t - arr[i]]
-                dp[i][t] = take + notake
+                    take = prev[t - arr[i]]
+                curr[t] = take + notake
                 
-        return dp[n - 1][target]
+            prev = curr.copy()
+                
+        return prev[target]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
