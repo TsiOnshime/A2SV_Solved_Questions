@@ -1,23 +1,32 @@
 #User function Template for python3
 class Solution:
 	def perfectSum(self, arr, target):
+	    n = len(arr)
+	    dp = [[-1] * (target + 1) for i in range(n)]
+	    def countSubset(i, target):
+	        nonlocal dp
 
+	        if i == 0:
+                if target == 0 and arr[0] == 0:
+	                return 2
+	            if arr[0] == target:
+	                return 1
+	            if target == 0:
+	                return 1
+	            return 0
+	        if dp[i][target] != -1:
+	            return dp[i][target]
+	        
+            notake = countSubset(i - 1, target)
+            take = 0
+            if arr[i] <= target:
+                take = countSubset(i - 1, target - arr[i])
+            dp[i][target] = take + notake
+            return take + notake
+            
 
-		front= [0] * (target + 1) 
+        return countSubset(n - 1, target)
 
-    
-        front[target] = 1
-        curr = [0] * (target + 1)
-        for i in range(len(arr) - 1, -1, -1):
-            for j in range(target + 1):
-                notake = front[j]
-                take = 0
-                if j + arr[i] <= target:
-                    take = front[j + arr[i]]
-                curr[j] = take + notake
-                
-            front = curr.copy()
-        return front[0]
         
 #         arr = [1,2,3]
 # target = 4
