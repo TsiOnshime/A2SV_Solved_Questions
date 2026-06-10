@@ -1,26 +1,18 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        if len(s) == 1:
-            return s in wordDict
-        queue = deque()
-        queue.append(0)
-        wordDict = set(wordDict)
-        visited = set()
-        
-        while queue:
-            start = queue.popleft()
+        dp = [False] * (len(s) + 1)
+        dp[len(s)] = True
 
-            if start == len(s):
-                return True
-            visited.add(start)
+        for i in range(len(s) -1, -1, -1):
+            for w in wordDict:
+                if i + len(w) <= len(s) and s[i:i + len(w)] == w:
+                    dp[i] = dp[i + len(w)]
 
-            for end in range(start + 1, len(s) + 1):
-                word = s[start:end]
-                if word in wordDict and end not in visited:
-                    queue.append(end)
-                    visited.add(end)
-        # queue = [0], visited = {}, start = 0, end = 
-        return False
+                if dp[i] == True:
+                    break
+
+        return dp[0]
+                
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
