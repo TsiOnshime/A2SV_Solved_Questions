@@ -12,26 +12,25 @@ class Solution:
             return 0
         n = len(arr)
         target = (total - diff) // 2
-        dp = [[-1] * (target + 1) for i in range(n)]
-        def countSubset(i, target):
-            if i == 0:
-                if target == 0 and arr[i] == 0:
-                    return 2
-                if target == 0 or arr[i] == target:
-                    return 1
-                return 0
-            if dp[i][target] != -1:
-                return dp[i][target]
+        dp = [[0] * (target + 1) for i in range(n)]
+        
+        if arr[0] == 0:
+            dp[0][0] = 2
+        else:
+            dp[0][0] = 1
             
-            notake = countSubset(i - 1, target)
-            take = 0
-            if target >= arr[i]:
-                take = countSubset(i - 1, target - arr[i])
-            val = notake + take
-            dp[i][target] = val
-            return val
+        if arr[0] != 0 and arr[0] <= target:
+            dp[0][arr[0]] = 1
             
-        return countSubset(n - 1, target)
+        for i in range(1, n):
+            for t in range(target + 1):
+                notake = dp[i - 1][t]
+                take = 0 
+                if arr[i] <= t:
+                    take = dp[i - 1][t - arr[i]]
+                dp[i][t] = take + notake
+                
+        return dp[n - 1][target]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
