@@ -4,7 +4,7 @@ class Solution:
 
 
         prev = [0] * (W + 1)
-        curr = [0] * (W + 1)
+
         
 
         for i in range(W + 1):
@@ -12,14 +12,13 @@ class Solution:
                 prev[i] = val[0]
                 
         for i in range(1, len(wt)):
-            for j in range(W + 1):
+            for j in range(W, -1, -1):
                 nosteal = prev[j]
                 steal = float('-inf')
                 if wt[i] <= j:
                     steal = val[i] + prev[j - wt[i]]
                 
-                curr[j] = max(steal, nosteal)
-            prev = curr.copy()
+                prev[j] = max(steal, nosteal)
                 
         return prev[W]
                     
