@@ -4,23 +4,13 @@ class Solution:
         output = []
         l = 0
         r = 0
-        while r < k:
-            if not queue or nums[r] <= queue[-1]:
-                queue.append(nums[r])
-            else:
-                while queue and queue[-1] < nums[r]:
-                    queue.pop()
-                queue.append(nums[r])
-            r += 1
-        
-
-        if queue:
-            output.append(queue[0])
 
         while r < len(nums):
-            if queue[0] == nums[l]:
-                queue.popleft()
-            l += 1
+            if r >= k:
+                if queue[0] == nums[l]:
+                    queue.popleft()
+                l += 1
+
             if not queue or nums[r] <= queue[-1]:
                 queue.append(nums[r])
             else:
@@ -28,7 +18,8 @@ class Solution:
                     queue.pop()
                 queue.append(nums[r])
             r += 1
-            output.append(queue[0])
+            if r >= k:
+                output.append(queue[0])
 
         return output
 
