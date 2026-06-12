@@ -3,25 +3,25 @@ class Solution:
         n, m = len(text1), len(text2)
         dp = [[float('-inf')] * (m + 1) for _ in range(n + 1)]
 
-        def subsequence(i, j):
-            if i == 0 or j == 0:
-                return 0
-            if dp[i][j] != float('-inf'):
-                return dp[i][j]
+        for i in range(n + 1):
+            dp[i][0] = 0
+        for j in range(m + 1):
+            dp[0][j] = 0
 
-            matched = float('-inf')
-            notmatched = float('-inf')
-            if text1[i - 1] == text2[j - 1]:
-                matched = 1 + subsequence(i - 1, j - 1)
-            else:
-                notmatched = max(subsequence(i - 1, j), subsequence(i, j - 1))
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                matched = float('-inf')
+                notmatched = float('-inf')
 
-            val = max(matched, notmatched)
-            dp[i][j] = val
+                if text1[i - 1] == text2[j - 1]:
+                    matched = 1 + dp[i - 1][j - 1]
+                else:
+                    notmatched = max(dp[i - 1][j], dp[i][j - 1])
+                val = max(matched, notmatched)
+                dp[i][j] = val
 
-            return val
+        return dp[n][m]
 
-        return subsequence(n, m)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
