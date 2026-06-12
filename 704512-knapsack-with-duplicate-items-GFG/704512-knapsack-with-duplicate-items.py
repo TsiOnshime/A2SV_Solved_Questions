@@ -2,7 +2,6 @@ class Solution:
     def knapSack(self, val, wt, capacity):
 
         prev = [float('-inf')] * (capacity + 1)
-        curr = [float('-inf')] * (capacity + 1)
         
         for i in range(capacity + 1):
             prev[i] = (i //wt[0]) * val[0]
@@ -12,10 +11,10 @@ class Solution:
                 notake = 0 + prev[j]
                 take = float('-inf')
                 if wt[i] <= j:
-                    take = val[i] + curr[j - wt[i]]
+                    take = val[i] + prev[j - wt[i]]
                     
-                curr[j] = max(notake, take)
-            prev = curr.copy()
+                prev[j] = max(notake, take)
+ 
         return prev[capacity]
 
 # Synced seamlessly with LeetHub Pro
