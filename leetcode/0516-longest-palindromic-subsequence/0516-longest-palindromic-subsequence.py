@@ -2,19 +2,21 @@ class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
         t = s[::-1]
         n = len(s)
-        dp = [[float('-inf')]*(n + 1) for _ in range(n + 1)]
-        for i in range(n + 1):
-            dp[0][i] = 0
-        for j in range(n + 1):
-            dp[j][0] = 0
+
+        prev = [0] * (n + 1)
+        curr = [0] * (n + 1)
+
         def lcs(s, t):
+            nonlocal prev
+            nonlocal curr
 
             for i in range(1, n + 1):
                 for j in range(1, n + 1):
                     if s[i - 1] == t[j - 1]:
-                        dp[i][j] = 1 + dp[i -1][j - 1]
+                        curr[j] = 1 + prev[j - 1]
                     else:
-                        dp[i][j] = 0 + max(dp[i - 1][j], dp[i][j - 1])
+                        curr[j] = 0 + max(prev[j], curr[j - 1])
+                prev = curr.copy()
         
         lcs(s, t)
         # print(dp)
@@ -32,7 +34,7 @@ class Solution:
         #         else:
         #             j -= 1
         # ans = "".join(reversed(ans))
-        return dp[n][n]
+        return prev[n]
         
 
 # Synced seamlessly with LeetHub Pro
