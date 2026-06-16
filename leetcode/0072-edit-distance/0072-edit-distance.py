@@ -1,29 +1,26 @@
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
-        dp = [[float('inf')] * len(word2) for _ in range(len(word1))]
 
-        def findMinDistance(i, j):
-            if j < 0:
-                return i + 1
-            if i < 0:
-                return j + 1
-            if dp[i][j] != float('inf'):
-                return dp[i][j]
+        dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]
 
-            if word1[i] == word2[j]:
-                dp[i][j] = findMinDistance(i - 1, j - 1)
-            else:
-                # insert
-                ins = 1 + findMinDistance(i, j - 1)
-                # delete
-                dele = 1 + findMinDistance(i - 1, j)
-                # replace
-                rep = 1 + findMinDistance(i - 1, j - 1)
+        for i in range(len(word1) + 1):
+            dp[i][0] = i
+        for j in range(len(word2) + 1):
+            dp[0][j] = j
+  
+        for i in range(1, len(word1) + 1):
+            for j in range(1, len(word2) + 1):
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    ins = 1 + dp[i][j - 1]
+                    dele = 1 + dp[i - 1][j]
+                    rep = 1 + dp[i - 1][j - 1]
+                    dp[i][j] = min(ins, dele, rep)
+  
+        return dp[len(word1)][len(word2)]
 
-                dp[i][j] = min(ins, dele, rep)
-            return dp[i][j]
 
-        return findMinDistance(len(word1) - 1, len(word2) - 1)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
