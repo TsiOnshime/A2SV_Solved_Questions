@@ -1,19 +1,15 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        # l => buying price
-        # r => selling price
-        # if the selling price is less than or equal to the buying price set the buying price to the selling price and look for a better selling price
+        _min = prices[0]
+        profit = 0
+        for i in range(len(prices)):
+            cost = prices[i] - _min
+            profit = max(profit, cost)
 
-        l = 0
-        maxP = 0
-        for r in range(1, len(prices)):
-            profit = prices[r] - prices[l]
-            if profit <= 0:
-                l = r
-            else:
-                maxP = max(maxP, profit)
+            _min = min(_min, prices[i])
 
-        return maxP
+        return profit
 
-
-        
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
