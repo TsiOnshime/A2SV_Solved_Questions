@@ -3,25 +3,26 @@ class Solution:
         # buy = 0, 1, 2
         n = len(prices)
 
-        dp = [[[float('-inf')] * 3 for _ in range(2)] for _ in range(n)]
+        dp = [[[float('-inf')] * 3 for _ in range(2)] for _ in range(n + 1)]
 
+        for i in range(n+1):
+            for j in range(2):
+                dp[i][j][2] = 0
+        for j in range(2):
+            for k in range(2):
+                dp[n][j][k] = 0
 
-        def calculateProfit(i, buy, t):
-            if i == n:
-                return 0
-            if t == 2:
-                return 0
-            if dp[i][buy][t] != float('-inf'):
-                return dp[i][buy][t]
+        for i in range(n - 1, -1, -1):
+            for j in range(2):
+                for k in range(2):
+                    if j:
+                        profit = max(-prices[i] + dp[i + 1][0][k], dp[i + 1][1][k])
+                    else:
+                        profit = max(prices[i] + dp[i + 1][1][k + 1], dp[i + 1][0][k])
+                    dp[i][j][k] = profit
+        
+        return dp[0][1][0]
 
-            if buy:
-                profit = max(-prices[i] + calculateProfit(i + 1, 0, t), calculateProfit(i + 1, 1, t))
-            else:
-                profit = max(prices[i] + calculateProfit(i + 1, 1, t + 1), calculateProfit(i + 1, 0, t))
-
-            dp[i][buy][t] = profit
-            return profit
-        return calculateProfit(0, 1, 0)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
