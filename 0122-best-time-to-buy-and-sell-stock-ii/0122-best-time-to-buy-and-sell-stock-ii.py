@@ -1,28 +1,21 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # 1 -> Buy
-        dp = [[float('-inf')] * 2 for _ in range(len(prices))]
-        print(dp)
-        def calc(i, buy):
-            if i == len(prices):
-                return 0
-            if dp[i][buy] != float('-inf'):
-                return dp[i][buy]
+        dp = [[float('-inf')] * 2 for _ in range(len(prices) + 1)]
+        for i in range(2):
+            dp[len(prices)][i] = 0
+        for i in range(len(prices) - 1, -1, -1):
+            for j in range(2):
+                profit = 0
+                if j:
+                    profit = max(-prices[i] + dp[i + 1][0], dp[i + 1][1])
+                else:
+                    profit = max(prices[i] + dp[i + 1][1], dp[i + 1][0])
+                
+                dp[i][j] = profit
 
-            if buy:
-                profit = max(-prices[i] + calc(i + 1, 0), 0 + calc(i + 1, 1))
-
-            else:
-                profit = max(prices[i] + calc(i + 1, 1), 0 + calc(i + 1, 0))
-            dp[i][buy] = profit
-            
-            return profit
-
+        return dp[0][1]
         
-
-
-
-        return calc(0, 1)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
