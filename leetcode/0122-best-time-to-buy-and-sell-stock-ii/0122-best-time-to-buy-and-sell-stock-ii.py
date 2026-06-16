@@ -6,7 +6,6 @@ class Solution:
             dp[len(prices)][i] = 0
         for i in range(len(prices) - 1, -1, -1):
             for j in range(2):
-                profit = 0
                 if j:
                     profit = max(-prices[i] + dp[i + 1][0], dp[i + 1][1])
                 else:
