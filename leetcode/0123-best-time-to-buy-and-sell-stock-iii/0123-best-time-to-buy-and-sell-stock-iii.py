@@ -3,25 +3,22 @@ class Solution:
         # buy = 0, 1, 2
         n = len(prices)
 
-        dp = [[[float('-inf')] * 3 for _ in range(2)] for _ in range(n + 1)]
+        front = [[0] * 3 for _ in range(2)] 
 
-        for i in range(n+1):
-            for j in range(2):
-                dp[i][j][2] = 0
-        for j in range(2):
-            for k in range(2):
-                dp[n][j][k] = 0
+
 
         for i in range(n - 1, -1, -1):
+            curr = [[0] * 3 for _ in range(2)]
             for j in range(2):
                 for k in range(2):
                     if j:
-                        profit = max(-prices[i] + dp[i + 1][0][k], dp[i + 1][1][k])
+                        profit = max(-prices[i] + front[0][k], front[1][k])
                     else:
-                        profit = max(prices[i] + dp[i + 1][1][k + 1], dp[i + 1][0][k])
-                    dp[i][j][k] = profit
-        
-        return dp[0][1][0]
+                        profit = max(prices[i] + front[1][k + 1], front[0][k])
+
+                    curr[j][k] = profit
+            front = [row[:] for row in curr]
+        return front[1][0]
 
 
 # Synced seamlessly with LeetHub Pro
