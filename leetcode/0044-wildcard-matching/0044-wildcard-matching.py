@@ -28,33 +28,7 @@ class Solution:
         return dp[len(s)][len(p)]
                         
 
-        def matchPattern(i, j):
-            if i < 0 and j < 0:
-                return True
-            if i >= 0 and j < 0:
-                return False
-            if i < 0 and j >= 0:
-                for i in range(0, j + 1):
-                    if p[i] != "*":
-                        return False
-                return True
-            
-            if dp[i][j] != float('inf'):
-                return dp[i][j]
-
-
-            if s[i] == p[j] or p[j] == "?":
-                dp[i][j] =  matchPattern(i - 1, j - 1)
-            else:
-                if p[j] != "*":
-                    return False
-                else:
-                    dp[i][j] = matchPattern(i, j - 1) or matchPattern(i - 1, j)
-                
-            return dp[i][j]
-
-
-        return matchPattern(len(s) - 1, len(p) - 1)
+ 
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
