@@ -1,22 +1,20 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
-        dp = [[float('-inf')] * (2) for _ in range(n)]
-        def calcProfit(i, b):
-            if i >= n:
-                return 0
+        dp = [[0] * (2) for _ in range(n + 1)]
 
-            if dp[i][b] != float('-inf'):
-                return dp[i][b]
+        for i in range(n - 1, -1, -1):
+            for j in range(2):
+                if j:
+                    profit = max(-prices[i] + dp[i + 1][0], dp[i + 1][1])
+                else:
+                    if i + 2 <= n:
+                        profit = max(prices[i] + dp[i + 2][1], dp[i + 1][0])
+                    else:
+                        profit = max(prices[i],dp[i + 1][0])
+                dp[i][j] = profit
+        return dp[0][1]
 
-            if b:
-                profit = max(-prices[i] + calcProfit(i + 1, 0), calcProfit(i + 1, 1))
-            else:
-                profit = max(prices[i] + calcProfit(i + 2, 1), calcProfit(i + 1, 0))
-            dp[i][b] = profit 
-            return profit
-        
-        return calcProfit(0, 1)
 
 
 # Synced seamlessly with LeetHub Pro
