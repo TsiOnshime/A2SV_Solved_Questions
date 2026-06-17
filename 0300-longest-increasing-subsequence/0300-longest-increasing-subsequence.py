@@ -1,21 +1,14 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         n = len(nums)
-        front = [0] * (n + 1)
-        curr = [0] * (n + 1)
+        dp = [1] * n
 
-        for i in range(n - 1, -1, -1):
-            for j in range(-1, i):
-                # take
-                take = 0
-                if j == -1 or nums[i] > nums[j]:
-                    take = 1 + front[i + 1]
-                # notake
-                notake = front[j + 1]
-                val = max(take, notake)
-                curr[j + 1] = val   
-            front = curr.copy()
-        return front[0]           
+        for i in range(n):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
+
         
 
 # Synced seamlessly with LeetHub Pro
