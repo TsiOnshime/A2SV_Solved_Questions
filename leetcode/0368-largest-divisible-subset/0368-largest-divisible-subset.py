@@ -13,9 +13,9 @@ class Solution:
                     if dp[j] + 1 > dp[i]:
                         dp[i] = dp[j] + 1
                         parent[i] = j
-                if dp[i] > dp[maxi]:
-                    maxi = i
-                    lastelem = nums[i]
+            if dp[i] > dp[maxi]:
+                maxi = i
+                lastelem = nums[i]
 
         ans = []
         i = maxi
