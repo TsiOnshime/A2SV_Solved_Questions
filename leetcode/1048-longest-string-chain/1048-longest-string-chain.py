@@ -14,23 +14,15 @@ class Solution:
                     i += 1
             return i == len(longer) and j == len(small)
         n = len(words)
-        front = [0] * (n + 1)
-        curr = [0] * (n + 1)
-        for i in range(n - 1, -1, -1):
-            for prev in range(-1, i):
-                small, longer = words[prev], words[i]
-                take = 0
-                if prev == -1:
-                    take = 1 + front[i + 1]
-                else:
-                    if compare(small, longer):
-                        take = 1 + front[i + 1]
-                notake = front[prev + 1]
-                val = max(take, notake)
-                curr[prev + 1] = val
-            front = curr.copy()
-        return front[0]
+        dp = [1] * (n + 1)
 
+        for i in range(n):
+            for prev in range(i):
+                small, longer = words[prev], words[i]
+                if compare(small, longer):
+                    dp[i] = max(dp[i], dp[prev] + 1)
+        return max(dp)
+# [1, 1, 2, 3, 3, 4]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
