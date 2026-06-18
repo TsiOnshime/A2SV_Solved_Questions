@@ -14,30 +14,22 @@ class Solution:
                     i += 1
             return i == len(longer) and j == len(small)
         n = len(words)
-        dp = [[-1] * (n + 1) for _ in range(n)]
+        dp = [[0] * (n + 1) for _ in range(n + 1)]
 
-        def calcLength(i, prev_index):
-            if i == n:
-                return 0
-            if dp[i][prev_index + 1] != -1:
-                return dp[i][prev_index + 1]
+        for i in range(n - 1, -1, -1):
+            for prev in range(-1, i):
+                small, longer = words[prev], words[i]
+                take = 0
+                if prev == -1:
+                    take = 1 + dp[i + 1][i + 1]
+                else:
+                    if compare(small, longer):
+                        take = 1 + dp[i + 1][i + 1]
+                notake = dp[i + 1][prev + 1]
+                val = max(take, notake)
+                dp[i][prev + 1] = val
+        return dp[0][0]
 
-            take = 0
-            small = words[prev_index]
-            longer = words[i]
-
-            if prev_index == -1:
-                take = 1 + calcLength(i + 1, i)
-            else:
-                truth = compare(small, longer) 
-                if truth:
-                    take = 1 + calcLength(i + 1, i)
-            notake = calcLength(i + 1, prev_index)
-            val = max(take, notake)
-            dp[i][prev_index + 1] = val
-            return val
-
-        return calcLength(0, -1)
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
