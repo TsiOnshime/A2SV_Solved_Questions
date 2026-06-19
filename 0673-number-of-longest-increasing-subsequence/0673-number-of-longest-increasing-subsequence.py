@@ -9,7 +9,6 @@ class Solution:
         count = [1] * n
         maxi = 0
         _max = float('-inf')
-        maxis = set()
 
         for i in range(n):
             for j in range(i):
@@ -22,16 +21,12 @@ class Solution:
             
             if dp[i] > dp[maxi]:
                 maxi = i
-                maxis = {maxi}
-            elif dp[i] == dp[maxi]:
-                maxis.add(i)
 
         res = 0
-        for i in maxis:
-            res += count[i]
-        return res
+        for i in range(n):
+            if dp[i] == dp[maxi]: res += count[i]
 
-                
+        return res     
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
