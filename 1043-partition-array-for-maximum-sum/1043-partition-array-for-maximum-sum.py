@@ -9,9 +9,11 @@ class Solution:
                 return dp[i]
 
             max_sum = float('-inf')
+            curr_max = 0
             for j in range(i, len(arr)):
                 if j - i + 1 <= k:
-                    _sum = (j - i + 1) * max(arr[i:j+1]) + partition(j + 1)
+                    curr_max = max(curr_max, arr[j])
+                    _sum = (j - i + 1) * curr_max + partition(j + 1)
                     max_sum = max(max_sum, _sum)
             dp[i] = max_sum
             return max_sum
