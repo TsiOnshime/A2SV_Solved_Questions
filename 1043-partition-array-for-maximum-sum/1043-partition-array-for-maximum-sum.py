@@ -6,7 +6,9 @@ class Solution:
         for i in range(len(arr) - 1, -1, -1):
             max_sum = float('-inf')
             curr_max = 0
-            for j in range(i, len(arr)):
+            for j in range(i, i + k):
+                if j >= len(arr):
+                    break
                 if j - i + 1 <= k:
                     curr_max = max(curr_max, arr[j])
                     _sum = (j - i + 1) * curr_max + dp[j + 1]
