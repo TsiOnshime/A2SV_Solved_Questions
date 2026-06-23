@@ -1,29 +1,31 @@
 class Solution:
     def findPairs(self, nums: List[int], k: int) -> int:
         nums.sort()
-        count = 0
+        if len(nums) == 1:
+            return 0
         print(nums)
-        l = 0
-        r = 1
-        temp = 0
-        while r < len(nums):
-            if nums[r] == nums[r - 1] and r - 1 != l:
-                r += 1
-                continue
+        i, j = 0, 1
+        count = 0
 
-            diff = nums[r] - nums[l]
-            if diff == k:
-                count += 1
-                temp = r
-            elif diff > k:
-                l += 1
-                while l < len(nums) and nums[l] == nums[l - 1]:
-                    l += 1
-                r = temp if temp and temp > l else l + 1
-                continue
-            r += 1
+        while i < len(nums) and j < len(nums):
+            while i < len(nums) and i > 0 and nums[i] == nums[i -1]:
+                i += 1
+            while j < len(nums) and j > 1 and nums[j] == nums[j - 1] and i != j - 1:
+                j += 1
+            if i < len(nums) and j < len(nums):
+                diff = nums[j] - nums[i]
+                if diff == k:
+                    if i != j:
+                        
+                        count += 1
+                    j += 1
+                elif diff > k:
+                    i += 1
+                elif diff < k:
+                    j += 1
         return count
-            
+    
+        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
