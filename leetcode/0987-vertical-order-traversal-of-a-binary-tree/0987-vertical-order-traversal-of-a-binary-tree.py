@@ -7,17 +7,17 @@
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
         order = defaultdict(lambda:defaultdict(list))
-    
-        def dfs(root, r, c):
-            nonlocal order
-            if not root:
-                return 
-           
-            order[c][r].append(root.val)
-            dfs(root.left, r + 1, c - 1)
-            dfs(root.right, r + 1, c + 1)
+        queue = deque()
         
-        dfs(root, 0, 0)
+        queue.append([root, 0, 0])
+        while queue:
+            node, r, c = queue.popleft()
+            order[c][r].append(node.val)
+            if node.left:
+                queue.append([node.left, r + 1, c - 1])
+            if node.right:
+                queue.append([node.right, r + 1, c + 1])
+
 
         res = []
 
