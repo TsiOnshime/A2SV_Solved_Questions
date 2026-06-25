@@ -1,28 +1,26 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        n = len(candidates)
-
-        solution = []
-        
-        def search(i, state, total):
-            if total == target:
-                solution.append(state[:])
+        res = []
+        def combination(i, _sum, state):
+            nonlocal res
+            if _sum > target:
                 return
-
-            if i >= n or total > target:
-                return 
-            
+            if i == len(candidates):
+                if _sum == target:
+                    res.append(state.copy())
+                return
+            # no take
+            combination(i + 1, _sum, state)
+            # take
             state.append(candidates[i])
-            total += candidates[i]
-            search(i, state, total)
-            total -= candidates[i]
+            _sum += candidates[i]
+            combination(i, _sum, state)
+            _sum -= candidates[i]
             state.pop()
+        combination(0, 0, [])
+        return res
 
-            search(i + 1, state, total)
-        search(0, [], 0)
-        return solution
 
-    
-            
-
-            
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
