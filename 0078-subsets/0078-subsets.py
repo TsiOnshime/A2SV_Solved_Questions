@@ -1,25 +1,22 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
-        def is_valid(i):
+        def dfs(i, state):
             if i == len(nums):
-                return True
-            return False
-
-        def get_candidates(i):
-            return [[], nums[i]]
-            
-        def search(i, subset):
-            nonlocal res
-            if is_valid(i):
-                res.append(subset.copy())
+                res.append(state.copy())
                 return
-            for candidate in get_candidates(i):
-                if candidate != []:
-                    subset.append(candidate)
-                search(i + 1, subset)
-            if subset:
-                subset.pop()
+            
+            state.append(nums[i])
+            dfs(i + 1, state)
+            state.pop()
 
-        search(0, [])
+            dfs(i + 1, state)
+        
+        dfs(0, [])
         return res
+
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
