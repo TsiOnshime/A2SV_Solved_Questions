@@ -1,20 +1,22 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
         nums.sort()
-        solution = []
-        state = []
+        def dfs(start, state):
 
-        def search(i):
-            if i == len(nums):
-                solution.append(state.copy())
-                return
+            res.append(state.copy())
+ 
             
-            state.append(nums[i])
-            search(i + 1)
-            state.pop()
+            for i in range(start, len(nums)):
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
 
-            while i + 1 < len(nums) and nums[i] == nums[i + 1]:
-                i += 1
-            search(i + 1)
-        search(0)
-        return solution
+                state.append(nums[i])
+                dfs(i + 1, state)
+                state.pop()
+        dfs(0, [])
+        return res
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
