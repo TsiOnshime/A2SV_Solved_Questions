@@ -5,31 +5,30 @@
 #         self.left = left
 #         self.right = right
 class BSTIterator:
-    def traverse(self, root):
-        if not root:
-            return 
-
-        self.traverse(root.left)
-        self.inorder.append(root.val)
-        self.traverse(root.right)
-
-
-
 
     def __init__(self, root: Optional[TreeNode]):
-        self.inorder = []
-        self.traverse(root)
-        self.pointer = -1
+        self.stack = []
+        curr = root
+        while curr:
+            self.stack.append(curr)
+            curr = curr.left
+        
 
     def next(self) -> int:
-        self.pointer += 1
-        return self.inorder[self.pointer]
+        res = self.stack.pop()
+        curr = res.right
+        while curr:
+            self.stack.append(curr)
+            curr = curr.left
+        return res.val
+        
 
     def hasNext(self) -> bool:
-        if self.pointer + 1 < len(self.inorder):
+        if len(self.stack):
             return True
         return False
         
+
 
 # Your BSTIterator object will be instantiated and called as such:
 # obj = BSTIterator(root)
