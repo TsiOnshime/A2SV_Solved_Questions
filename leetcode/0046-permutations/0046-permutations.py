@@ -1,26 +1,20 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        
         res = []
-
-        def permutiations(used, state):
-            if len(used)== len(nums):
+        def permutiations(i, state):
+            if i == len(nums):
                 res.append(state.copy())
-                return
+                return 
             
-            for i in range(len(nums)):
-                if i not in used:
-                    state.append(nums[i])
-                    used.add(i)
-                    permutiations(used, state)
-                    used.remove(i)
-                    state.pop()
+            for ind in range(i, len(nums)):
+                nums[i], nums[ind] = nums[ind], nums[i]
+                state.append(nums[i])
+                permutiations(i + 1, state)
+                state.pop()
+                nums[i], nums[ind] = nums[ind], nums[i]
 
-        permutiations(set(), [])
+        permutiations(0, [])
         return res
-
-
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
