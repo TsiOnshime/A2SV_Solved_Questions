@@ -1,38 +1,25 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         
+        res = []
 
-       
-        def is_valid_state(state):
-            # check if it is a valid state
-            if len(state) == len(nums):
-                return True
-
-        
-        def get_candidates(state):
-            res = []
+        def permutiations(nums, state):
+            if not nums:
+                res.append(state.copy())
+                return
+            
             for i in range(len(nums)):
-                if used[i] == False:
-                    res.append(nums[i])
-            return res
+                state.append(nums[i])
+                new_nums = nums[:i] + nums[i + 1:]
+                permutiations(new_nums, state)
+                state.pop()
 
-        
-        def search(state, solutions):
-            if is_valid_state(state):
-                solutions.append(state[:])
-            
-            for candidate in get_candidates(state):
-                state.append(candidate)
-                used[nums.index(candidate)] = True
-                search(state, solutions)
-                state.remove(candidate)
-                used[nums.index(candidate)] = False
-        
-        
-        used = [False] * len(nums)
-        state = []
-        solutions = []
-        search(state, solutions)
-        return solutions
-            
-        
+        permutiations(nums, [])
+        return res
+
+
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
