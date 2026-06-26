@@ -3,18 +3,20 @@ class Solution:
         
         res = []
 
-        def permutiations(nums, state):
-            if not nums:
+        def permutiations(used, state):
+            if len(used)== len(nums):
                 res.append(state.copy())
                 return
             
             for i in range(len(nums)):
-                state.append(nums[i])
-                new_nums = nums[:i] + nums[i + 1:]
-                permutiations(new_nums, state)
-                state.pop()
+                if i not in used:
+                    state.append(nums[i])
+                    used.add(i)
+                    permutiations(used, state)
+                    used.remove(i)
+                    state.pop()
 
-        permutiations(nums, [])
+        permutiations(set(), [])
         return res
 
 
