@@ -1,33 +1,43 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        board = [["."] * n for i in range(n)]
-        cols = set()
-        posDiag = set()
-        negDiag = set()
+        
+        board = [["."] * n for _ in range(n)]
         res = []
+        def isSafe(col, row):
+            r, c = row, col
+            while r >= 0 and c >= 0:
+                if board[r][c] == "Q":
+                    return False
+                c -= 1
+                r -= 1
+            r, c = row, col
+            while c >= 0:
+                if board[r][c] == "Q":
+                    return False
+                c -= 1
+            r, c = row, col
+            while r < n and c >= 0:
+                if board[r][c] == "Q":
+                    return False
+                c -= 1
+                r += 1
+            return True
 
-        def backtrack(r):
-            if r == n:
-                cpy = ["".join(row) for row in board]
-                res.append(cpy)
-                return
+        def solve(col):
+            if col == n:
+                res.append(["".join(row) for row in board])
+                return 
+            
 
-            for c in range(n):
-                if c  in cols or (r - c)  in posDiag or (r + c)  in negDiag:
-                    continue
+            for row in range(n):
+                if isSafe(col, row):
+                    board[row][col] = "Q"
+                    solve(col + 1)
+                    board[row][col] = "."
 
-                cols.add(c)
-                posDiag.add(r - c)
-                negDiag.add(r + c)
-                board[r][c] = "Q"
-
-                backtrack(r + 1)
-                
-                cols.remove(c)
-                posDiag.remove(r - c)
-                negDiag.remove(r + c)
-                board[r][c] = "."
-
-
-        backtrack(0)
+        solve(0)
         return res
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
