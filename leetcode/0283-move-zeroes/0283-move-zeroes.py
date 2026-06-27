@@ -3,17 +3,12 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        new_nums = []
-        for i in range(len(nums)):
-            if nums[i] != 0:
-                new_nums.append(nums[i])
-        
-        for i in range(len(nums)):
-            if i < len(new_nums):
-                nums[i] = new_nums[i]
-            else:
-                nums[i] = 0
-        
+        l = r = 0
+        while r < len(nums):
+            if nums[r]:
+                nums[r], nums[l] = nums[l], nums[r]
+                l += 1
+            r += 1
         
 
 # Synced seamlessly with LeetHub Pro
