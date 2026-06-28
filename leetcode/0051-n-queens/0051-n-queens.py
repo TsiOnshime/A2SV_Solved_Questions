@@ -3,24 +3,21 @@ class Solution:
         
         board = [["."] * n for _ in range(n)]
         res = []
+        leftRow = [0] * n
+        lowerDiagonal = [0] * (2 * n - 1)
+        upperDiagonal = [0] * (2 * n - 1)
         def isSafe(col, row):
-            r, c = row, col
-            while r >= 0 and c >= 0:
-                if board[r][c] == "Q":
-                    return False
-                c -= 1
-                r -= 1
-            r, c = row, col
-            while c >= 0:
-                if board[r][c] == "Q":
-                    return False
-                c -= 1
-            r, c = row, col
-            while r < n and c >= 0:
-                if board[r][c] == "Q":
-                    return False
-                c -= 1
-                r += 1
+            nonlocal leftRow
+            nonlocal lowerDiagonal
+            nonlocal upperDiagonal
+
+            if leftRow[row] != 0:
+                return False
+            if lowerDiagonal[col + row] != 0:
+                return False
+            if upperDiagonal[n - 1 + col - row] != 0:
+                return False
+            
             return True
 
         def solve(col):
@@ -31,8 +28,14 @@ class Solution:
 
             for row in range(n):
                 if isSafe(col, row):
+                    leftRow[row] = 1
+                    lowerDiagonal[col + row] = 1
+                    upperDiagonal[n - 1 + col - row] = 1
                     board[row][col] = "Q"
                     solve(col + 1)
+                    leftRow[row] = 0
+                    lowerDiagonal[col + row] = 0
+                    upperDiagonal[n - 1 + col - row] = 0
                     board[row][col] = "."
 
         solve(0)
