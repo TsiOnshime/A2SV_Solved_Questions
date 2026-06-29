@@ -5,24 +5,24 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = curr = ListNode()
         carry = 0
-
+        dummy = ListNode()
+        curr = dummy
         while l1 or l2 or carry:
-            val1 = l1.val if l1 else 0
-            val2 = l2.val if l2 else 0
+            a = l1.val if l1 else 0
+            b = l2.val if l2 else 0
 
-            _sum = val1 + val2 + carry
-            curr.next = ListNode(_sum % 10)
-            carry = _sum // 10
-
+            digit = (a + b + carry) % 10
+            carry = (a + b + carry) // 10
+            curr.next = ListNode(digit)
             curr = curr.next
-            l1 = l1.next if l1 else None
-            l2 = l2.next if l2 else None
-            
 
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
         return dummy.next
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
