@@ -1,7 +1,7 @@
 class Solution:
     def inversionCount(self, arr):
         # Code Here
-        count = 0
+  
         def merge(l, mid, r):
             
             first = l 
@@ -29,17 +29,20 @@ class Solution:
             
             
         def divide(l, r):
-            nonlocal count
+
+            count = 0
             if l >= r:
-                return 
+                return 0
             mid = l + (r - l)//2
             
-            divide(l,mid)
-            divide(mid + 1, r)
+            count += divide(l,mid)
+            count += divide(mid + 1, r)
             
             count += merge(l, mid, r)
-        divide(0, len(arr) - 1) 
-        return count
+            
+            return count
+        return divide(0, len(arr) - 1) 
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
