@@ -1,17 +1,22 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        parenthesis = {')': '(', '}': '{', ']': '['}
+        pairs = {
+            ")":"(",
+            "}":"{",
+            "]":"["
+        }
 
-        for i in range(len(s)):
-            if s[i] in parenthesis:
-                if stack and stack[-1] == parenthesis[s[i]]:
-                    stack.pop()
-                else:
-                    return False
+        for br in s:
+            if br in {"(", "[", "{"}:
+                stack.append(br)
             else:
-                stack.append(s[i])
+                if not stack or stack[-1] != pairs[br]:
+                    return False
+                stack.pop()
+        
+        return True if not stack else False
 
-        if stack:
-            return False
-        return True
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
