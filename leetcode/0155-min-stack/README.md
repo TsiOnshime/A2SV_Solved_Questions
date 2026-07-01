@@ -12,7 +12,7 @@ Implement the `MinStack` class:
 
 - `MinStack()` initializes the stack object.
 
-- `void push(int val)` pushes the element `val` onto the stack.
+- `void push(int value)` pushes the element `value` onto the stack.
 
 - `void pop()` removes the element on the top of the stack.
 
