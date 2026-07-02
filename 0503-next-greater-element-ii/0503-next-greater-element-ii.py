@@ -1,21 +1,20 @@
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        # [1, 2, 1]
-
-        # [1, 2, 1, 1, 2, 1]
-        #  0  1  2  3  4  5
-        #  1 + 3 = 4 - 1
         nge = [-1] * len(nums)
-        for i in range(len(nums)):
-            for j in range(i + 1, i + len(nums)):
-                j = j % len(nums)
-                if nums[j] > nums[i]:
-                    nge[i] = nums[j]
-                    break
+        stack = []
+
+        for i in range(len(nums) - 1, -1, -1):
+            while stack and stack[-1] <= nums[i]:
+                stack.pop()
+            stack.append(nums[i])
+
+        for i in range(len(nums) - 1, -1, -1):
+            while stack and stack[-1] <= nums[i]:
+                stack.pop()
+            nge[i] = stack[-1] if stack else -1
+            stack.append(nums[i])
         return nge
-
-
-
+        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
