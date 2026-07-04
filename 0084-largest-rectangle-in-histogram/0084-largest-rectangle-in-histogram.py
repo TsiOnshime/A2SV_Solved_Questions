@@ -1,23 +1,29 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        # monotonically increasing height
-
-        # stores = starting index, height
+        # it is all about finding the pse and nse 
         stack = []
-        maxArea = 0
+        max_area = 0
+        # [2]
         for i in range(len(heights)):
-            idx = i
-            while stack and stack[-1][1] > heights[i]:
-                elem = stack.pop()
-                idx = elem[0]
-                height = elem[1]
-                maxArea = max((i - idx) *height, maxArea)
+            while stack and heights[stack[-1]] > heights[i]:
+                idx = stack.pop()
+                pse = stack[-1] if stack else -1
+                nse = i
+                area = heights[idx] * (nse - pse - 1)
+                max_area = max(max_area, area)
 
-            stack.append([idx, heights[i]])
+            stack.append(i)
+        
+        nse = len(heights)
+        while stack:
+            idx = stack.pop()
+            pse = stack[-1] if stack else -1
+            area = heights[idx] * (nse - pse - 1)
+            max_area = max(max_area, area)
 
-        print(stack)
-        n = len(heights)
+        return max_area
 
-        for i in range(len(stack)):
-            maxArea = max((n - stack[i][0]) * stack[i][1], maxArea)
-        return maxArea
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
