@@ -1,20 +1,12 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
-
-        if len(nums) == 1:
-            return True
-
-        # 1, 0 ,2
-        max_jump = 0
-
+        maxJump = 0
         for i in range(len(nums)):
-            if i > max_jump:
-                return False
-            max_jump = max(max_jump, i + nums[i])
-
+            if i > maxJump: return False
+            maxJump = max(maxJump, i + nums[i])
 
         return True
 
-
-
-
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
