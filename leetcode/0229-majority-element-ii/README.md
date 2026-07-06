@@ -6,7 +6,7 @@
 
 ---
 
-Given an integer array of size `n`, find all elements that appear more than `&lfloor; n/3 &rfloor;` times.
+Given an integer array of size `n`, find all elements that appear more than `&lfloor;n / 3&rfloor;` times.
 
 Example 1:
 
