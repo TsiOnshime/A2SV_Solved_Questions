@@ -1,29 +1,17 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         queue = deque()
-        output = []
-        l = 0
-        r = 0
-
-        while r < len(nums):
-            if r >= k:
-                if queue[0] == nums[l]:
+        res = []
+   
+        for i in range(len(nums)):
+            while queue and queue[-1] < nums[i]:
+                queue.pop()
+            queue.append(nums[i])
+            if i + 1 >= k:
+                res.append(queue[0])
+                if i - k + 1 >= 0 and nums[i - k + 1] == queue[0]:
                     queue.popleft()
-                l += 1
-
-            if not queue or nums[r] <= queue[-1]:
-                queue.append(nums[r])
-            else:
-                while queue and queue[-1] < nums[r]:
-                    queue.pop()
-                queue.append(nums[r])
-            r += 1
-            if r >= k:
-                output.append(queue[0])
-
-        return output
-
-
+        return res
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
