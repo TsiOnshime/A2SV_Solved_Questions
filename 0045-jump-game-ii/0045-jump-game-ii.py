@@ -1,14 +1,25 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        jump = 0
-        l = r = 0
+            dp = [-1] * len(nums)
 
-        while r < len(nums) - 1:
-            farthest = 0
-            for i in range(l, r+1):
-                farthest = max(farthest, i + nums[i])
-            l = r + 1
-            r = farthest
-            jump += 1
+            def min_jump(i):
+                if i >= len(nums) - 1:
+                    return 0
+                if dp[i] != -1:
+                    return dp[i]
 
-        return jump
+                
+                minimum = float('inf')
+                for j in range(1,nums[i] + 1):
+                    minimum = min(minimum, 1 + min_jump(i + j))
+
+                dp[i] = minimum
+                return minimum
+
+            return min_jump(0)
+
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
