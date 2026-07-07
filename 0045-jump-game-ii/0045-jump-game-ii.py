@@ -1,23 +1,19 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-            dp = [-1] * len(nums)
-
-            def min_jump(i):
-                if i >= len(nums) - 1:
-                    return 0
-                if dp[i] != -1:
-                    return dp[i]
-
-                
-                minimum = float('inf')
-                for j in range(1,nums[i] + 1):
-                    minimum = min(minimum, 1 + min_jump(i + j))
-
-                dp[i] = minimum
-                return minimum
-
-            return min_jump(0)
-
+        jump = 0
+        current_end = 0
+        farthest = 0
+        if len(nums) <= 1:
+            return 0
+        i = 0
+        while i < len(nums):
+            while i <= current_end:
+                farthest = max(farthest, i + nums[i])
+                i += 1
+            current_end = farthest
+            jump += 1
+            if current_end >= len(nums) - 1:
+                return jump
 
 
 # Synced seamlessly with LeetHub Pro
