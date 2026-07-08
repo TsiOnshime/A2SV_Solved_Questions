@@ -1,20 +1,19 @@
 class Solution:
     def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -> int:
-        max_units = 0
+        max_unit = 0
+        heap = [[-units, boxes] for boxes, units in boxTypes]
+        heapq.heapify(heap)
 
-        boxTypes.sort(key=lambda x: x[1], reverse=True)
-
-        for i in range(len(boxTypes)):
-            boxes, units = boxTypes[i]
+        while heap and truckSize:
+            units, boxes = heapq.heappop(heap)
 
             if boxes <= truckSize:
-                max_units += (units * boxes)
+                max_unit += (-units * boxes)
                 truckSize -= boxes
             else:
-                max_units += (units * truckSize)
-                break
-        
-        return max_units
+                max_unit += (-units * truckSize)
+                truckSize = 0
+        return max_unit
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
