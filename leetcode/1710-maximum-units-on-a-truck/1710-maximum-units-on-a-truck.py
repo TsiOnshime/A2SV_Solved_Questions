@@ -4,8 +4,6 @@ class Solution:
 
         boxTypes.sort(key=lambda x: x[1], reverse=True)
 
-
-        _max = 3
         for i in range(len(boxTypes)):
             boxes, units = boxTypes[i]
 
@@ -13,7 +11,6 @@ class Solution:
                 max_units += (units * boxes)
                 truckSize -= boxes
             else:
-            
                 max_units += (units * truckSize)
                 break
         
