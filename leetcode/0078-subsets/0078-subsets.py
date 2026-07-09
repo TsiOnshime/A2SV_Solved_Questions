@@ -1,17 +1,15 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+        subsets = 1 << len(nums)
         res = []
-        def dfs(start, state):
-            res.append(state.copy())
-            for i in range(start, len(nums)):
-                state.append(nums[i])
-                dfs(i + 1, state)
-                state.pop()
-
+        for number in range(subsets):
+            subset = []
+            for i in range(len(nums)):
+                if number & (1 << i):
+                    subset.append(nums[i])
+            res.append(subset.copy())
         
-        dfs(0, [])
         return res
-
 
 
 # Synced seamlessly with LeetHub Pro
