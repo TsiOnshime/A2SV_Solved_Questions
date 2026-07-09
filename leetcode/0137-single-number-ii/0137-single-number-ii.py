@@ -1,21 +1,12 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        ans = 0
-        for i in range(32):
-            count = 0
-            for j in nums:
-                # check if ith bit is set
-                if j & (1 << i):
-                    count += 1
-            if count % 3 == 1:
-                # if the sigh bit is set
-                if i == 31:
-                    # we decrement what we have been working on by 2**31 so that we could get the negative number 
-                    ans -= (1 << i)
-                else:
-                    # set ith bit
-                    ans = ans | (1 << i)
-        return ans
+        nums.sort()
+        i = 1
+        while i < len(nums):
+            if nums[i] != nums[i - 1]:
+                return nums[i-1]
+            i += 3
+        return nums[len(nums) - 1]
 
 
 # Synced seamlessly with LeetHub Pro
