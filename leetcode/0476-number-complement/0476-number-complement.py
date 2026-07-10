@@ -7,10 +7,8 @@ class Solution:
             num >>= 1
             count += 1
 
-        for i in range(count):
-            if (temp & (1 << i)) == 0:
-                res = res | (1 << i)
-        return res
+        mask = (1 << count) - 1
+        return temp ^ mask
 
 
     
