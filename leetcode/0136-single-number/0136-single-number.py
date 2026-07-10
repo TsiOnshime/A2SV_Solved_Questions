@@ -1,11 +1,9 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        num = 0
-
+        number = 0
         for i in range(len(nums)):
-            num = num ^ nums[i]
-        
-        return num
+            number ^= nums[i]
+        return number
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
