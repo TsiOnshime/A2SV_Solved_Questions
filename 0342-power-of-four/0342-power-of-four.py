@@ -1,6 +1,6 @@
 class Solution:
     def isPowerOfFour(self, n: int) -> bool:
-        return n > 0 and (n & (n - 1) == 0) and (n & 0x55555555) != 0
+        return n > 0 and (n & (n - 1) == 0) and (n % 3) == 1
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
