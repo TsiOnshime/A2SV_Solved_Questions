@@ -1,14 +1,7 @@
 class Solution:
     def isPowerOfFour(self, n: int) -> bool:
-        def pow_four(n):
-            if n == 1.0:
-                return 1
-            elif n < 4.0:
-                return 0
-            
-            return pow_four(n/4)
-        n = pow_four(n)
-        if n == 1:
-            return True
-        return False
-            
+        return n > 0 and (n & (n - 1) == 0) and (n & 0x55555555) != 0
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
