@@ -1,19 +1,19 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> List[int]:
-        groupA = 0 # rightMost = 1
-        groupB = 0 # rightMost = 0
+        xor = 0
+        for i in range(len(nums)):
+            xor ^= nums[i]
+        
+        rightMost = xor & -xor
 
-        num = 0
+        groupA = 0
+        groupB = 0
+
         for i in range(len(nums)):
-            num ^= nums[i]
-        
-        rightMost = (num & (num - 1)) ^ num
-        
-        for i in range(len(nums)):
-            if nums[i] & rightMost == 0:
-                groupB ^= nums[i]
-            else: 
+            if nums[i] & rightMost:
                 groupA ^= nums[i]
+            else:
+                groupB ^= nums[i]
         
         return [groupA, groupB]
 
