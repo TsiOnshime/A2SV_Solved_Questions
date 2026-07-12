@@ -1,23 +1,24 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        
-        visited = set()
+        def nextHappy(n):
+            _sum = 0
+            while n:
+                _sum += (n % 10) ** 2
+                n //= 10
 
-        while n not in visited:
-            visited.add(n)
+            return _sum
+        tortoise = n
+        hare = nextHappy(n)
 
-            n = self.sumOfSquares(n)
-
-            if n == 1:
+        while tortoise != hare:
+            if tortoise == 1:
                 return True
-        return False
+            tortoise = nextHappy(tortoise)
+            hare = nextHappy(nextHappy(hare))
+        return tortoise == 1
 
-    def sumOfSquares(self, n:int) -> int:
 
-        summ = 0
-        while n:
-            last_digit = n % 10
-            last_digit = pow(last_digit, 2)
-            summ += last_digit
-            n //= 10
-        return summ
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
