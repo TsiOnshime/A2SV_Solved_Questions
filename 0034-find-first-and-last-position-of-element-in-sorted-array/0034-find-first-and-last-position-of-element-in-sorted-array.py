@@ -1,41 +1,32 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        
+        l, r = 0, len(nums) - 1
+        first = -1
+        last = -1
+        while l <= r:
+            mid = l + (r - l)//2
 
-        def first_pos():
-            l = 0 
-            r = len(nums) - 1
-            ans = -1
-            while l <= r:
-                mid = (l + r) // 2
+            if nums[mid] == target:
+                first = mid
+                r = mid - 1
+            elif nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid - 1
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            mid = l + (r - l)//2
 
-                if nums[mid] == target:
-                    ans = mid 
-                    r = mid - 1
-                elif nums[mid] < target:
-                    l = mid + 1
-                else:
-                    r = mid  - 1
+            if nums[mid] == target:
+                last = mid
+                l = mid + 1
+            elif nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid - 1
 
-            return ans
+        return [first, last]
 
-        def last_pos():
-
-            l, r = 0, len(nums) - 1
-            ans = -1
-
-            while l <= r:
-                mid = (l + r) // 2
-
-                if nums[mid] == target:
-                    ans = mid
-                    l = mid + 1
-                elif nums[mid] < target:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-            return ans
-
-        return [first_pos(), last_pos()]
-
-
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
