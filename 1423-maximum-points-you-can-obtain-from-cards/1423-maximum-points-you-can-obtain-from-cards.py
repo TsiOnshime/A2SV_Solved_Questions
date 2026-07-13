@@ -1,25 +1,24 @@
 class Solution:
     def maxScore(self, cardPoints: List[int], k: int) -> int:
-        # a subarray which has length of len(cardPoints) - k and has minimum sum
+        lsum = 0
+        rsum = 0
+        max_sum = 0
 
-        l = 0
-        r = 0
-        length = len(cardPoints) - k
-        ans = float('inf')
-        _sum = 0
-        for i in range(length):
-            _sum += cardPoints[i]
-        r = length 
-        ans = min(ans, _sum)
+        for i in range(k):
+            lsum += cardPoints[i]
+        max_sum = max(max_sum, lsum)
 
-        while r < len(cardPoints):
-            _sum += cardPoints[r]
-            while r - l + 1 > length:
-                _sum -= cardPoints[l]
-                l += 1
-            ans = min(ans, _sum)
-            r += 1
-        return sum(cardPoints) - ans
+        r = len(cardPoints) - 1
+        for i in range(k - 1, -1, -1):
+            lsum -= cardPoints[i]
+            rsum += cardPoints[r]
+            r -= 1
+            max_sum = max(max_sum, lsum + rsum)
+        
+        return max_sum
+        
+
+        
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
