@@ -13,10 +13,11 @@ class Solution:
                 l = mid + 1
             else:
                 r = mid - 1
-        l, r = 0, len(nums) - 1
+        if first == -1:
+            return [-1, -1]
+        l, r = first, len(nums) - 1
         while l <= r:
             mid = l + (r - l)//2
-
             if nums[mid] == target:
                 last = mid
                 l = mid + 1
