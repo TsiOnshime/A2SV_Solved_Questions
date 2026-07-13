@@ -6,17 +6,21 @@ class Solution:
         for i in range(subsequences):
             prev = set()
             length = 0
+            valid = True
             for j in range(len(arr)):
                 if i & (1 << j):
                     for k in range(len(arr[j])):
                         if arr[j][k] in prev:
+                            valid = False
                             break
                         else:
                             prev.add(arr[j][k])
                     else:
                         length += len(arr[j])
-
-            max_length = max(max_length, length)
+                    if not valid:
+                        break
+            if valid:
+                max_length = max(max_length, length)
         return max_length
                     
 
