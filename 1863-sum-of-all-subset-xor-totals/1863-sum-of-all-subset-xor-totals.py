@@ -1,16 +1,9 @@
 class Solution:
     def subsetXORSum(self, nums: List[int]) -> int:
-        xor = 0
-        subsets = 1 << len(nums)
-
-        for number in range(subsets):
-            subset_xor = 0
-            for i in range(len(nums)):
-                if number & (1 << i):
-                    subset_xor ^= nums[i]
-            xor += subset_xor
-
-        return xor
+        mask = 0
+        for n in nums:
+            mask |= n
+        return mask * (2**(len(nums)))//2
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
