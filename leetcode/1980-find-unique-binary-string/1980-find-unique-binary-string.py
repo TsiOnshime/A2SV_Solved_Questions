@@ -1,28 +1,14 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        nums = set(nums)
-        n = len(nums)
+        ans = []
 
-        def backtrack(i, state):
-            if i == n:
-                res = "".join(state)
-                if res not in nums:
-                    return res
-                return 
-            state.append("0")
-            res = backtrack(i + 1, state)
-            if res: 
-                return res
-            state.pop()
+        for i in range(len(nums)):
+            if nums[i][i] == "0":
+                ans.append("1")
+            else:
+                ans.append("0")
+        return "".join(ans)
 
-            state.append("1")
-            res = backtrack(i + 1, state)
-            if res:
-                return res
-            state.pop()
-
-        
-        return backtrack(0, [])
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
