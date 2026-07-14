@@ -1,31 +1,34 @@
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
-        subsequences = 1 << len(arr)
-        max_length = 0
+        masks = [[0, 0]] # mask, concatenated words len
+        ans = 0
+        for word in arr:
 
-        for i in range(subsequences):
-            prev = set()
-            length = 0
+            state = 0
             valid = True
-            for j in range(len(arr)):
-                if i & (1 << j):
-                    for k in range(len(arr[j])):
-                        if arr[j][k] in prev:
-                            valid = False
-                            break
-                        else:
-                            prev.add(arr[j][k])
-                    else:
-                        length += len(arr[j])
-                    if not valid:
-                        break
-            if valid:
-                max_length = max(max_length, length)
-        return max_length
-                    
+            for ch in word:
+                if not state & (1 << (ord(ch) - 97)):
+                    state |= (1 << (ord(ch) - 97))
+                else:
+                    valid = False
+            if not valid:
+                continue
 
+            
+            n = len(masks)
+            
+            for i in range(n):
+                mask, length = masks[i]
+                if mask & state:
+                    continue
+                
+                masks.append([mask | state, length + len(word)])
+                ans = max(ans, length + len(word))
 
-
+        return ans
+                
+                
+            
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
