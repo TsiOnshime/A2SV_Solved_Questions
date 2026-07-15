@@ -7,8 +7,8 @@ class Solution:
                 ans.append("1")
             else:
                 ans.append("0")
+                
         return "".join(ans)
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
