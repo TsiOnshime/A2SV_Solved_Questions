@@ -11,12 +11,12 @@ class Solution:
             chars[ord(s[r]) - offset] += 1
             maxFreq = max(maxFreq, chars[ord(s[r]) - offset])
             length += 1
-            while length - maxFreq > k:
+            if length - maxFreq > k:
                 chars[ord(s[l]) - offset] -= 1
-                maxFreq = max(chars)
                 l += 1
                 length -= 1
-            max_length = max(max_length, length)
+            if length - maxFreq <= k:
+                max_length = max(max_length, length)
             r += 1
         return max_length
 
