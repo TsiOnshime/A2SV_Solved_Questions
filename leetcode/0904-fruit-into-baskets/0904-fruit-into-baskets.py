@@ -10,12 +10,13 @@ class Solution:
             else:
                 picked[fruits[r]] = 1
             
-            while len(picked) > 2:
+            if len(picked) > 2:
                 picked[fruits[l]] -= 1
                 if picked[fruits[l]] == 0:
                     del picked[fruits[l]]
                 l += 1
-            length = max(length, r - l + 1)
+            if len(picked) <= 2:
+                length = max(length, r - l + 1)
             r += 1
         return length
 
