@@ -7,20 +7,30 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        
-        def search(root):
-            if not root:
-                return 
+        def dfs(root):
+            if not root: return None
+            left = dfs(root.left)
+            right = dfs(root.right)
             
-            if root.val == p.val or root.val == q.val:
+            if left == None and right == None:
+                if root == p or root== q:
+                    return root
+                else:
+                    return None
+            elif left != None and right != None:
                 return root
-            left = search(root.left)
-            right = search(root.right)
             
-            if left and right:
-                return root
-            if left:
-                return left
-            if right:
+            elif left != None and right == None:
+                if root == p or root == q:
+                    return root
+                else:
+                    return left
+            elif left == None and right != None:
+                if root == p or root== q:
+                    return root
                 return right
-        return search(root)
+        return dfs(root)
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
