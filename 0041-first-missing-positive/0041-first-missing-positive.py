@@ -1,31 +1,25 @@
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
-        
-        n = len(nums)
-        contains1 = False
-
-        for i in range(n):
+        # change all negatives, zeros, and numbers greater than n to 1
+        containsOnes = False
+        for i in range(len(nums)):
             if nums[i] == 1:
-                contains1 = True
-            elif nums[i] <= 0 or nums[i] > n:
+                containsOnes = True
+            elif nums[i] <= 0 or nums[i] > len(nums):
                 nums[i] = 1
-            
-        if not contains1:
-            return 1
+        if not containsOnes: return 1
 
-        for i in range(n):
-            val = abs(nums[i])
-            if val == n:
-                nums[0] = -abs(nums[0])
-
-            else:
-                nums[val] = -abs(nums[val])
-
-        for i in range(1, n):
+        # change the index where an element belongs to negative
+        for i in range(len(nums)):
+            index = abs(nums[i]) - 1
+            if nums[index] > 0: nums[index] = -nums[index]
+        
+        # search for the first index which is positive
+        for i in range(len(nums)):
             if nums[i] > 0:
-                return i
-        
-        if nums[0] > 0:
-            return n
-        
-        return n + 1
+                return i + 1
+        return len(nums) + 1
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
