@@ -7,19 +7,15 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         
+        def calcDepth(root):
+            if not root:
+                return 0
+            left = calcDepth(root.left) + 1
+            right = calcDepth(root.right) + 1
 
-        # iterative dfs
+            return max(left, right)
+        return calcDepth(root)
 
-        stack = []
-        stack.append([root, 1])
-        res = 0
-
-        while stack:
-            node, depth = stack.pop()
-
-            if node:
-                res = max(res, depth)
-                stack.append([node.left, depth + 1])
-                stack.append([node.right, depth + 1])
-                
-        return res
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
