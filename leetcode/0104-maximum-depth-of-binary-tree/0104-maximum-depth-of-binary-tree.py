@@ -6,15 +6,20 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        
-        def calcDepth(root):
-            if not root:
-                return 0
-            left = calcDepth(root.left) + 1
-            right = calcDepth(root.right) + 1
+        if not root:
+            return 0
 
-            return max(left, right)
-        return calcDepth(root)
+        queue = deque()
+        queue.append([root, 1])
+        max_depth = 1
+        while queue:
+            node, depth = queue.popleft()
+            max_depth = max(max_depth, depth)
+            for neigh in [node.left, node.right]:
+                if neigh:
+                    queue.append([neigh, depth + 1])
+        return max_depth
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
