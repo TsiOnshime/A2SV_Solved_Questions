@@ -6,20 +6,24 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        self.Truth = True
-        def dfs(root):
+        def checkBalance(root):
             if not root:
-                return 0
+                return [True, 0]
             
-            left = dfs(root.left)
-            right = dfs(root.right)
+            left = checkBalance(root.left)
+            right = checkBalance(root.right)
 
-            if abs(left - right) > 1:
-                self.Truth = False
+            if not left[0] or not right[0]:            
+                return [False, 1 + max(left[1], right[1])]
+            balanced = abs(left[1] - right[1]) <= 1
+            if balanced:
+                return [True, 1 + max(left[1], right[1])]
+            else:
+                return [False, 1 + max(left[1], right[1])]
+        return checkBalance(root)[0]
 
-            return 1 + max(left, right)
 
 
-        dfs(root)
-        return self.Truth
-        
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
