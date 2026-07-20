@@ -6,25 +6,24 @@
 #         self.right = right
 class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        # level: [verticals] [0]
         max_width = 1
-        hashmap = defaultdict(list)
+        queue = deque()
+        queue.append([root, 0])
 
-        def maxWidth(root, level, index):
-            nonlocal hashmap
-            if not root:
-                return 
-            hashmap[level].append(index)
-            maxWidth(root.left, level + 1, 2 * index + 1)
-            maxWidth(root.right, level + 1, 2 * index + 2)
-        maxWidth(root, 0, 0)
-        for key, val in hashmap.items():
-            first = val[0]
-            second = val[-1]
-            max_width = max(max_width, second - first + 1)
-        
+        while queue:
+            min_idx = queue[0][1]
+            max_idx = queue[-1][1]
+            max_width = max(max_width, max_idx - min_idx + 1)
+            n = len(queue)
+            for i in range(n):
+                node, idx = queue.popleft()
+                index = idx - min_idx
+                if node.left:
+                    queue.append([node.left, 2 * index + 1])
+                if node.right:
+                    queue.append([node.right, 2 * index + 2])
         return max_width
-            
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
