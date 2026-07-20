@@ -6,19 +6,20 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        order = []
-        def dfs(root, level):
+        res = []
+        def rightSide(root, level): 
+            nonlocal res
             if not root:
-                return []
-            if len(order) == level:
-                order.append(root.val)
-            dfs(root.right, level + 1)
-            dfs(root.left, level + 1)
-        dfs(root, 0)
-        return order
+                return 
+            if level == len(res): res.append(root.val)
+         
+            rightSide(root.right, level + 1)
+            rightSide(root.left, level + 1)
 
+        rightSide(root, 0)
+        return res
 
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
