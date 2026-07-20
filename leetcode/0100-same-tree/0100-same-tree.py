@@ -6,19 +6,21 @@
 #         self.right = right
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        
-        stack = [[p,q]]
-
-        while stack:
-            nodep, nodeq = stack.pop()
-
-            if not nodep and not nodeq:
-                continue
-            if not nodep or not nodeq:
+        def sameTree(tree1, tree2):
+            if not tree1 and not tree2:
+                return True
+            if not tree1 or not tree2:
                 return False
-            if nodeq.val != nodep.val:
+            if tree1.val != tree2.val:
                 return False
             
-            stack.append([nodep.left, nodeq.left])
-            stack.append([nodep.right, nodeq.right])
-        return True
+            left = sameTree(tree1.left, tree2.left)
+            right = sameTree(tree1.right, tree2.right)
+            
+            return left and right
+
+        return sameTree(p, q)
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
