@@ -6,21 +6,25 @@
 #         self.right = right
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        max_sum = float('-inf')
 
-        self.Max = float('-inf')
-
-        def dfs(curr):
-
-            if not curr:
+        def pathSum(root):
+            nonlocal max_sum
+            if not root:
                 return 0
+            leftSum = pathSum(root.left)
+            rightSum = pathSum(root.right)
+            
+            max_sum = max(max_sum, root.val + leftSum + rightSum)
+            if root.val + max(leftSum, rightSum) < 0:
+                return 0
+            return root.val + max(leftSum, rightSum)
+        
+        pathSum(root)
+        return max_sum
 
-            leftSum = max(dfs(curr.left), 0)
-            rightSum = max(dfs(curr.right), 0)
 
-            self.Max = max(self.Max, leftSum + curr.val + rightSum)
 
-            return curr.val + max(leftSum, rightSum)
-
-        dfs(root)
-        return self.Max
-
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
