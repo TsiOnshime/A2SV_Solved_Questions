@@ -7,21 +7,24 @@
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         
-        self.val_idx = {val:i for i, val in enumerate(inorder)}
-
+        self.index = {val: i for i, val in enumerate(inorder)}
         self.idx = 0
-
-        def build(left, right):
+        def build_tree(left, right):
             if left > right:
                 return
 
             root = TreeNode(preorder[self.idx])
             self.idx += 1
-            mid = self.val_idx[root.val]
-
-            root.left = build(left, mid - 1)
-            root.right = build(mid + 1, right)
+            mid = self.index[root.val]
+            root.left = build_tree(left, mid - 1)
+            root.right = build_tree(mid + 1, right)
 
             return root
+        return build_tree(0, len(preorder) - 1)
 
-        return build(0, len(preorder) - 1)
+
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
