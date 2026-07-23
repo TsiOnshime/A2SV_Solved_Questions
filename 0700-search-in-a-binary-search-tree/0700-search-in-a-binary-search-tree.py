@@ -7,15 +7,18 @@
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         
-
-        def search(node, key):
-
-            if not node:
-                return 
-            if node.val == key:
-                return node
-            elif key > node.val:
-                return search(node.right, key)
+        def search(root):
+            if not root:
+                return
+            if root.val == val:
+                return root
+            
+            if root.val > val:
+                return search(root.left)
             else:
-                return search(node.left, key)
-        return search(root, val)
+                return search(root.right)
+        return search(root)
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
