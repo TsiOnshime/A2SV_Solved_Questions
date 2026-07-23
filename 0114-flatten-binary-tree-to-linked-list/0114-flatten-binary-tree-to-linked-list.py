@@ -9,26 +9,20 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        if not root:
-            return []
-        stack = []
-        stack.append(root)
-        while stack:
-            curr = stack.pop()
-
-            if curr.right:
-                stack.append(curr.right)
-            if curr.left:
-                stack.append(curr.left)
-            if stack:
-                curr.right = stack[-1]
-            curr.left = None
-
+        curr = root
+        while curr:
+            if not curr.left:
+                curr = curr.right
+            else:
+                temp = curr.left
+                while temp.right:
+                    temp = temp.right
+                temp.right = curr.right
+                curr.right = curr.left
+                curr.left = None
+                curr = curr.right
         
-# [1]
-# curr = 1, stack = [5, 2]
-# 
-#
+
 
 
 # Synced seamlessly with LeetHub Pro
