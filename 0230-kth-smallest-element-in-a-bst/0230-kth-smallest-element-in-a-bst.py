@@ -7,15 +7,31 @@
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         
-        stack = []
+        count = 0
         curr = root
-        while curr or stack:
-            while curr:
-                stack.append(curr)
-                curr = curr.left
+        while curr:
+            if not curr.left:
+                count += 1
+                if count == k:
+                    return curr.val
+                curr = curr.right
+            else:
+                temp = curr.left
+                while temp.right and temp.right != curr:
+                    temp = temp.right
+                if not temp.right: 
+                    temp.right = curr
+                    curr = curr.left
+                elif temp.right == curr:
+                    count += 1
+                    if count == k:
+                        return curr.val
+                    temp.right = None
+                    curr = curr.right
+        
+        return inorder[k - 1]
 
-            curr = stack.pop()
-            k -= 1
-            if k == 0:
-                return curr.val
-            curr = curr.right
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
