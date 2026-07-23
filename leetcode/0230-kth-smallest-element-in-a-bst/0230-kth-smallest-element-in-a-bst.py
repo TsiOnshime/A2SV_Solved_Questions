@@ -7,25 +7,27 @@
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         
+        inorder = []
         curr = root
         while curr:
             if not curr.left:
-                k -= 1
-                if k == 0:
-                    return curr.val
+                inorder.append(curr.val)
                 curr = curr.right
-            
             else:
-                prev = curr.left
-                while prev.right and prev.right != curr:
-                    prev = prev.right
-                if not prev.right:
-                    prev.right = curr
+                temp = curr.left
+                while temp.right and temp.right != curr:
+                    temp = temp.right
+                if not temp.right: 
+                    temp.right = curr
                     curr = curr.left
-                else:
-                    prev.right = None
-                    k -= 1
-                    if k == 0:
-                        return curr.val
+                elif temp.right == curr:
+                    inorder.append(curr.val)
+                    temp.right = None
                     curr = curr.right
-                    
+        
+        return inorder[k - 1]
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
