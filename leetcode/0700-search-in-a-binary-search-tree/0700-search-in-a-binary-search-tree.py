@@ -7,17 +7,13 @@
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         
-        def search(root):
-            if not root:
-                return
-            if root.val == val:
-                return root
-            
+        while root and root.val != val:
             if root.val > val:
-                return search(root.left)
+                root = root.left
             else:
-                return search(root.right)
-        return search(root)
+                root = root.right
+        
+        return root
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
