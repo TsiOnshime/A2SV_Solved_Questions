@@ -7,18 +7,21 @@
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         
-        def validate(node, left, right):
-            if not node:
+        def validate(root, left, right):
+            if not root:
                 return True
-            if node.val <= left or node.val >= right:
+            if root.val <= left or root.val >= right:
                 return False
-
             
-            return validate(node.left, left, node.val) and validate(node.right, node.val, right)
+            validateLeft = validate(root.left, left, root.val)
+            validateRight = validate(root.right, root.val, right)
+
+            return validateLeft and validateRight
+
+        
 
         return validate(root, float('-inf'), float('inf'))
-                
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
