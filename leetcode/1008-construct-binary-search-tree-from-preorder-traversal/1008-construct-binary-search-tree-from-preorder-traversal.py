@@ -6,29 +6,20 @@
 #         self.right = right
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
-        root = TreeNode(preorder[0])
+        idx = 0
+        def constructBst(upperBound):
+            nonlocal idx
+            if idx == len(preorder):
+                return 
+            if preorder[idx] > upperBound:
+                return 
+            root = TreeNode(preorder[idx])
+            idx += 1
+            root.left = constructBst(root.val)
+            root.right = constructBst(upperBound)
 
-        def insertNode(root, val):
-            node = TreeNode(val)
-            curr = root
-            while curr:
-                if node.val < curr.val:
-                    if not curr.left:
-                        curr.left = node
-                        break
-                    else:
-                        curr = curr.left
-                else:
-                    if not curr.right:
-                        curr.right = node
-                        break
-                    else:
-                        curr = curr.right
-        
-        for i in range(1, len(preorder)):
-            insertNode(root, preorder[i])
-        return root
-
+            return root
+        return constructBst(float('inf'))
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
