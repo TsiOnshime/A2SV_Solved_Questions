@@ -9,28 +9,29 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        temp1 = TreeNode(float('inf'))
-        temp2 = TreeNode(float('-inf'))
-        
-        def recoverBst(lowerBound, upperBound, upperCurr, lowerCurr, root):
-            nonlocal flag
-            if not root:
-                return 
-            if root.val >= upperBound:
-                root.val, upperCurr.val = upperCurr.val, root.val
-                flag = True
-                return 
-            elif root.val <= lowerBound:
-                root.val, lowerCurr.val = lowerCurr.val, root.val
-                flag = True
-                return 
-            recoverBst(lowerBound, root.val, root, lowerCurr, root.left)
-            recoverBst(root.val, upperBound, upperCurr, root, root.right)
-        while True:
-            flag = False
-            recoverBst(float('-inf'), float('inf'), temp1, temp2, root)
-            if not flag:
-                break
+        self.first = None
+        self.middle = None
+        self.last = None
+        self.prev = TreeNode(float('-inf'))
+        def recover(root):
+            
+            if not root: return
+            recover(root.left)
+            if self.prev.val > root.val:
+                if not self.first:
+                    self.first = self.prev
+                    self.middle = root
+                else:
+                    self.last = root
+            self.prev = root
+            recover(root.right)
+
+        recover(root)
+        if self.last:
+            self.first.val, self.last.val = self.last.val, self.first.val
+        else:
+            self.first.val, self.middle.val = self.middle.val, self.first.val
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
