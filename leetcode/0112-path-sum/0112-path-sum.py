@@ -6,18 +6,21 @@
 #         self.right = right
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        
-        def pathSum(curr, currSum):
-            if not curr:
+        if not root:
+            return False
+        def checkPathSum(root, _sum):
+            if not root:
                 return False
-            
-            currSum += curr.val
-            if not curr.right and not curr.left:
-                return currSum == targetSum
-                
-            leftSum = pathSum(curr.left, currSum)
-            rightSum = pathSum(curr.right, currSum)
+            if not root.left and not root.right:
+                if _sum + root.val == targetSum:
+                    return True
+                return False
 
-            return leftSum or rightSum
+            return checkPathSum(root.left, _sum + root.val) or checkPathSum(root.right, _sum + root.val)
 
-        return pathSum(root, 0)
+        
+        return checkPathSum(root, 0)
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
