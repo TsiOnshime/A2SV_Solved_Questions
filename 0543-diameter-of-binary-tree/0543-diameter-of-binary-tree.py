@@ -6,25 +6,21 @@
 #         self.right = right
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        res = 0
+        self.max_diameter = 0
         def diameter(root):
-            nonlocal res
-
             if not root:
                 return 0
+            
+            leftDiameter = diameter(root.left)
+            rightDiameter = diameter(root.right)
 
-            left = 1 + diameter(root.left)
-            right = 1 + diameter(root.right)
-            left_edge = left - 1
-            right_edge = right - 1
-            res = max(res, left_edge + right_edge)
-            return max(left, right)
+            self.max_diameter = max(self.max_diameter, leftDiameter + rightDiameter)
+
+            return 1 + max(leftDiameter, rightDiameter)
 
         diameter(root)
-        return res
-# res = 2
+        return self.max_diameter
 
-# left = 1 + 2 = 3
-# 
-# right = 2
-# 
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
