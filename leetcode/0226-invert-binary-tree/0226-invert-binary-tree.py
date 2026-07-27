@@ -6,19 +6,16 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        
-        if not root:
-            return None
-        q = deque()
-
-        q.append(root)
-
-        while q:
-            node = q.popleft()
-            node.left, node.right = node.right, node.left
-            if node.left:
-                q.append(node.left)
-            if node.right:
-                q.append(node.right)
-        
+        def invert(root):
+            if not root:
+                return 
+            
+            root.right, root.left = root.left, root.right
+            invert(root.left)
+            invert(root.right)
+        invert(root)
         return root
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
