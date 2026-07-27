@@ -7,30 +7,45 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        
-        def lowestAncestor(root):
-            if not root:
-                return 
+        self.commonAncestor = None
 
-            left = lowestAncestor(root.left)
-            right = lowestAncestor(root.right)
+        def lowestCommon(root):
+            if not root:
+                # found, ancestor
+                return False
+            
+            left = lowestCommon(root.left)
+            right = lowestCommon(root.right)
 
             if not left and not right:
-                if root == p or root == q:
-                    return root 
-            elif left and right:
-                return root
-            elif left:
-                if root == p or root == q:
-                    return root
-                return left
-            elif right:
-                if root == p or root == q:
-                    return root
-                return right
-            
+                if root.val == q.val or root.val == p.val:
+                    return True
+                return False
 
-        return lowestAncestor(root)
+            if left and right:
+                if self.commonAncestor is None:
+                    self.commonAncestor = root
+                return True
+            
+            if left:
+                if root.val == p.val or root.val == q.val:
+                    if self.commonAncestor is None:
+                        self.commonAncestor = root
+                return True
+            if right:
+                if root.val == p.val or root.val == q.val:
+                    if self.commonAncestor is None:
+                        self.commonAncestor = root
+                return True
+            return False
+
+        lowestCommon(root)
+        return self.commonAncestor
+
+                
+
+
+            
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
