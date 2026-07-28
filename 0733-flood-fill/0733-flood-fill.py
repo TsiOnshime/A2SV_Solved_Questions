@@ -1,28 +1,29 @@
 class Solution:
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
-        rows, cols = len(image), len(image[0])
-        original = image[sr][sc]
-        queue = deque()
         visited = set()
-        directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+        original = image[sr][sc]
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        rows, cols = len(image), len(image[0])
 
         def is_valid(r, c):
-            if r in range(rows) and c in range(cols) and image[r][c] == original and (r, c) not in visited:
+            if 0 <= r < rows and 0 <= c < cols and image[r][c] == original and (r, c) not in visited:
                 return True
             return False
-        queue.append((sr, sc))
-        visited.add((sr, sc))
+            
+        def dfs(r, c):
 
-        while queue:
-            cr, cc = queue.popleft()
-            image[cr][cc] = color
+            visited.add((r, c))
+            image[r][c] = color
+
             for dr, dc in directions:
-                nr, nc = cr + dr, cc + dc
+                nr, nc = dr + r, dc + c
                 if is_valid(nr, nc):
-                    queue.append((nr, nc))
-                    visited.add((nr, nc))
+                    dfs(nr, nc)
+        dfs(sr, sc)
         return image
 
 
 
-
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
