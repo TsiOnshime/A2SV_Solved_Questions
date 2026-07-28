@@ -1,30 +1,23 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         n = len(isConnected)
-
         visited = set()
-        provinces = 0
+        count = 0
 
-        def bfs(start):
-            queue = deque([start])
-            visited.add(start)
+        def dfs(city1):
+            if city1 in visited:
+                return 0
+            visited.add(city1)
 
-            while queue:
-                curr = queue.popleft()
-                for i in range(n):
-
-                    if i not in visited and isConnected[curr][i]== 1:
-                        queue.append(i)
-                        visited.add(i)
-
-        for i in range(n):
-            if i not in visited:
-                bfs(i)
-                provinces += 1
-
-        return provinces
-
+            for city2 in range(n):
+                if isConnected[city1][city2] == 1 and city2 not in visited:
+                    dfs(city2)
+            return 1
+        for city in range(n):
+            count += dfs(city)
+        
+        return count
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
