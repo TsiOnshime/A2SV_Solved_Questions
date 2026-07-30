@@ -1,31 +1,30 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        visited = set()
+        n = len(graph)
+        group = [-1] * n
 
-        def bfs(start):
+        def bfs(node):
             queue = deque()
-            queue.append(start)
-        
-
-            group = {start: "A"}
-
+            group[node] = 0
+            queue.append(node)
             while queue:
                 node = queue.popleft()
                 for neigh in graph[node]:
-                    if neigh not in group:
-                        if group[node] == "A": group[neigh] = "B"
-                        else: group[neigh] = "A"
+                    if group[neigh] == -1:
+                        group[neigh] = not group[node]
                         queue.append(neigh)
-                    else:
+                    elif group[neigh] == group[node]:
+                        return False
 
-                        if group[node] == group[neigh]:
-                            return False
             return True
 
-        truth = True
-        for i in range(len(graph)):
-            if len(graph[i]) > 0 and i not in visited:
-                truth = truth and bfs(i)
-                if not truth:
+        for i in range(n):
+            if group[i] == -1:
+                if not bfs(i):
                     return False
+
         return True
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
