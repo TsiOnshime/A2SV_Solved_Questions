@@ -1,17 +1,19 @@
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
+        memo = {}
         rows, cols = len(grid), len(grid[0])
+        def minPath(r, c):
+            if r == rows - 1 and c == cols - 1:
+                return grid[r][c]
+            if (r, c) in memo:
+                return memo[(r, c)]
+            
+            right = minPath(r, c + 1) if c + 1 < cols else float("INF")
+            down = minPath(r + 1, c) if r + 1 < rows else float("INF")
 
-        for c in range(cols-2,-1,-1):
-            grid[rows-1][c] += grid[rows-1][c + 1]
-        
-        for r in range(rows - 2, -1, -1):
-            for c in range(cols - 1, -1, -1):
-                down = grid[r + 1][c] if r + 1 < rows else float('inf')
-                right = grid[r][c + 1] if c + 1 < cols else float('inf')
-                grid[r][c] = grid[r][c] + min(down, right)
-
-        return grid[0][0]
+            memo[(r, c)] = min(down, right) + grid[r][c]
+            return min(down, right) + grid[r][c]
+        return minPath(0, 0)
 
 
 # Synced seamlessly with LeetHub Pro
