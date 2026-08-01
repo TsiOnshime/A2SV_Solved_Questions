@@ -1,27 +1,30 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        indegree = [0] * numCourses
+        course_ordering = []
+        adj_list = defaultdict(list)
         queue = deque()
-        order = []
-        adj = {c:[] for c in range(numCourses)}
-
+        indegree = [0] * numCourses
+        
         for u, v in prerequisites:
-            adj[v].append(u)
+            adj_list[v].append(u)
             indegree[u] += 1
         
-    
-        for i in range(len(indegree)):
+        for i in range(numCourses):
             if indegree[i] == 0:
                 queue.append(i)
         
-        
         while queue:
             node = queue.popleft()
-            order.append(node)
-            for neigh in adj[node]:
+            course_ordering.append(node)
+            for neigh in adj_list[node]:
                 indegree[neigh] -= 1
                 if indegree[neigh] == 0:
                     queue.append(neigh)
-            
+        
+        return course_ordering if len(course_ordering) == numCourses else []
 
-        return order if len(order) == numCourses else []
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
