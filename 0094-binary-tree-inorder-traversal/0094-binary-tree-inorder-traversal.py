@@ -6,24 +6,17 @@
 #         self.right = right
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        
-        res = []
-        curr = root
+        order = []
+        def inorder(root):
+            if not root:
+                return 
+            inorder(root.left)
+            order.append(root.val)
+            inorder(root.right)
+        inorder(root)
+        return order
 
-        while curr:
-            if not curr.left:
-                res.append(curr.val)
-                curr = curr.right
-            else:
-                prev = curr.left
-                while prev.right and prev.right != curr:
-                    prev = prev.right
-                
-                if prev.right == None:
-                    prev.right = curr
-                    curr = curr.left
-                else:
-                    prev.right = None
-                    res.append(curr.val)
-                    curr = curr.right
-        return res
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
