@@ -2,37 +2,37 @@ class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         if endWord not in wordList:
             return 0
-        
-        # all words have the same length
 
-        # map pattern with list of words that satisfy that pattern
-        adj_list = defaultdict(list)
-        n = len(beginWord)
         wordList.append(beginWord)
 
+        pat_words = defaultdict(list)
+
+        n = len(beginWord)
+
         for i in range(len(wordList)):
+            word = wordList[i]
             for j in range(n):
-                pat = wordList[i][:j] + "*" + wordList[i][j + 1:]
-                adj_list[pat].append(wordList[i])
+                pattern = word[:j] + "*" + word[j+1:]
+                pat_words[pattern].append(word)
+        print(pat_words)
 
-        
         queue = deque()
-        visited = set()
-
         queue.append([beginWord, 1])
+        visited = set()
         visited.add(beginWord)
 
         while queue:
             word, dist = queue.popleft()
             if word == endWord:
-                return dist 
+                return dist
             for i in range(n):
-                pat = word[:i] + "*" + word[i + 1:]
-                for neigh in adj_list[pat]:
+                pattern = word[:i] + "*" + word[i + 1:]
+                for neigh in pat_words[pattern]:
                     if neigh not in visited:
                         queue.append([neigh, dist + 1])
                         visited.add(neigh)
         return 0
+            
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
