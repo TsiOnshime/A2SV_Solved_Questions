@@ -5,6 +5,7 @@ class Solution:
         directions = [[-1, 0], [1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]
         if grid[0][0] != 0:
             return -1
+            
         def is_valid(r, c):
             if 0 <= r < len(grid) and 0 <= c < len(grid[0]) and grid[r][c] == 0 and (r, c) not in visited:
                 return True
