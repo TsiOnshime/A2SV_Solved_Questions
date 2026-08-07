@@ -1,22 +1,30 @@
 class Solution:
     def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
         distance = [[float('inf')] * n for i in range(n)]
-        
+        adj_list = defaultdict(list)
+
         for u, v, wt in edges:
-            distance[u][v] = wt
-            distance[v][u] = wt
+            adj_list[u].append([v, wt])
+            adj_list[v].append([u, wt])
 
         
         for i in range(n):
             distance[i][i] = 0
 
         for k in range(n):
-            for src in range(n):
-                for dest in range(n):
-                    if distance[src][k] != float('inf') and distance[k][dest] != float('inf'):
-                        distance[src][dest] = min(distance[src][dest], distance[src][k] + distance[k][dest])
+            min_heap = []
+            heapq.heappush(min_heap, [0, k])
+            distance[k][k] = 0
+            while min_heap:
+                dist, node = heapq.heappop(min_heap)
+                if dist > distance[k][node]:
+                    continue
+                for neigh, d in adj_list[node]: 
+                    if dist + d < distance[k][neigh]:
+                        distance[k][neigh] = dist + d
+                        heapq.heappush(min_heap, [dist + d, neigh])
         
-
+       
         city = -1
         min_count = float('inf')
         
