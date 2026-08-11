@@ -1,60 +1,53 @@
 class UnionFind:
     def __init__(self, n):
-        self.parent = [i for i in range(n)]
         self.rank = [0] * n
-    
+        self.parent = [i for i in range(n)]
+
     def find(self, node):
         if node != self.parent[node]:
             self.parent[node] = self.find(self.parent[node])
         return self.parent[node]
-    def union(self, u, v):
-        p1, p2 = self.find(u), self.find(v)
-
-        if p1 == p2:
-            return 
-        
-        if self.rank[p1] == self.rank[p2]:
-            self.parent[p1] = p2
-            self.rank[p2] += 1
-        elif self.rank[p1] > self.rank[p2]:
-            self.parent[p2] = p1
-        else:
-            self.parent[p1] = p2
     
+    def union(self, node1, node2):
+        parent1, parent2 = self.find(node1), self.find(node2)
+        if parent1 == parent2:
+            return 
+        if self.rank[parent1] > self.rank[parent2]:
+            self.parent[parent2] = parent1
+        elif self.rank[parent2] > self.rank[parent1]:
+            self.parent[parent1] = parent2
+        else:
+            self.parent[parent1] = parent2
+            self.rank[parent2] += 1        
 class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
-        max_row = 0
-        max_col = 0
-        for u, v in stones:
-            max_row = max(max_row, u)
-            max_col = max(max_col, v)
+        rows, cols = 0, 0
+        for u,v in stones:
+            rows = max(rows, u)
+            cols = max(cols, v)
 
-        n = max_row + max_col + 2
-        # [0, 1, 2, 3, 4, 5, 6]
+        offset = rows + 1
+
+        n = offset + cols + 1
+        stone_nodes = defaultdict(int)
+        components = 0
+        
         uf = UnionFind(n)
-        used = set()
-        def get_new_idx(c):
-            return c + max_row + 1
-        for u, v in stones:
-            new_col = get_new_idx(v)
-            uf.union(u, new_col)
-            used.add(u)
-            used.add(new_col)
 
-        roots = set()
-        for i in used:
-            roots.add(uf.find(i))
+        for r, c in stones:
+            uf.union(r, c + offset)
+            stone_nodes[r] = 1
+            stone_nodes[c + offset] = 1
 
-        return len(stones) - len(roots)
-        
+
+        for node in stone_nodes.keys():
+            if uf.find(node) == node:
+                components += 1
+        return len(stones) - components
+
 
         
-
-
-# from each connected component spare one element
-
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
