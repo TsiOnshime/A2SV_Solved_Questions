@@ -3,30 +3,33 @@ class Solution:
         rows, cols = len(grid), len(grid[0])
         visited = set()
         count = 0
-        directions = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+        def is_valid(r, c):
+            if 0 <= r < rows and 0 <= c < cols and grid[r][c] == "1" and (r, c) not in visited:
+                return True
+            return False
+        def bfs(r, c):
+            queue = deque()
+            queue.append([r, c])
+            visited.add((r, c))
+            while queue:
+                r, c = queue.popleft()
+                for dr, dc in directions:
+                    nr, nc = dr + r, c + dc
+                    if is_valid(nr, nc):
+                        queue.append([nr, nc])
+                        visited.add((nr, nc))
+
 
         for r in range(rows):
             for c in range(cols):
                 if grid[r][c] == "1" and (r, c) not in visited:
-                    self.explore(r, c, visited, rows, cols, directions, grid)
                     count += 1
+                    bfs(r, c)
+        
         return count
-
-    def is_valid(self, r, c, visited, rows, cols, grid):
-        if 0 <= r < rows and 0 <= c < cols and (r, c) not in visited and grid[r][c] == "1":
-            return True
-        return False
-    
-    def explore(self, r, c, visited, rows, cols, directions, grid):
-        if not self.is_valid(r, c, visited, rows, cols, grid):
-            return 
-        visited.add((r, c))
-        for dr, dc in directions:
-            self.explore(r + dr, c + dc, visited, rows, cols, directions, grid)
-            
-
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-# Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
