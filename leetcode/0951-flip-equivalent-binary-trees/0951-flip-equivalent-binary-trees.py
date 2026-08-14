@@ -11,10 +11,10 @@ class Solution:
                 return True
             if not root1 or not root2 or root1.val != root2.val:
                 return False
-            firstCheck = flipCheck(root1.left, root2.left) and flipCheck(root1.right, root2.right)
-            secondCheck = flipCheck(root1.left, root2.right) and flipCheck(root1.right, root2.left)
+            no_flip = flipCheck(root1.left, root2.left) and flipCheck(root1.right, root2.right)
+            flip = flipCheck(root1.left, root2.right) and flipCheck(root1.right, root2.left)
 
-            return firstCheck or secondCheck
+            return no_flip or flip
         
         return flipCheck(root1, root2)
 
