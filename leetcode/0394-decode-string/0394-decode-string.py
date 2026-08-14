@@ -1,75 +1,24 @@
 class Solution:
     def decodeString(self, s: str) -> str:
+        stack = []
 
-# when we find an openning bracket we recurssively call
-# the next function
-# wehn we get ]
-        def decode(i):
-            result = ""
-            k = 0
-            
-            while i < len(s):
-                if s[i].isdigit():
-                    k = k * 10 + int(s[i])
+        for i in range(len(s)):
+            if s[i] != "]":
+                stack.append(s[i])
+            else:
+                substr = ""
+                while stack[-1] != "[":
+                    substr = stack.pop() + substr
+                stack.pop()
+                num = ""
+                while stack and stack[-1].isdigit():
+                    num = stack.pop() + num
                 
-                elif s[i] == '[':
-                    sub, i = decode(i + 1)
-                    result += sub * k
-                    k = 0
-                
-                elif s[i] == ']':
-                    return result, i
-                
-                else:
-                    result += s[i]
-                
-                i += 1
-            
-            return result, i
+                stack.append(substr * int(num))
         
-        return decode(0)[0]
-            
-
-            
+        return "".join(stack)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # stack = []
-
-        # for i in range(len(s)):
-        #     if s[i] != "]":
-        #         stack.append(s[i])
-        #     else:
-        #         substring = ""
-        #         while stack[-1] != "[":
-        #             substring = stack.pop() + substring
-        #         stack.pop()
-
-        #         k = ""
-        #         while stack and stack[-1].isdigit():
-        #             k = stack.pop() + k
-
-        #         stack.append(int(k) * substring)
-        
-        # return "".join(stack)
-            
-                    
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
