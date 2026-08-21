@@ -1,18 +1,22 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        elem = 0
+        
+        candidate = 0
         count = 0
 
-        for i in range(len(nums)):
+        for i in nums:
             if count == 0:
-                elem = nums[i]
+                candidate = i
                 count = 1
-            elif elem == nums[i]:
-                count += 1
             else:
-                count -= 1
-        
-        return elem
+                if candidate == i:
+                    count += 1
+                else:
+                    count -= 1
+                    if count == 0:
+                        candidate = i
+                        count = 1
+        return candidate
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
