@@ -1,6 +1,6 @@
 class Solution:
     def inversionCount(self, arr):
-        cnt = 0
+        
         def merge(l, mid, r):
             temp = []
             count = 0
@@ -28,19 +28,21 @@ class Solution:
             return count
 
         def divide(l, r):
-            nonlocal cnt
+            cnt = 0
             if l >= r:
-                return
+                return 0
 
             mid = l + (r - l)//2
 
-            divide(l, mid)
-            divide(mid + 1, r)
+            cnt += divide(l, mid)
+            cnt += divide(mid + 1, r)
 
             cnt += merge(l, mid, r)
+            
+            return cnt
 
-        divide(0, len(arr) - 1)
-        return cnt
+        return divide(0, len(arr) - 1)
+        
 
 
 
