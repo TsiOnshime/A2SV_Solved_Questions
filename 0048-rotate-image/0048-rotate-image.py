@@ -3,34 +3,22 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-    # [                               
-    #     [0,0] ,[0,1], [0,2] [0,3]
-    #     [1,0] ,[1,1], [1,2]
-    #     [2,0] ,[2,1], [2,2]
-    
-    # ]
-
-    # [
-    #     [2,0], [1,0], [0,0]         
-    #     [2,1], [1,1], [0,1]
-    #     [2,2], [1,2], [0,2]
-
-    # ]
-
-
-        ROWS, COLS = len(matrix), len(matrix[0])
-
-        for row in range(ROWS):
-            for col in range(row + 1,COLS):
-                if row == col:
-                    continue
-                matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]
-        print(matrix)
-        for row in range(ROWS):
-            for col in range(COLS//2):
-                swapped_col = COLS - 1 - col
-
-                matrix[row][col], matrix[row][swapped_col] = matrix[row][swapped_col], matrix[row][col]
-
-
         
+        rows, cols = len(matrix), len(matrix[0])
+
+        for i in range(rows - 1):
+            for j in range(i + 1, cols):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+            
+        print(matrix)
+        for i in range(rows):
+            l, r = 0, cols - 1
+            while l <= r:
+                matrix[i][l], matrix[i][r] = matrix[i][r], matrix[i][l]
+                l += 1
+                r -= 1
+        
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
