@@ -1,43 +1,27 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
-        res = []
-        count1 = 0
-        elem1 = 0
-
-        count2 = 0
-        elem2 = 0
-
-        for i in range(len(nums)):
-            if count1 == 0 and nums[i] != elem2:
-                count1 = 1
-                elem1 = nums[i]
-            elif count2 == 0 and nums[i] != elem1:
-                count2 = 1
-                elem2 = nums[i]
-            elif nums[i] == elem1:
-                count1 += 1
-            elif nums[i] == elem2:
-                count2 += 1
-            else:
-                count1 -= 1
-                count2 -= 1
-        count1 = count2 = 0
-        for i in range(len(nums)):
-            if nums[i] == elem1:
-                count1 += 1
-            elif nums[i] == elem2:
-                count2 += 1
-        if count1 > len(nums) // 3:
-            res.append(elem1)
-        if count2 > len(nums) // 3:
-            res.append(elem2)
-        return res
-
-
         
+        count = defaultdict(int)
+        for i in range(len(nums)):
+            count[nums[i]] += 1
+            if len(count) <= 2:
+                continue
+            new_count = defaultdict(int)
+            for n, c in count.items():
+                if c > 1:
+                    new_count[n] = c - 1
             
-
+            count = new_count
         
+
+        res = []
+
+        for n in count:
+            if nums.count(n) > len(nums)//3:
+                res.append(n)
+        return res
+            
+            
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
