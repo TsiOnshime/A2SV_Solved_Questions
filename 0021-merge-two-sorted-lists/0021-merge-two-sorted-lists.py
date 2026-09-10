@@ -3,24 +3,33 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        curr1 = list1
+        curr2 = list2
+
         dummy = ListNode()
-        print(dummy)
+
         curr = dummy
-        while list1 and list2:
-            if list1.val <= list2.val:
-                curr.next = list1
-                list1 = list1.next
+
+        while curr1 and curr2:
+            if curr1.val  <= curr2.val:
+                curr.next = curr1
+                curr1 = curr1.next
             else:
-                curr.next = list2
-                list2 = list2.next
-
+                curr.next = curr2
+                curr2 = curr2.next
             curr = curr.next
-        if list1:
-            curr.next = list1
-        if list2:
-            curr.next = list2
-
+        
+        if curr1:
+            curr.next = curr1
+        
+        if curr2:
+            curr.next = curr2
+        
         return dummy.next
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
