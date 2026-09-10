@@ -5,24 +5,22 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        if not head.next:
-            return 
-        slow = fast = head
-        # 2, 1 => 2
-        # 1, 2 => None
+        ptr1 = head
+        ptr2 = head
+        while n and ptr1.next:
+            ptr1 = ptr1.next
+            n -= 1
+        if n:
+            return head.next
 
-        while n and fast.next:
-            fast = fast.next
-            n -= 1
-        while n:
-            slow = slow.next
-            n -= 1
-            if n == 0:
-                return slow
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next
-        
-        slow.next = slow.next.next
+        while ptr1 and ptr1.next:
+            ptr1 = ptr1.next
+            ptr2 = ptr2.next
+        ptr2.next = ptr2.next.next
         return head
 
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
