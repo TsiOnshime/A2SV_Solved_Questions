@@ -10,12 +10,14 @@ class Solution:
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
-
-        node.val = node.next.val
-        node.next = node.next.next
         
+        if not node.next:
+            node = None
+        else:
+            node.val = node.next.val
+            node.next = node.next.next
 
 
-
-
-        
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
