@@ -4,24 +4,46 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        if not head: return
-        length = 1
+    def rotateRight(self, head: ListNode | None, k: int) -> ListNode | None:
+        if not head or not head.next or k == 0:
+            return head
+        def findNthNode(temp, k):
+            cnt = 1
+            while temp:
+                if cnt == k:
+                    return temp
+                cnt += 1
+                temp = temp.next
+            return temp
+        n = 1
         tail = head
         while tail.next:
-            length += 1
+            n += 1
             tail = tail.next
-        tail.next =head
-        pivot = length - (k % length)
+        if k == 0:
+            return head
+        
+        if (k % n == 0):
+            return head
 
-        curr = head
-        count = 1
-        while count != pivot:
-            curr = curr.next
-            count += 1
-        new_head = curr.next
-        curr.next = None
-        return new_head
+        k = k % n
+
+        tail.next = head
+        newLastNode = findNthNode(head, n - k)
+
+        head = newLastNode.next
+        newLastNode.next = None
+
+        return head
+
+
+
+
+
+
+
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
