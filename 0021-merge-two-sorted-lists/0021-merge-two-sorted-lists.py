@@ -5,29 +5,34 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        curr1 = list1
-        curr2 = list2
-
-        dummy = ListNode()
-
-        curr = dummy
-
-        while curr1 and curr2:
-            if curr1.val  <= curr2.val:
-                curr.next = curr1
-                curr1 = curr1.next
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        
+        if list1.val < list2.val:
+            head = list1
+            list1 = list1.next
+        else:
+            head = list2
+            list2 = list2.next
+        tail = head
+        while list1 and list2:
+            if list1.val < list2.val:
+                tail.next = list1
+                list1 = list1.next
             else:
-                curr.next = curr2
-                curr2 = curr2.next
-            curr = curr.next
+                tail.next = list2
+                list2 = list2.next
+            tail = tail.next
+
+        if list1:
+            tail.next = list1
+        if list2:
+            tail.next = list2
         
-        if curr1:
-            curr.next = curr1
-        
-        if curr2:
-            curr.next = curr2
-        
-        return dummy.next
+        return head
+
 
 
 # Synced seamlessly with LeetHub Pro
