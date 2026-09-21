@@ -1,43 +1,20 @@
-from collections import defaultdict
 class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        # dic =
-        # {
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+        freq_list = defaultdict(list)
+        res = []
+        for i in range(len(strs)):
+            freq = [0] * 26
+            offset = ord('a')
+            for j in range(len(strs[i])):
+                freq[ord(strs[i][j]) - offset] += 1
+            freq_list[tuple(freq)].append(strs[i])
 
-        #     (frequecy of each element): [the strings]
-        # }
-        # _dict = defaultdict(list)
-     
-        # arr = [0] * 26
-        
-        # iterate throu the strings
-        #     for letter in string
-        #         i would increase teh value of its index at arr
-        #     _dict[tuple(arr)].append(string)
-
-        #  strs = ["eat","tea","tan","ate","nat","bat"]
-
-        #  arr = [1,0,0,0,1--------1000000]
-        #  {
-        #     (1,0,0,0,1--------1000000): ["eat","tea"],
-        #     (1,0,0,,,0,0,1, -----1,0,0,0): ["tan"]
-        #  }
-            
-        # return [_dict.values] [["eat","tea"], "tan"]
+        for key, value in freq_list.items():
+            res.append(value)
+        return res
+      
 
 
-        _dict = defaultdict(list)
-
-        
-        for word in strs:
-            arr = [0] * 26
-            for letter in word:
-                index = ord(letter) - ord("a")
-                arr[index] += 1
-            _dict[tuple(arr)].append(word)
-
-        return [i for i in _dict.values()]
-
-
-
-        
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
