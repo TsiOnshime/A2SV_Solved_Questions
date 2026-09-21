@@ -22,7 +22,6 @@ class Solution:
 
         for i in range(len(list1)):
             idx = find_word(list1[i])
-
             if idx == float('inf'):
                 continue
             if idx + i < min_sum:
