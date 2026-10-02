@@ -1,45 +1,47 @@
 class Solution:
-    def solveNQueens(self, n: int) -> List[List[str]]:
-        
-        board = [["."] * n for _ in range(n)]
+    def solveNQueens(self, n: int) -> list[list[str]]:
         res = []
-        leftRow = [0] * n
-        lowerDiagonal = [0] * (2 * n - 1)
-        upperDiagonal = [0] * (2 * n - 1)
-        def isSafe(col, row):
-            nonlocal leftRow
-            nonlocal lowerDiagonal
-            nonlocal upperDiagonal
+        state = [['.'] * n for _ in range(n)]
 
-            if leftRow[row] != 0:
-                return False
-            if lowerDiagonal[col + row] != 0:
-                return False
-            if upperDiagonal[n - 1 + col - row] != 0:
-                return False
+        def is_valid(c, r):
+            # same row
+            for cc in range(c):
+                if state[r][cc] == "Q":
+                    return False
             
+            # upper-left diagonal
+            rr, cc = r - 1, c - 1
+            while rr >= 0 and cc >= 0:
+                if state[rr][cc] == "Q":
+                    return False
+                rr -= 1
+                cc -= 1
+            
+            # lower-left diagonal 
+            rr, cc = r + 1, c - 1
+            while rr < n and cc >= 0:
+                if state[rr][cc] == "Q":
+                    return False
+                rr += 1
+                cc -= 1
+
             return True
 
-        def solve(col):
-            if col == n:
-                res.append(["".join(row) for row in board])
+        def solve(c):
+            nonlocal state
+            if c == n:
+                res.append(["".join(row) for row in state])
                 return 
             
-
-            for row in range(n):
-                if isSafe(col, row):
-                    leftRow[row] = 1
-                    lowerDiagonal[col + row] = 1
-                    upperDiagonal[n - 1 + col - row] = 1
-                    board[row][col] = "Q"
-                    solve(col + 1)
-                    leftRow[row] = 0
-                    lowerDiagonal[col + row] = 0
-                    upperDiagonal[n - 1 + col - row] = 0
-                    board[row][col] = "."
-
+            for r in range(n):
+                if is_valid(c, r):
+                    state[r][c] = "Q"
+                    solve(c + 1)
+                    state[r][c] = "."
         solve(0)
         return res
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
