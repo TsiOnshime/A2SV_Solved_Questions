@@ -3,41 +3,38 @@ class Solution:
         res = []
         state = [['.'] * n for _ in range(n)]
 
-        def is_valid(c, r):
-            # same row
-            for cc in range(c):
-                if state[r][cc] == "Q":
-                    return False
-            
-            # upper-left diagonal
-            rr, cc = r - 1, c - 1
-            while rr >= 0 and cc >= 0:
-                if state[rr][cc] == "Q":
-                    return False
-                rr -= 1
-                cc -= 1
-            
-            # lower-left diagonal 
-            rr, cc = r + 1, c - 1
-            while rr < n and cc >= 0:
-                if state[rr][cc] == "Q":
-                    return False
-                rr += 1
-                cc -= 1
+        upper_left = defaultdict(bool)
+        lower_left = defaultdict(bool)
+        row = defaultdict(bool)
 
+        def is_valid(c, r):
+            if row[r] == True:
+                return False
+            
+            if upper_left[c - r] == True:
+                return False
+            
+            if lower_left[c + r] == True:
+                return False
+            
             return True
 
         def solve(c):
-            nonlocal state
             if c == n:
                 res.append(["".join(row) for row in state])
                 return 
             
             for r in range(n):
                 if is_valid(c, r):
+                    row[r] = True
+                    upper_left[c - r] = True
+                    lower_left[c + r] = True 
                     state[r][c] = "Q"
                     solve(c + 1)
                     state[r][c] = "."
+                    row[r] = False
+                    upper_left[c - r] = False
+                    lower_left[c + r] = False
         solve(0)
         return res
 
