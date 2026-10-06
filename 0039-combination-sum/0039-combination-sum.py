@@ -1,25 +1,25 @@
 class Solution:
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
+        
         res = []
-        def combination(i, _sum, state):
-            nonlocal res
+        def combinations(i, _sum, state):
             if _sum > target:
-                return
+                return 
             if i == len(candidates):
                 if _sum == target:
                     res.append(state.copy())
-                return
-            # no take
-            combination(i + 1, _sum, state)
-            # take
-            state.append(candidates[i])
+                return 
+            # not pick
+            combinations(i + 1, _sum, state)
+            # pick
             _sum += candidates[i]
-            combination(i, _sum, state)
+            state.append(candidates[i])
+            combinations(i , _sum, state)
             _sum -= candidates[i]
             state.pop()
-        combination(0, 0, [])
+        
+        combinations(0, 0, [])
         return res
-
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
