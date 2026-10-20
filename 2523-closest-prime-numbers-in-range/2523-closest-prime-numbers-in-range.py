@@ -8,7 +8,7 @@ class Solution:
             for j in range(start, len(sieve), step):
                 sieve[j] = False
             
-        for i in range(2, len(sieve)):
+        for i in range(2, int(sqrt(len(sieve)) + 1)):
             if sieve[i]:
                 mark_non_primes(i * i, i)
         
