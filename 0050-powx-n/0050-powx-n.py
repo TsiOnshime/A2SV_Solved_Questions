@@ -1,20 +1,20 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        def power(x, n):
-            if x == 0:
-                return 0
-            if n == 0:
-                return 1
-            
-            res = power(x, n // 2)
-            res = res * res
-
-            return x * res if n % 2 else res
         
+    
+        
+        def power(x, n):
+            if n == 0:
+                return 1.0
+            
+            half = power(x, n // 2)
+            result = half * half
 
+            if n % 2:
+                result *= x
+            return result
         res = power(x, abs(n))
-
-        return res if n >= 0 else 1/ res
+        return res if n > 0 else 1 / res
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
