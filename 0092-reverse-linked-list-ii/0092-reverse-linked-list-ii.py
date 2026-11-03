@@ -5,33 +5,25 @@
 #         self.next = next
 class Solution:
     def reverseBetween(self, head: ListNode | None, left: int, right: int) -> ListNode | None:
-        
-        def reverse(curr, length):
-            prev = None
-            tail = curr
-            after = None
+        dummy = ListNode(0, head)
+        leftPrev, curr = dummy, head
+        for i in range(left - 1):
+            leftPrev, curr = curr, curr.next
 
-            while length <= right:
-                nxt = curr.next
-                curr.next = prev
-                prev = curr
-                curr = nxt
-                length += 1
-            tail.next = curr
-            return prev
-        
-        if left == 1:
-            return reverse(head, left)
-        
-        curr = head
-        n = 1
+        prev = None
+        for i in range(right - left + 1):
+            tempNext = curr.next
+            curr.next = prev
+            prev, curr = curr, tempNext
 
-        while n < left - 1:
-            curr = curr.next
-            n += 1
-        
-        curr.next = reverse(curr.next, left)
-        return head
+        leftPrev.next.next = curr
+        leftPrev.next = prev
+
+        return dummy.next
+
+
+
+
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
