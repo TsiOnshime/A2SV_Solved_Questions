@@ -1,0 +1,33 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrderBottom(self, root: TreeNode | None) -> list[list[int]]:
+        if not root:
+            return []
+        res = []
+        queue = deque()
+        queue.append(root)
+
+        while queue:
+            n = len(queue)
+            level = []
+            for i in range(n):
+                node = queue.popleft()
+                level.append(node.val)
+                for neigh in [node.left, node.right]:
+                    if neigh:
+                        queue.append(neigh)
+            if level:
+                res.append(level.copy())
+        
+        return list(reversed(res))
+            
+                
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
