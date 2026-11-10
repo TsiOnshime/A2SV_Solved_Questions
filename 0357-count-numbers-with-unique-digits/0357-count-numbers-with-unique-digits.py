@@ -1,9 +1,5 @@
 class Solution:
     def countNumbersWithUniqueDigits(self, n: int) -> int:
- 
-        dp = [0] * (n + 1)
-        dp[0] = 1
-
         prev = 1
       
 
